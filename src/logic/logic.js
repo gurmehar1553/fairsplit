@@ -7,6 +7,39 @@ const input = [
     'A-600-A,B,C,D',
     'A'
 ]
+function actualLentAmt(ans,amt,n1){
+    const n=ans[0].length;
+    var t=0;
+    for(let i=0;i<n;i++){
+        if(ans[0][i]!=n1){
+            continue
+        }
+        for(let j=1;j<n;j++){
+            t+=ans[j][i];
+        }
+    }
+    return amt-t
+}
+function lent(ans){
+    const n=ans[0].length
+    console.log("lent")
+    ans.filter((ele)=>{
+        return ele[0]!='.'
+    }).map((ele)=>{
+        const n1=ele[0]
+        var amt=0;
+        for(let i=1;i<n;i++){
+            amt+=ele[i]
+        }
+        amt=actualLentAmt(ans,amt,n1)
+        if(amt>=0){
+            console.log(n1+" lent "+amt)
+        }
+        else{
+            console.log(n1+ " borrowed "+Math.abs(amt))
+        }
+    })
+}
 function addValues(ans,newarr){
     newarr.map((ele)=>{
         var [name,amt,...borrowers]=ele;
@@ -25,6 +58,7 @@ function addValues(ans,newarr){
         }
     })
     console.log(ans)
+    lent(ans);
 }
 function soln(newarr){
     const ans=[];
