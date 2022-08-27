@@ -7,6 +7,25 @@ const input = [
     'A-600-A,B,C,D',
     'A'
 ]
+function addValues(ans,newarr){
+    newarr.map((ele)=>{
+        var [name,amt,...borrowers]=ele;
+        borrowers=borrowers[0][0].split(',')
+        // console.log(borrowers)
+        for(let i=1;i<ans[0].length;i++){
+            if(ans[i][0]==name){
+                borrowers.map((ele)=>{
+                    for(let j=1;j<=ans[0].length;j++){
+                        if(ans[0][j]==ele){
+                            ans[i][j]+=amt;
+                        }
+                    }
+                })
+            }
+        }
+    })
+    console.log(ans)
+}
 function soln(newarr){
     const ans=[];
     const tem = newarr.map((e)=>{
@@ -29,6 +48,7 @@ function soln(newarr){
         ans.push(t)
     })
     console.log(ans)
+    addValues(ans,newarr)
 }
 
 function solve(arr){
