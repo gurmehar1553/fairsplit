@@ -2,6 +2,23 @@ body{
     margin: 0%;
     padding: 0%;
 }
-div{
+/* div{
     border: 1px solid;
+} */
+nav{
+    background-color: #576F72;
+}
+.profile-icon{
+    --size: 3rem;
+    border-radius: 50%;
+    height: var(--size);
+    width: var(--size);
+    font-size: 20px;
+    background-color: black;
+}
+.dash-menu{
+    background-color: #F8F9D7;
+}
+.btn-div{
+    background-color: #F8F9D7;
 }

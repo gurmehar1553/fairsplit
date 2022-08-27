@@ -1,8 +1,11 @@
+import Header from './components/Header'
+import Dashboard from './components/Dashboard'
 
 function App() {
   return (
     <div className="App">
-      hellloo
+      <Header/>
+      <Dashboard/>
     </div>
   );
 }
