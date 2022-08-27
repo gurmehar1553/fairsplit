@@ -12,30 +12,25 @@ const input = [
 ]
 const ans=[];
 function soln(newarr){
-    // const s=new Set(arr)
-    // const tem=[]
     const tem = newarr.map((e)=>{
-        const temp = e[2]
-        return temp
+        return e[2]
     })
     const allNames = tem.join(',')
     const SplitedAllNames = allNames.split(',')
     const NamesSet = new Set(SplitedAllNames)
     console.log([...NamesSet])
-    const firstArr=['st',...NamesSet];
+    const firstArr=['.',...NamesSet];
     ans.push(firstArr)
-    // const len=firstArr[0].length-1;
     const a=[...NamesSet]
     const len=[...NamesSet].length
-    for(let i=1;i<=len;i++){
-        a.map((ele)=>{
-            const t=[]
-            t.push(ele);
-            for(let i=0;i<len;i++){
-                t.push(0)
-            }ans.push(t)
-        })
-    }
+    a.map((ele)=>{
+        const t=[]
+        t.push(ele);
+        for(let i=0;i<len;i++){
+            t.push(0)
+        }
+        ans.push(t)
+    })
     console.log(ans)
 }
 
