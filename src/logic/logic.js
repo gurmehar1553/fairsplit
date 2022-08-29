@@ -7,43 +7,48 @@ const input = [
     'A-600-A,B,C,D',
     'A'
 ]
-function actualLentAmt(ans,amt,n1){
-    const n=ans[0].length;
-    var t=0;
+function coordinateValue(arr,a,b){
+    const n=arr.length;
     for(let i=0;i<n;i++){
-        if(ans[0][i]!=n1){
+        if(arr[i][0]!=a){
             continue
         }
-        for(let j=1;j<n;j++){
-            t+=ans[j][i];
+        else{
+            for(let j=0;j<arr[0].length;j++){
+                if(arr[0][j]==b){
+                    return arr[i][j]
+                }
+            }
         }
     }
-    return amt-t
 }
-function lent(ans){
-    const n=ans[0].length
-    console.log("lent")
-    ans.filter((ele)=>{
-        return ele[0]!='.'
-    }).map((ele)=>{
-        const n1=ele[0]
-        var amt=0;
-        for(let i=1;i<n;i++){
-            amt+=ele[i]
+function lent(ans,a){
+    var amt=0;
+    for(let i=0;i<ans[0].length;i++){
+        if(ans[0][i]=='.' || ans[i][0]==a){
+            continue
         }
-        amt=actualLentAmt(ans,amt,n1)
-        if(amt>=0){
-            console.log(n1+" lent "+amt)
+        amt+=coordinateValue(ans,a,ans[0][i]);
+    }
+    console.log(a+" lent "+amt)
+}
+function borrow(ans,a){
+    const n=ans.length;
+    var amt=0;
+    for(let i=0;i<n;i++){
+        if(ans[i][0]=='.' || ans[i][0]==a){
+            continue
         }
-        else{
-            console.log(n1+ " borrowed "+Math.abs(amt))
-        }
-    })
+        amt+=coordinateValue(ans,ans[i][0],a);
+    }
+    console.log(a+" borrowed "+amt)
 }
 function addValues(ans,newarr){
-    newarr.map((ele)=>{
-        var [name,amt,...borrowers]=ele;
-        borrowers=borrowers[0][0].split(',')
+    newarr.forEach((ele)=>{
+        var [name,amt,borrowers]=ele;
+        borrowers=borrowers.split(',')
+        const borr_len=borrowers.length;
+        amt=amt/borr_len;
         // console.log(borrowers)
         for(let i=1;i<ans[0].length;i++){
             if(ans[i][0]==name){
@@ -58,7 +63,12 @@ function addValues(ans,newarr){
         }
     })
     console.log(ans)
-    lent(ans);
+    // console.log(coordinateValue(ans,'B','C'))
+    console.log("A lent "+coordinateValue(ans,'A','B')+" to B")
+    console.log("A lent "+coordinateValue(ans,'A','C')+" to C")
+    console.log("A lent "+coordinateValue(ans,'A','D')+" to D")
+    lent(ans,'A');
+    borrow(ans,'A')
 }
 function soln(newarr){
     const ans=[];
@@ -73,7 +83,7 @@ function soln(newarr){
     ans.push(firstArr)
     const a=[...NamesSet]
     const len=[...NamesSet].length
-    a.map(ele => {
+    a.forEach(ele => {
         const t=[]
         t.push(ele);
         for(let i=0;i<len;i++){
@@ -88,7 +98,7 @@ function soln(newarr){
 function solve(arr){
     const query = arr.pop()
     const transformedArr = arr.map((e)=>{
-        const [name, amount,...borrowers] = e.split('-')
+        const [name, amount,borrowers] = e.split('-')
         return [name,parseInt(amount),borrowers]
     })
     soln(transformedArr)
