@@ -51,10 +51,10 @@ function addValues(ans,newarr){
         amt=amt/borr_len;
         // console.log(borrowers)
         for(let i=1;i<ans[0].length;i++){
-            if(ans[i][0]==name){
-                borrowers.map((ele)=>{
+            if(ans[i][0]===name){
+                borrowers.forEach((ele)=>{
                     for(let j=1;j<=ans[0].length;j++){
-                        if(ans[0][j]==ele){
+                        if(ans[0][j]===ele){
                             ans[i][j]+=amt;
                         }
                     }
@@ -78,7 +78,7 @@ function soln(newarr){
     const allNames = tem.join(',')
     const SplitedAllNames = allNames.split(',')
     const NamesSet = new Set(SplitedAllNames)
-    console.log([...NamesSet])
+    console.log("set of users:",[...NamesSet])
     const firstArr=['.',...NamesSet];
     ans.push(firstArr)
     const a=[...NamesSet]
@@ -91,10 +91,9 @@ function soln(newarr){
         }
         ans.push(t)
     })
-    console.log(ans)
+    console.log("unfilled Answer users:",ans)
     addValues(ans,newarr)
 }
-
 function solve(arr){
     const query = arr.pop()
     const transformedArr = arr.map((e)=>{
@@ -106,5 +105,4 @@ function solve(arr){
     console.log(query)
     
 }
-
 solve(input)
