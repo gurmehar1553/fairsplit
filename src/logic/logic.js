@@ -5,7 +5,7 @@ const input = [
     'D-1000-C',
     'B-200-C,D',
     'A-600-A,B,C,D',
-    'A'
+    'B'
 ]
 function coordinateValue(arr,a,b){
     const n=arr.length;
@@ -43,7 +43,7 @@ function borrow(ans,a){
     }
     console.log(a+" borrowed "+amt)
 }
-function addValues(ans,newarr){
+function addValues(ans,newarr,query){
     newarr.forEach((ele)=>{
         var [name,amt,borrowers]=ele;
         borrowers=borrowers.split(',')
@@ -64,13 +64,13 @@ function addValues(ans,newarr){
     })
     console.log(ans)
     // console.log(coordinateValue(ans,'B','C'))
-    console.log("A lent "+coordinateValue(ans,'A','B')+" to B")
-    console.log("A lent "+coordinateValue(ans,'A','C')+" to C")
-    console.log("A lent "+coordinateValue(ans,'A','D')+" to D")
-    lent(ans,'A');
-    borrow(ans,'A')
+    // console.log("A lent "+coordinateValue(ans,'A','B')+" to B")
+    // console.log("A lent "+coordinateValue(ans,'A','C')+" to C")
+    // console.log("A lent "+coordinateValue(ans,'A','D')+" to D")
+    lent(ans,query);
+    borrow(ans,query)
 }
-function soln(newarr){
+function soln(newarr,query){
     const ans=[];
     const tem = newarr.map((e)=>{
         return e[2]
@@ -92,7 +92,7 @@ function soln(newarr){
         ans.push(t)
     })
     console.log("unfilled Answer users:",ans)
-    addValues(ans,newarr)
+    addValues(ans,newarr,query)
 }
 function solve(arr){
     const query = arr.pop()
@@ -100,7 +100,7 @@ function solve(arr){
         const [name, amount,borrowers] = e.split('-')
         return [name,parseInt(amount),borrowers]
     })
-    soln(transformedArr)
+    soln(transformedArr,query)
     console.log(transformedArr)
     console.log(query)
     
