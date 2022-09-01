@@ -4,7 +4,7 @@ const input = [
     'C-600-A,B,C',
     'D-1000-C',
     'B-200-C,D',
-    'A-600-A,B,C,D',
+    'A-600-A,B,C,D',    
     'B'
 ]
 function coordinateValue(arr,a,b){
