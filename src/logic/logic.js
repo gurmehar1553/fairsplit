@@ -10,12 +10,12 @@ const input = [
 function coordinateValue(arr,a,b){
     const n=arr.length;
     for(let i=0;i<n;i++){
-        if(arr[i][0]!=a){
+        if(arr[i][0]!==a){
             continue
         }
         else{
             for(let j=0;j<arr[0].length;j++){
-                if(arr[0][j]==b){
+                if(arr[0][j]===b){
                     return arr[i][j]
                 }
             }
@@ -25,7 +25,7 @@ function coordinateValue(arr,a,b){
 function lent(ans,a){
     var amt=0;
     for(let i=0;i<ans[0].length;i++){
-        if(ans[0][i]=='.' || ans[i][0]==a){
+        if(ans[0][i]==='.' || ans[i][0]===a){
             continue
         }
         amt+=coordinateValue(ans,a,ans[0][i]);
@@ -36,7 +36,7 @@ function borrow(ans,a){
     const n=ans.length;
     var amt=0;
     for(let i=0;i<n;i++){
-        if(ans[i][0]=='.' || ans[i][0]==a){
+        if(ans[i][0]==='.' || ans[i][0]===a){
             continue
         }
         amt+=coordinateValue(ans,ans[i][0],a);
