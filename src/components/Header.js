@@ -2,7 +2,7 @@ export default function Header() {
   return (
     <div>
         <nav className="navbar navbar-light">
-            <div className="navbar-brand px-5 text-light">
+            <div className="navbar-brand ms-3 px-5 text-light">
               <h1 className="display-6">
                 FairSplit
               </h1>

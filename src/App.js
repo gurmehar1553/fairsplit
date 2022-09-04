@@ -1,18 +1,19 @@
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
-import Form from './components/Form';
-import Toggelable from './components/Toggelable';
+import {useState} from 'react';
 
 function App() {
+
+  const [members, setMembers] = useState([{
+    name:'You',
+    id:'00000'
+  }])
+  const [expenses,setExpenses] = useState([])
   return (
     <div className="App">
-      <Header/>
-      <Dashboard/>
-      <Toggelable>
-        <Form />
-      </Toggelable>
+      <Header />
+      <Dashboard setMembers={setMembers} members={members} setExpenses={setExpenses} expenses={expenses} />
     </div>
   );
 }
-
 export default App;
