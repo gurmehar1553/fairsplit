@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <Loader />
       <Header />
-      <Dashboard setMembers={setMembers} members={members} setExpenses={setExpenses} expenses={expenses} />
+      <Dashboard setMembers={setMembers} members={members} setExpenses={setExpenses} expenses={expenses}/>
     </div>
   );
 }
