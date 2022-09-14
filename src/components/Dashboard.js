@@ -10,7 +10,7 @@ export default function Dashboard({members, setMembers, expenses, setExpenses}) 
           <div className='col-md-4'>
             <div className='btn-div'>
                 <Toggelable show='Add Expense' hide='Hide' >
-                  <ExpenseForm  setExpenses={setExpenses} expenses={expenses} />
+                  <ExpenseForm  setExpenses={setExpenses} expenses={expenses} members={members}/>
                 </Toggelable>
             </div>
             <div className='btn-div'>

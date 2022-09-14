@@ -1,6 +1,7 @@
 import Header from './components/Header'
 import Dashboard from './components/Dashboard'
 import {useState} from 'react';
+import Loader from './components/Loader';
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
   const [expenses,setExpenses] = useState([])
   return (
     <div className="App">
+      <Loader />
       <Header />
       <Dashboard setMembers={setMembers} members={members} setExpenses={setExpenses} expenses={expenses} />
     </div>
