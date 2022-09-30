@@ -19,6 +19,7 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                     setExpenses={setExpenses} 
                     expenses={expenses} 
                     members={members} 
+                    lenders={lenders}
                     setBorrowers={setBorrowers} 
                     setLenders={setLenders}
                   />
