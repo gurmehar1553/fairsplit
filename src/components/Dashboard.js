@@ -20,6 +20,7 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                     expenses={expenses} 
                     members={members} 
                     lenders={lenders}
+                    borrowers={borrowers}
                     setBorrowers={setBorrowers} 
                     setLenders={setLenders}
                   />
@@ -41,11 +42,13 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
             <div className='col-8'>
               Expenses:
               <ul>
-                {expenses.map(e => {
+                {expenses.map((e,i) => {
+                  console.log(lenders[i])
+                  console.log(borrowers[i])
                   return (
                     <li key={e.id}>Spent Rs.{e.amount} at {e.name} <br/> 
-                          &nbsp;&nbsp;&nbsp;-&gt;PaidBy: {lenders.join(', ')}<br/> 
-                          &nbsp;&nbsp;&nbsp;-&gt;PaidTo: {borrowers.join(', ')}
+                          &nbsp;&nbsp;&nbsp;-&gt;PaidBy: {lenders[i].join(', ')}<br/> 
+                          &nbsp;&nbsp;&nbsp;-&gt;PaidTo: {borrowers[i].join(', ')}
                     </li>
                   )
                 })}
