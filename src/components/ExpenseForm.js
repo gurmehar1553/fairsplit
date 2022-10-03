@@ -5,7 +5,7 @@ function genertateId(){
     return (Math.random() * 100000).toFixed(0)
 }
 
-export default function Form({setExpenses, expenses, members, setLenders, setBorrowers}) {
+export default function Form({setExpenses, expenses, members, setLenders, setBorrowers, lenders, borrowers}) {
     
     const [ name,setName ] = useState('')
     const [ expenseAmount, setExpenseAmount ] = useState('')
@@ -43,8 +43,8 @@ export default function Form({setExpenses, expenses, members, setLenders, setBor
         setExpenses(newExpenses)
         setName('')
         setExpenseAmount('')
-        setLenders(nameLenders)
-        setBorrowers(nameBorrowers)
+        setLenders([...lenders, nameLenders])
+        setBorrowers([...borrowers,nameBorrowers])
     }
     return (
         <form className='p-4 form' onSubmit={handleSubmit}>
