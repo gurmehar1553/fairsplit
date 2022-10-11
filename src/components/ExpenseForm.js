@@ -5,13 +5,13 @@ function genertateId(){
     return (Math.random() * 100000).toFixed(0)
 }
 
-export default function Form({setExpenses, expenses, members, setLenders, setBorrowers, lenders, borrowers}) {
+export default function Form({setExpenses, expenses, members, setlendersAndBorrowers, lendersAndBorrowers}) {
     
     const [ name,setName ] = useState('')
     const [ expenseAmount, setExpenseAmount ] = useState('')
 
 
-   function handleNameChange(event){
+    function handleNameChange(event){
         setName(event.target.value)
     }
     function handleAmountChange(event){
@@ -20,9 +20,6 @@ export default function Form({setExpenses, expenses, members, setLenders, setBor
 
     function handleSubmit(event){
         event.preventDefault()
-
-        console.log(event.target.involvedMembers)
-        console.log(event.target.paidForMembers)
         const newLenders = [...event.target.involvedMembers].filter(element => {
             return element.checked? element.value:false
         });
@@ -32,8 +29,6 @@ export default function Form({setExpenses, expenses, members, setLenders, setBor
 
         const nameLenders = newLenders.map((e)=> {return e.value})
         const nameBorrowers = newBorrowers.map((e)=> {return e.value})
-        console.log('lenders:',nameLenders)
-        console.log('borrowers:',nameBorrowers)
         const newExpense = {
             name,
             amount:expenseAmount,
@@ -43,8 +38,11 @@ export default function Form({setExpenses, expenses, members, setLenders, setBor
         setExpenses(newExpenses)
         setName('')
         setExpenseAmount('')
-        setLenders([...lenders, nameLenders])
-        setBorrowers([...borrowers,nameBorrowers])
+        const objectedLendersAndBorrowers = {
+            lenders: nameLenders,
+            borrowers: nameBorrowers
+        }
+        setlendersAndBorrowers([...lendersAndBorrowers, objectedLendersAndBorrowers])
     }
     return (
         <form className='p-4 form' onSubmit={handleSubmit}>

@@ -5,9 +5,7 @@ import MemberAddForm from './MemberAddForm'
 
 export default function Dashboard({members, setMembers, expenses, setExpenses }) {
   
-  const [ lenders, setLenders ] = useState([])
-  const [ borrowers, setBorrowers ] = useState([])
-
+  const [ lendersAndBorrowers, setlendersAndBorrowers ] = useState([])
 
   return (
     <div className='container-fluid px-0 dashBoard-main'>
@@ -19,10 +17,8 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                     setExpenses={setExpenses} 
                     expenses={expenses} 
                     members={members} 
-                    setBorrowers={setBorrowers} 
-                    setLenders={setLenders}
-                    lenders={lenders}
-                    borrowers={borrowers}
+                    setlendersAndBorrowers={setlendersAndBorrowers}
+                    lendersAndBorrowers={lendersAndBorrowers}
                   />
                 </Toggelable>
             </div>
@@ -42,11 +38,12 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
             <div className='col-6'>
               Expenses:
               <ul>
-                {expenses.map(e => {
+                {expenses.map((e,i) => {
+                  // console.log("lendersArr->",lendersAndBorrowers)
                   return (
                     <li key={e.id}>Spent Rs.{e.amount} at {e.name} <br/> 
-                          &nbsp;&nbsp;&nbsp;-&gt;PaidBy: {lenders.join(', ')}<br/> 
-                          &nbsp;&nbsp;&nbsp;-&gt;PaidTo: {borrowers.join(', ')}
+                          &nbsp;&nbsp;&nbsp;-&gt;PaidBy: {lendersAndBorrowers[i].lenders.join(', ')}<br/> 
+                          &nbsp;&nbsp;&nbsp;-&gt;PaidTo: {lendersAndBorrowers[i].borrowers.join(', ')}
                     </li>
                   )
                 })}
