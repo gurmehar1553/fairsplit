@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 export default function Toggelable(props) {
-    const [visible,setVisible] = useState(false)
+    const [visible,setVisible] = useState(true)
 
     const showStyle = {display: visible? 'none':''}
     const hideStyle = {display: visible? '':'none'}

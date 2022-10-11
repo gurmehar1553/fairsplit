@@ -3,17 +3,28 @@ import Dashboard from './components/Dashboard'
 import {useState} from 'react';
 import Loader from './components/Loader';
 
+const theUser = {
+  name:'You',
+  id:'00000'
+}
+
 function App() {
-  const [members, setMembers] = useState([{
-    name:'You',
-    id:'00000'
-  }])
+  
+  const [members, setMembers] = useState([theUser])
   const [expenses,setExpenses] = useState([])
+
+  const props = {
+    setMembers,
+    members,
+    setExpenses,
+    expenses
+  }
+
   return (
     <div className="App">
       <Loader />
       <Header />
-      <Dashboard setMembers={setMembers} members={members} setExpenses={setExpenses} expenses={expenses}/>
+      <Dashboard {...props} />
     </div>
   );
 }
