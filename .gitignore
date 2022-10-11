@@ -12,6 +12,7 @@ fairsplit.psd
 /build
 
 # misc
+fairsplit.psd
 .DS_Store
 .env.local
 .env.development.local

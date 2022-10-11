@@ -7,13 +7,10 @@ function genertateId(){
 export default function MemberAddForm({setMembers, members}) {
     function handleSubmit(event){
         event.preventDefault()
-        console.log(event.target.newMemberName.value)
         const newMember ={
             name:event.target.newMemberName.value,
             id:genertateId()
         }
-        console.log(members)
-        console.log(newMember)
         const newArr = [...members, newMember]
         setMembers(newArr)
         event.target.newMemberName.value=''
