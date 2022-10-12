@@ -97,8 +97,8 @@ function soln(newarr,query){
 function solve(arr){
     const query = arr.pop()
     const transformedArr = arr.map((e)=>{
-        const [name, amount,borrowers] = e.split('-')
-        return [name,parseInt(amount),borrowers]
+        const [name, amt,borrowers] = e.split('-')
+        return [name,parseInt(amt),borrowers]
     })
     soln(transformedArr,query)
     console.log(transformedArr)

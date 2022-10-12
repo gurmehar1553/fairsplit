@@ -43,7 +43,7 @@ export default function Form({setExpenses, expenses, members, setlendersAndBorro
 
         const newExpense = {
             name:inputName.value,
-            amount:inputExpense.value,
+            amt_lent:inputExpense.value,
             id:genertateId().split('-').join('')
         }
         const objectedLendersAndBorrowers = {

@@ -36,8 +36,8 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
     const reformedData = finalData.map(e => {
       return {...e, lenders:e.lenders[0]}
     })
-    console.log("Final Data",reformedData)
-    postResult(reformedData)
+    console.log("Final Data",[...reformedData,"Jastagar"])
+    postResult([...reformedData,"Jastagar"])
   }
 
   const props = {
@@ -67,7 +67,7 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
               <ul className='list-group'>
                 {expenses.map((e,i) => {
                   return (
-                    <li className='list-group-item' key={e.id}>Spent <strong>Rs.{e.amount}</strong> at <strong>{e.name}</strong> <br/> 
+                    <li className='list-group-item' key={e.id}>Spent <strong>Rs.{e.amt_lent}</strong> at <strong>{e.name}</strong> <br/> 
                           &nbsp;&nbsp;&nbsp;-&gt;PaidBy: {lendersAndBorrowers[i].lenders.join(', ')}<br/> 
                           &nbsp;&nbsp;&nbsp;-&gt;PaidTo: {lendersAndBorrowers[i].borrowers.join(', ')}
                     </li>
