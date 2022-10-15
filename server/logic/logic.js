@@ -30,7 +30,10 @@ function lent(ans,a){
         }
         amt+=coordinateValue(ans,a,ans[0][i]);
     }
-    console.log(a+" lent "+amt)
+    // for(let i=1;i<ans[0].length;i++){
+    //     let b= ans[0][i]!==a? coordinateValue(ans,a,ans[0][i]):'';
+    //     b? console.log(a+" lent "+b+" to "+ans[0][i]):'';
+    // }
 }
 function borrow(ans,a){
     const n=ans.length;
@@ -41,7 +44,8 @@ function borrow(ans,a){
         }
         amt+=coordinateValue(ans,ans[i][0],a);
     }
-    console.log(a+" borrowed "+amt)
+    
+    
 }
 function addValues(ans,newarr,query){
     newarr.forEach((ele)=>{
@@ -67,12 +71,20 @@ function addValues(ans,newarr,query){
         }
     })
     console.log(ans)
-    // console.log(coordinateValue(ans,'B','C'))
-    // console.log("A lent "+coordinateValue(ans,'A','B')+" to B")
-    // console.log("A lent "+coordinateValue(ans,'A','C')+" to C")
-    // console.log("A lent "+coordinateValue(ans,'A','D')+" to D")
     lent(ans,query);
     borrow(ans,query)
+    let ans_arr=[]
+    for(let i=1;i<ans[0].length;i++){
+        const result=coordinateValue(ans,ans[0][i],query)-coordinateValue(ans,query,ans[0][i])
+        let obj={
+            action:result<0,
+            amount:Math.abs(result),
+            to:ans[0][i]
+        }
+        ans_arr.push(obj)
+        // result<0 ? console.log(query+" lent " +Math.abs(result) +" to "+ans[0][i]) : console.log(query+" borrowed " + result +" from "+ans[0][i])
+    }
+    return ans_arr
 }
 function soln(newarr,query){
     const ans=[];
@@ -96,7 +108,7 @@ function soln(newarr,query){
         ans.push(t)
     })
     // console.log("unfilled Answer users:",ans)
-    addValues(ans,newarr,query)
+    return addValues(ans,newarr,query)
 }
 function solve(arr){
     const query = arr.pop()
@@ -104,7 +116,7 @@ function solve(arr){
         const [name, amount,borrowers] = e.split('-')
         return [name,parseInt(amount),borrowers]
     })
-    soln(transformedArr,query)
+    return soln(transformedArr,query)
     // console.log(transformedArr)
     // console.log(query)
     

@@ -7,10 +7,8 @@ const solve=require('./logic/logic.js')
 app.use(express.json())
 app.use(cors())
 
+app.use(express.static('build'))
 
-app.get('/', (req, res) => {
-    res.send('<h2>HIIIII</h2>')
-}) 
 
 app.get('/getResults', (req,res) => {
     console.log('I recieved a request')
@@ -27,8 +25,9 @@ app.post('/handlePost',(request,response)=>{
         console.log(str)
         return str
     })
-    solve([...input,query])
-    response.json(obj)
+    const final_arr=solve([...input,query])
+    console.log(final_arr)
+    response.json(final_arr)
 })
 
 app.listen(3001,()=>{
