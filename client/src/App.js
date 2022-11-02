@@ -1,30 +1,19 @@
-import Header from './components/Header'
-import Dashboard from './components/Dashboard'
-import {useState} from 'react';
-import Loader from './components/Loader';
-
-const theUser = {
-  name:'You',
-  id:'00000'
-}
+import React from "react";
+import MainBoard from "./routes/MainBoard";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
-  
-  const [members, setMembers] = useState([theUser])
-  const [expenses,setExpenses] = useState([])
-
-  const props = {
-    setMembers,
-    members,
-    setExpenses,
-    expenses
-  }
 
   return (
     <div className="App">
-      <Loader />
-      <Header />
-      <Dashboard {...props} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<>LandingPage</>} />
+          <Route path="/app" element={ <MainBoard />} />
+          <Route path="/login" element={<>login</>} />
+          <Route path="/signup" element={<>signup</>} />
+        </Routes>
+      </Router>
     </div>
   );
 }

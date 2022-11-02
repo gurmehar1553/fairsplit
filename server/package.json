@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "getUi": "rm -rf build && cd ../client && npm run build && cp build ../server"
   },
   "author": "Gurmehar and Jastagar",
   "license": "ISC",
