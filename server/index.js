@@ -11,11 +11,17 @@ app.use(express.static('build'))
 app.use(cookieParser())
 app.use(cors())
 
+
+
 const tempUser = {
     email:'jastagarbrar@gmail.com',
     password:'jastagarbrar'
 }
+
+
 const SecretKey = "fairSplit"
+
+
 app.get('/', (req, res) => {
     console.log(req.cookies)
     res.sendFile('index.html')
@@ -29,7 +35,14 @@ app.get('/getResults', (req,res) => {
 app.get("/login", async (req,res) =>{
     const authToken = req.cookies
     console.log(authToken)
-    res.end()
+    var verified;
+    try{
+        jwt.verify(authToken.auth,SecretKey)
+        verified=true
+    }catch(e){
+        verified=false
+    }
+    res.send(verified)
 })
 
 app.post('/login',async (req,res) => {
@@ -41,7 +54,10 @@ app.post('/login',async (req,res) => {
     if(condition){
         const token = jwt.sign(incommingData,SecretKey)
         console.log("userVerified and TokenCreated: ",token)
-        res.send(token)
+        res.cookie("auth",token)
+        res.send(true)
+    }else{
+        res.send(false)
     }
 })
 

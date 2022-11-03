@@ -1,15 +1,29 @@
-import React from 'react'
-import {useCookies} from 'react-cookie'
+import React,{useEffect} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
-import {postLogin} from '../serverApi/server'
+import {postLogin,varifyAuth} from '../serverApi/server'
 
-export default function Login() {
+export default function Login({setAuth}) {
+    
     
     const inputEmail = useField('email')
     const inputPass = useField('password')
-    const setAuthCookie = useCookies('user')[1]
     const navigate = useNavigate()
+  
+    async function verify(){
+      const status = await varifyAuth()
+      if(status){
+        setAuth(true)
+        navigate("/app")
+      }else{
+        console.log('not Authorized')
+      }
+    }
+  
+    useEffect(()=>{
+        verify()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -18,11 +32,15 @@ export default function Login() {
             password: inputPass.value
         } 
         const authData = await postLogin(loginData)
-        if(authData){
-            setAuthCookie("auth",authData)
-            navigate('/app')
-        }
+        authData && navigate('/app')
     }
+    
+    
+    //   useEffect(()=>{
+    //       verify()? setAuthentication(true):setAuthentication(false)
+    //       verify()
+    //   },[])
+
 
     return (
     <div className='LoginOuterWrap h-100 container'>
