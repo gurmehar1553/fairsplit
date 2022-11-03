@@ -1,10 +1,14 @@
 import axios from "axios";
 
-const gurmeharsURL='http://192.168.85.174:3001/'
+const URL='/'
 
 async function postResult(data){
-    const response = await axios.post(gurmeharsURL+'handlePost',data)
+    const response = await axios.post(URL+'handlePost',data)
+    return response.data
+}
+async function postLogin(data){
+    const response = await axios.post(URL+'login',data)
     return response.data
 }
 
-export { postResult }
+export { postResult,postLogin }
