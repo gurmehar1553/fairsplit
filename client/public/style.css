@@ -182,6 +182,8 @@ a:hover{
     background-color: transparent;
     border: none;
     outline: none;
+    text-decoration: none;
+    color: #000 !important;
 }
 
 #signInLink,#signUpLink:hover{
@@ -192,12 +194,16 @@ a:hover{
     overflow: hidden;
     position: absolute;
     left: 50%;
+    top: 50%;
+    /* transform: translateY(-50%); */
 }
 .sign-up{
     transition: all 0.5s;
     overflow: hidden;
     position: absolute;
     left: 50%;
+    top: 50%;
+    /* transform: translateY(-50%); */
 }
 .login-outer h1,h2,h3,h4{
   font-family: 'Philosopher';
@@ -205,8 +211,8 @@ a:hover{
 }
 .main-div{
     backdrop-filter: blur(4px);
-    height: 600px;
-    transform: translateX(-50%);
+    /* height: 600px; */
+    transform: translateX(-50%) translateY(-60%);
 }
 a{
     color: white !important;
@@ -296,5 +302,11 @@ span{
   }
 
   .feature-main{
-    background-image: url('../src/routes/images/bg.jpg');
+    background-image: url('/images/bg-feature.jpg');
+    /* background-repeat: no-repeat; */
+    /* background-position: left; */
+    /* background-size: 1000px; */
+  }
+  .feature-white{
+    background-image: url('/images/bg-white.png');
   }

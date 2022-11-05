@@ -28,7 +28,7 @@ export default function Login() {
 
     return (
         <div className='login-outer'>
-            <div className="p-5 my-5 shadow col-lg-4 col-sm-12 col-md-6 main-div bg-opacity-10" id="sign-in">
+            <div className="p-5 my-5 shadow  col-lg-4 col-xl-3 col-sm-12 col-md-6 main-div bg-opacity-10" id="sign-in">
                 <div className="mx-auto col-md-5">
                     <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
                 </div>
@@ -39,15 +39,14 @@ export default function Login() {
                 <div className="mb-5">
                     <input type="password" className="form-control" id="pwd" placeholder="Password" name="pswd" />
                 </div>
-                <button type="submit" className="btn btn-success w-100 mb-4">Sign In</button>
-                <div className="mx-auto my-4">
-                    <p className="">or Sign in with</p>
-                    <a href="#"><i className="fa-brands fa-google fa-2x col-2 text-dark"></i></a>
-                    <a href="#"><i className="fa-brands fa-facebook fa-2x col-2 text-dark"></i></a>
-                    <a href="#"><i className="fa-brands fa-github fa-2x col-2 text-dark"></i></a>
+                <div className="form-check mb-4">
+                    <label className="form-check-label ">
+                        <input className="form-check-input checkbox" type="checkbox" name="remember" /> Remember me
+                    </label>
                 </div>
+                <button type="submit" className="btn btn-success w-100 mb-4">Login</button>
                 </form>
-                <p className="">Create a new account? <button id="signUpLink">Sign Up</button></p>
+                <p className="">Create a new account? <Link id="signUpLink" to='/signup'>Sign Up</Link></p>
             </div>
         </div>
     )
