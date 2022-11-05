@@ -5,9 +5,10 @@ const cors = require('cors');
 const solve=require('./logic/logic.js')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
+const path = require('path')
 
 app.use(express.json())
-app.use(express.static('build'))
+app.use(express.static("build"))
 app.use(cookieParser())
 app.use(cors())
 
@@ -22,27 +23,21 @@ const tempUser = {
 const SecretKey = "fairSplit"
 
 
-app.get('/', (req, res) => {
-    console.log(req.cookies)
-    res.sendFile('index.html')
-}) 
 
 app.get('/getResults', (req,res) => {
     console.log('I recieved a request')
     res.json(obj)
 })
 
-app.get("/login", async (req,res) =>{
+app.get("/login", async (req,res,next) =>{
     const authToken = req.cookies
     console.log(authToken)
-    var verified;
     try{
         jwt.verify(authToken.auth,SecretKey)
-        verified=true
+        res.json(true)
     }catch(e){
-        verified=false
+        res.json(false)
     }
-    res.send(verified)
 })
 
 app.post('/login',async (req,res) => {
@@ -75,6 +70,11 @@ app.post('/handlePost',(request,response)=>{
     console.log(final_arr)
     response.json(final_arr)
 })
+
+app.get("*",(req,res) =>{
+    res.sendFile(path.join(__dirname,"/build/index.html"))
+})
+
 
 app.listen(3001,()=>{
     console.log("Starting the server at port 3001")

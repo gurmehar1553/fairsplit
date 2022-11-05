@@ -15,7 +15,7 @@ function MainBoard({auth}) {
   const [members, setMembers] = useState([theUser])
   const [expenses,setExpenses] = useState([])
 
-  if(!auth){
+  if(auth!==true){
     return (
       <Navigate to="/login" />
     )

@@ -12,6 +12,7 @@ async function postLogin(data){
 }
 async function varifyAuth(){
     const varification = await axios.get(URL+'login')
+    console.log(varification.data)
     return varification.data
 }
 

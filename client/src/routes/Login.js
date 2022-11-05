@@ -12,7 +12,7 @@ export default function Login({setAuth}) {
   
     async function verify(){
       const status = await varifyAuth()
-      if(status){
+      if(status===true){
         setAuth(true)
         navigate("/app")
       }else{
@@ -21,7 +21,9 @@ export default function Login({setAuth}) {
     }
   
     useEffect(()=>{
-        verify()
+      console.log('verifying.....')
+      verify()
+      console.log('verified')
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
