@@ -1,31 +1,25 @@
-import React,{useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
-import {postLogin,varifyAuth} from '../serverApi/server'
+import {postLogin, setToken, varifyAuth} from '../serverApi/server'
 
-export default function Login({setAuth}) {
-    
+export default function Login() {
     
     const inputEmail = useField('email')
     const inputPass = useField('password')
     const navigate = useNavigate()
-  
-    async function verify(){
-      const status = await varifyAuth()
-      if(status===true){
-        setAuth(true)
-        navigate("/app")
-      }else{
-        console.log('not Authorized')
+
+    async function getAuth(){
+        const condition =await varifyAuth()
+        console.log("Error -----",condition)
+        if(condition){
+          navigate('/app')
+        }
       }
-    }
-  
-    useEffect(()=>{
-      console.log('verifying.....')
-      verify()
-      console.log('verified')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    
+      useEffect(()=>{
+        getAuth()
+      },[])
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -33,15 +27,10 @@ export default function Login({setAuth}) {
             email: inputEmail.value,
             password: inputPass.value
         } 
-        const authData = await postLogin(loginData)
-        authData && navigate('/app')
+        const token = await postLogin(loginData)
+        token && setToken(token)
+        token && navigate('/app')
     }
-    
-    
-    //   useEffect(()=>{
-    //       verify()? setAuthentication(true):setAuthentication(false)
-    //       verify()
-    //   },[])
 
 
     return (

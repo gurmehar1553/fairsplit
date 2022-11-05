@@ -1,25 +1,32 @@
 import Header from '../components/Header'
 import Dashboard from '../components/Dashboard'
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Loader from '../components/Loader';
-import {Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {varifyAuth} from '../serverApi/server';
 
 const theUser = {
   name:'You',
   id:'00000'
 }
 
-function MainBoard({auth}) {
-  
-  console.log(auth);
+function MainBoard() {
+
   const [members, setMembers] = useState([theUser])
   const [expenses,setExpenses] = useState([])
+  const navigate = useNavigate()
 
-  if(auth!==true){
-    return (
-      <Navigate to="/login" />
-    )
+  async function getAuth(){
+    const condition =await varifyAuth()
+    console.log("Error -----",condition)
+    if(!condition){
+      navigate('/login')
+    }
   }
+
+  useEffect(()=>{
+    getAuth()
+  },[])
   
   const props = {
     setMembers,

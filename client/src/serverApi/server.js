@@ -2,6 +2,17 @@ import axios from "axios";
 
 const URL='/'
 
+let token = null
+const localToken = window.localStorage.getItem("authToken")
+const setToken = (jwt) =>{
+    token = `bearer ${jwt}`
+    window.localStorage.setItem("authToken",jwt)
+}
+
+if(localToken){
+    setToken(localToken)
+}
+
 async function postResult(data){
     const response = await axios.post(URL+'handlePost',data)
     return response.data
@@ -11,9 +22,9 @@ async function postLogin(data){
     return response.data
 }
 async function varifyAuth(){
-    const varification = await axios.get(URL+'login')
-    console.log(varification.data)
+    const varification = await axios.post(URL+'loginverify',{},{headers:{Authorization: token}})
+    console.log("incomming data =>",varification.data)
     return varification.data
 }
 
-export { postResult,postLogin,varifyAuth }
+export { postResult,postLogin,varifyAuth,setToken }

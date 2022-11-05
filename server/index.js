@@ -19,26 +19,14 @@ const tempUser = {
     password:'jastagarbrar'
 }
 
-
 const SecretKey = "fairSplit"
-
-
 
 app.get('/getResults', (req,res) => {
     console.log('I recieved a request')
     res.json(obj)
 })
 
-app.get("/login", async (req,res,next) =>{
-    const authToken = req.cookies
-    console.log(authToken)
-    try{
-        jwt.verify(authToken.auth,SecretKey)
-        res.json(true)
-    }catch(e){
-        res.json(false)
-    }
-})
+app.post("/loginverify",authorization)
 
 app.post('/login',async (req,res) => {
     const incommingData = req.body
@@ -48,9 +36,7 @@ app.post('/login',async (req,res) => {
 
     if(condition){
         const token = jwt.sign(incommingData,SecretKey)
-        console.log("userVerified and TokenCreated: ",token)
-        res.cookie("auth",token)
-        res.send(true)
+        res.send(token)
     }else{
         res.send(false)
     }
@@ -71,10 +57,30 @@ app.post('/handlePost',(request,response)=>{
     response.json(final_arr)
 })
 
+function authorization(req,res,next){
+    const authHeader = req.get("Authorization")
+    console.log("authHeader=> ",authHeader)
+    const token = authHeader && authHeader.split(" ")[1]
+    
+    if(token == null){
+        console.log("token he null tha")
+        res.send(false)
+        return
+    }
+
+    jwt.verify(token,SecretKey, (err, user)=>{
+        if(err){
+            console.log("Error is ->>>>>>>",err.message)
+            res.send(false)
+        }else{
+            res.send(true)
+        }
+    })
+}
+
 app.get("*",(req,res) =>{
     res.sendFile(path.join(__dirname,"/build/index.html"))
 })
-
 
 app.listen(3001,()=>{
     console.log("Starting the server at port 3001")
