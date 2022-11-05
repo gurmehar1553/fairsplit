@@ -26,7 +26,7 @@ app.get('/getResults', (req,res) => {
     res.json(obj)
 })
 
-app.post("/loginverify",authorization)
+app.get("/loginverify",authorization)
 
 app.post('/login',async (req,res) => {
     const incommingData = req.body
@@ -79,6 +79,7 @@ function authorization(req,res,next){
 }
 
 app.get("*",(req,res) =>{
+    console.log("star wali b chal rahi hai")
     res.sendFile(path.join(__dirname,"/build/index.html"))
 })
 

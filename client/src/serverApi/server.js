@@ -22,7 +22,7 @@ async function postLogin(data){
     return response.data
 }
 async function varifyAuth(){
-    const varification = await axios.post(URL+'loginverify',{},{headers:{Authorization: token}})
+    const varification = await axios.get(URL+'loginverify',{headers:{Authorization: token}})
     console.log("incomming data =>",varification.data)
     return varification.data
 }
