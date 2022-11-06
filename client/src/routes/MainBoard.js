@@ -2,7 +2,7 @@ import Header from '../components/Header'
 import Dashboard from '../components/Dashboard'
 import {useContext, useState} from 'react';
 import Loader from '../components/Loader';
-import {useNavigate} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import AuthContext from '../utils/AuthProvider';
 
 const theUser = {
@@ -14,12 +14,13 @@ function MainBoard() {
 
   const [members, setMembers] = useState([theUser])
   const [expenses,setExpenses] = useState([])
-  const navigate = useNavigate()
 
   const {auth} = useContext(AuthContext)
 
+  console.log(auth)
+
   if(!auth){
-    navigate('/login')
+    return <Navigate to='/login'/>
   }
   
   const props = {
