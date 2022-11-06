@@ -1,0 +1,34 @@
+import React from 'react'
+import heroImg from '../routes/images/heroImg.png'
+
+const HeroSection = () => {
+  return (
+    <div className='container mx-5 my-3' >
+          <div className='row'>
+            <div className='col-md-6 text-center p-5 my-5'>
+                <h1>Fair<span>Split</span></h1>
+                <h4>Sharing travel costs with <span>roommates, friends, your partner, or anyone else</span> will relieve some of the stress.</h4>
+                <h4>Facing Problems in <span>managing expenses with your friends?</span></h4>
+                <h4><span>FairSplit</span> brings solution to this major problem!</h4>
+
+                <h2>Want to know how</h2>
+                <h4>Kindly Scroll</h4>
+
+            </div>
+            <div className='col-md-6'>
+              <img src={heroImg} height='500px' width='650px'/>
+            </div>
+          </div>
+          <div style={{marginLeft: "50%"}}>
+          <div id="scroll-down" className="mx-auto">
+            <a href="#features">
+              <div className="chevron"></div>
+              <div className="chevron"></div>
+              <div className="chevron"></div>
+            </a>
+          </div>
+        </div>
+    </div>
+  )
+}
+export default HeroSection
