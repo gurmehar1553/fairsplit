@@ -1,9 +1,9 @@
 import Header from '../components/Header'
 import Dashboard from '../components/Dashboard'
-import {useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import Loader from '../components/Loader';
 import {useNavigate} from 'react-router-dom';
-import {varifyAuth} from '../serverApi/server';
+import AuthContext from '../utils/AuthProvider';
 
 const theUser = {
   name:'You',
@@ -16,17 +16,11 @@ function MainBoard() {
   const [expenses,setExpenses] = useState([])
   const navigate = useNavigate()
 
-  async function getAuth(){
-    const condition =await varifyAuth()
-    console.log("Error -----",condition)
-    if(!condition){
-      navigate('/login')
-    }
-  }
+  const {auth} = useContext(AuthContext)
 
-  useEffect(()=>{
-    getAuth()
-  },[])
+  if(!auth){
+    navigate('/login')
+  }
   
   const props = {
     setMembers,

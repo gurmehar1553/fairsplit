@@ -1,6 +1,6 @@
 import React from 'react'
-import logo from './logo.png'
-import { Link, useNavigate } from 'react-router-dom'
+import logo from '../assets/images/logo.png'
+import { Link } from 'react-router-dom'
 
 export default function SignUp() {
     const showSignIn =()=>{

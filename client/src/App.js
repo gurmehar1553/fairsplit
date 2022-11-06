@@ -1,10 +1,13 @@
 import React from "react";
 import RouterComp from "./RouterComp";
+import {AuthProvider} from "./utils/AuthProvider";
 
 function App() {
   return (
-    <RouterComp/>
-    // <MainBoard />
+    <AuthProvider>
+      <RouterComp/>
+    </AuthProvider>
+
   );
 }
 export default App;

@@ -33,9 +33,11 @@ app.post('/login',async (req,res) => {
     console.log(incommingData)
 
     const condition = incommingData.email === tempUser.email && incommingData.password === tempUser.password 
+    incommingData.rememberMe? console.log("user is to be remembered"):console.log("user will be logged out in 1 h")
+    const expiry = incommingData.rememberMe? "9999d":"1h"
 
     if(condition){
-        const token = jwt.sign(incommingData,SecretKey)
+        const token = jwt.sign(incommingData,SecretKey,{expiresIn:expiry})
         res.send(token)
     }else{
         res.send(false)

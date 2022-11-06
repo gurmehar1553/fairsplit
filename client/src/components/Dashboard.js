@@ -86,9 +86,9 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                 Calculate
               </button>
             </div>
-            {resultValue.forEach(e=>{
+            {resultValue.map((e,i)=>{
               return(
-                <div>
+                <div key={i+"KeyForResultValue"}>
                   Jastagar {e.action? 'lent':'borrowed'} Rs. {e.amount} {e.action? "to":"from"} {e.to}
                 </div>
               )

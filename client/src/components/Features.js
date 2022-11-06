@@ -1,6 +1,6 @@
 import React from 'react'
-import heroImg from '../routes/images/heroImg.png'
-import bg from '../routes/images/bg.jpg'
+import heroImg from '../assets/images/heroImg.png'
+import bg from '../assets/images/bg.jpg'
 
 const Features = () => {
   return (
