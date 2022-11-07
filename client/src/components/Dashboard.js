@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Toggelable from './Toggelable'
 import ExpenseForm from './ExpenseForm'
 import MemberAddForm from './MemberAddForm'
@@ -21,15 +21,20 @@ function MainForm(props){
   )
 }
 
+function EachResult({data}){
+  return(
+    <div className=''>
+      Jastagar {data.action? 'lent':'borrowed'} Rs. {data.amount} {data.action? "to":"from"} {data.to}
+    </div>
+  )
+}
+
 export default function Dashboard({members, setMembers, expenses, setExpenses }) {
   
   const [ lendersAndBorrowers, setlendersAndBorrowers ] = useState([])
+  const [resultValue, setResultValue] = useState([])
 
-  console.log('expenses',expenses)
-  console.log('members',members)
-  console.log('lendersAndBorrowers',lendersAndBorrowers)
-
-  function prePostObjectConctatination(){
+  async function prePostObjectConctatination(){
     const finalData = expenses.map((e,i) => {
       return {...e,...lendersAndBorrowers[i]}
     })
@@ -37,8 +42,16 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
       return {...e, lenders:e.lenders[0]}
     })
     console.log("Final Data",[...reformedData,"Jastagar"])
-    postResult([...reformedData,"Jastagar"])
+    const ans=await postResult([...reformedData,"Jastagar"])
+    console.log(resultValue)
+    console.log(ans)
+
+    setResultValue(ans)
   }
+
+  useEffect(()=>{
+    
+  },[resultValue])
 
   const props = {
     expenses,
@@ -81,9 +94,13 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                 Calculate
               </button>
             </div>
+            {resultValue.map((e,i)=>{
+              return(
+               <EachResult key={i+"KeyForResultValue"} data={e} />
+              )
+            })}
           </div>
         </div>
-        
     </div>
   )
 }

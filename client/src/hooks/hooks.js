@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 function useField(type){
-    const [value, setValue] = useState();
+    const [value, setValue] = useState('');
 
     function onChange(e){
         if(e===''){
