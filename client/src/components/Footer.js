@@ -9,11 +9,11 @@ const Footer = () => {
             <div className='col-md-6'>
                 <img src={logo} height='60px' alt='notFound'/>
             </div>
-            <div className='col-md-6 d-flex justify-content-around'>
+            {/* <div className='col-md-6 d-flex justify-content-around'>
                 <p><Link to='/login' style={{textDecoration:"none"}}>Login</Link></p>
                 <p><Link to='/signup' style={{textDecoration:"none"}}>Signup</Link></p>
                 <p>Password Reset</p>
-            </div>
+            </div> */}
         </div>
         <div className='row justify-content-center'>
             <div className='text-center'>
