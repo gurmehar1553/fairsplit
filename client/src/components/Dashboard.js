@@ -45,7 +45,6 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
     const ans=await postResult([...reformedData,"Jastagar"])
     console.log(resultValue)
     console.log(ans)
-
     setResultValue(ans)
   }
 

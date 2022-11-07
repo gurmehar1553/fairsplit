@@ -3,7 +3,7 @@ import heroImg from '../assets/images/heroImg.png'
 
 const HeroSection = () => {
   return (
-    <div className='container mx-5 my-3' >
+    <div className='container my-3' >
           <div className='row'>
             <div className='col-md-6 text-center p-5 my-5'>
                 <h1>Fair<span>Split</span></h1>
@@ -19,7 +19,7 @@ const HeroSection = () => {
               <img src={heroImg} height='500px' width='650px' alt="notFound"/>
             </div>
           </div>
-          <div style={{marginLeft: "50%"}}>
+          <div className="scroll-chevron-div">
           <div id="scroll-down" className="mx-auto">
             <a href="#features">
               <div className="chevron"></div>
