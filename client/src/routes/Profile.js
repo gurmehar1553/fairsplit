@@ -138,3 +138,8 @@ export default function Profile() {
         </div>
     )
 }
+
+
+
+// Make friends requests working
+// Make search better
