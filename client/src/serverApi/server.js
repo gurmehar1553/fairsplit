@@ -21,10 +21,17 @@ async function postLogin(data){
     const response = await axios.post(URL+'login',data)
     return response.data
 }
-async function varifyAuth(){
-    const varification = await axios.get(URL+'loginverify',{headers:{Authorization: token}})
-    console.log("incomming data =>",varification.data)
+async function verifyAuth(){
+    const varification = await axios.get(URL+'login',{headers:{Authorization: token}})
     return varification.data
 }
+async function postSignUp(data){
+    const res = await axios.post(URL + 'signup',data)
+    return res.data
+}
+async function postFriendsSearch(data){
+    const res = await axios.post(URL + 'friends/search',data)
+    return res.data
+}
 
-export { postResult,postLogin,varifyAuth,setToken }
+export { postResult,postLogin,verifyAuth,setToken,postSignUp,postFriendsSearch }

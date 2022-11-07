@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import {varifyAuth} from '../serverApi/server'
+import {verifyAuth} from '../serverApi/server'
 
 const AuthContext = React.createContext()
 
 export function AuthProvider({children}) {
-    const [auth,setAuth]= useState(false)
+    const [auth,setAuth] = useState(false)
+    const [currentUser,setUser] = useState()
 
     async function getAuth(){
-        const condition =await varifyAuth()
-        console.log("Error -----",condition)
-        if(condition){
+        const {authStatus,user} =await verifyAuth()
+        if(authStatus){
             setAuth(true)
+            setUser(user)
         }
       }
       useEffect(()=>{
@@ -19,7 +20,7 @@ export function AuthProvider({children}) {
       },[])
 
   return (
-    <AuthContext.Provider value={{auth,setAuth}}>
+    <AuthContext.Provider value={{auth,setAuth,currentUser}}>
         {children}
     </AuthContext.Provider>
   )

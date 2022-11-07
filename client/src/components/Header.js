@@ -17,6 +17,7 @@ function LogoutBtn({setAuth}){
   return(
     <div className='d-flex justify-content-around mx-5' style={{width:'15%'}}>
         <button onClick={handleLogout} className='loginBtn'>LogOut</button>
+        <Link className='btn btn-outline-success' to='/profile'>Your Profile</Link>
     </div>
   )
 }

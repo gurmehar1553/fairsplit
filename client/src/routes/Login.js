@@ -42,10 +42,10 @@ export default function Login() {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="my-5">
-                        <input className="form-control" placeholder="Username" {...inputEmail}/>
+                        <input className="form-control" required placeholder="Username" {...inputEmail}/>
                     </div>
                     <div className="mb-5">
-                        <input className="form-control" placeholder="Password" {...inputPass} />
+                        <input className="form-control" required placeholder="Password" {...inputPass} />
                     </div>
                     <div className="form-check mb-4">
                         <label className="form-check-label ">
