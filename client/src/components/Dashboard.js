@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Toggelable from './Toggelable'
 import ExpenseForm from './ExpenseForm'
 import MemberAddForm from './MemberAddForm'
 import {postResult} from '../serverApi/server'
+import AuthContext from '../utils/AuthProvider'
 
 function MainForm(props){
   return(
@@ -24,14 +25,63 @@ function MainForm(props){
 function EachResult({data}){
   return(
     <div className=''>
-      Jastagar {data.action? 'lent':'borrowed'} Rs. {data.amount} {data.action? "to":"from"} {data.to}
+      You {data.action? 'lent':'borrowed'} Rs. {data.amount} {data.action? "to":"from"} {data.to}
+    </div>
+  )
+}
+
+function CurrentMembers({members}){
+  return(
+    <div className='col-md-3'>
+        <h3>Current members:</h3>
+        <ul className='list-group'>
+          {members.map(e => <li className='list-group-item' key={e.id}>{e.name}</li>)}
+        </ul>
+      </div>
+  )
+}
+function EachExpenseItem({lendersAndBorrowers,expense,index}){
+  return(
+    <li className='list-group-item'>
+      <div className='d-flex flex-column'>
+          <div>Spent <strong>Rs.{expense.amt_lent}</strong> at <strong>{expense.name}</strong></div>
+          <div className='ms-3'>
+            <div><strong>PaidBy</strong>:  {lendersAndBorrowers[index].lenders.join(',  ')}</div>
+            <div><strong>PaidTo</strong>:  {lendersAndBorrowers[index].borrowers.join(',  ')}</div>
+          </div>
+      </div>
+    </li>
+  )
+}
+function Expenses({expenses,lendersAndBorrowers}){
+
+  if(expenses.length === 0){
+    return(
+      <div className='col-md-9'>
+        <h3>Expenses:</h3>
+        <div className='list-group'>Use the form to add an Expense</div>
+      </div>
+    )
+  }
+
+  return(
+    <div className='col-md-9'>
+      <h3>Expenses:</h3>
+      <ul className='list-group'>
+        {expenses.map((e,i) => {
+          return (
+            <EachExpenseItem key={e.id} lendersAndBorrowers={lendersAndBorrowers} expense={e} index={i}/>
+          )
+        })}
+      </ul>
     </div>
   )
 }
 
 export default function Dashboard({members, setMembers, expenses, setExpenses }) {
   
-  const [ lendersAndBorrowers, setlendersAndBorrowers ] = useState([])
+  const {currentUser} = useContext(AuthContext)
+  const [lendersAndBorrowers, setlendersAndBorrowers] = useState([])
   const [resultValue, setResultValue] = useState([])
 
   async function prePostObjectConctatination(){
@@ -41,8 +91,9 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
     const reformedData = finalData.map(e => {
       return {...e, lenders:e.lenders[0]}
     })
-    console.log("Final Data",[...reformedData,"Jastagar"])
-    const ans=await postResult([...reformedData,"Jastagar"])
+    const finalDataToSend = [...reformedData,currentUser.username]
+    console.log("Final Data",finalDataToSend)
+    const ans=await postResult(finalDataToSend)
     console.log(resultValue)
     console.log(ans)
 
@@ -67,28 +118,8 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
         <div className='row m-0 shadow p-2'>
           <MainForm {...props} />
           <div className='col-md-9 row'>
-
-            <div className='col-md-3'>
-              <h3>Current members:</h3>
-              <ul className='list-group'>
-                {members.map(e => <li className='list-group-item' key={e.id}>{e.name}</li>)}
-              </ul>
-            </div>
-
-            <div className='col-md-9'>
-              <h3>Expenses:</h3>
-              <ul className='list-group'>
-                {expenses.map((e,i) => {
-                  return (
-                    <li className='list-group-item' key={e.id}>Spent <strong>Rs.{e.amt_lent}</strong> at <strong>{e.name}</strong> <br/> 
-                          &nbsp;&nbsp;&nbsp;-&gt;PaidBy: {lendersAndBorrowers[i].lenders.join(', ')}<br/> 
-                          &nbsp;&nbsp;&nbsp;-&gt;PaidTo: {lendersAndBorrowers[i].borrowers.join(', ')}
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-
+            <CurrentMembers members={members} />
+            <Expenses expenses={expenses} lendersAndBorrowers={lendersAndBorrowers} />
             <div className='text-center m-3'>
               <button className='btn btn-outline-primary' onClick={prePostObjectConctatination}>
                 Calculate

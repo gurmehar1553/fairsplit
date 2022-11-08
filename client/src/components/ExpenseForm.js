@@ -2,6 +2,19 @@ import React from 'react'
 import {useField} from '../hooks/hooks'
 import { v4 as genertateId } from 'uuid'
 
+
+function MemberListItem({member,inputName}){
+    console.log(member.name)
+    return(
+        <li className='list-group-item' key={member.id + 'key'}>
+            <label htmlFor={member.id + 'id' + inputName} className='my-auto' >
+                <input className='mx-2' id={member.id + 'id' + inputName} value={member.name} type='checkbox' name={inputName} />
+                {member.id==='00000'? 'You':member.name}
+            </label>  
+        </li>
+    )
+}
+
 function MemberListings({members, name, inputName}){
     return(
         <div className='col-md-6'>
@@ -9,16 +22,8 @@ function MemberListings({members, name, inputName}){
             <div className='text-start'>
                 <ul className='list-group'>
                     {members.map((member) => {
-                        return (
-                            <li className='list-group-item' key={member.id + 'key'}>
-                                <label htmlFor={member.id + 'id' + inputName} className='my-auto' >
-                                    <input className='mx-2' id={member.id + 'id' + inputName} value={member.name} type='checkbox' name={inputName} />
-                                    {member.id==='00000'? 'You':member.name}
-                                </label>  
-                            </li>
-                            )
-                        })
-                    }
+                        return <MemberListItem member={member} inputName={inputName} key={member.id + 'key'} />
+                    })}
                 </ul>
             </div>
         </div>
@@ -70,7 +75,7 @@ export default function Form({setExpenses, expenses, members, setlendersAndBorro
                 <MemberListings members={members} name='Paid By' inputName={'involvedMembers'} />
                 <MemberListings members={members} name='Paid To' inputName={'paidForMembers'} />
             </div>
-            <button className='btn btn-primary my-2' >Add Expense</button>
+            <button className='btn loginBtn my-2' >Add Expense</button>
         </form>
     )
 }

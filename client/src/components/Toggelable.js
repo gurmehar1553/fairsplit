@@ -12,10 +12,10 @@ export default function Toggelable(props) {
     return (
     <div className='text-center'>
         <div style={hideStyle}>
-            <button className='btn btn-primary my-3 w-75' onClick={handleToggleViz} style={hideStyle}>{props.hide}</button>
+            <button className='btn loginBtn my-3 w-75' onClick={handleToggleViz} style={hideStyle}>{props.hide}</button>
             {props.children}
         </div>
-        <button className='btn btn-primary my-3 w-75' onClick={handleToggleViz} style={showStyle}>{props.show}</button>
+        <button className='btn loginBtn my-3 w-75' onClick={handleToggleViz} style={showStyle}>{props.show}</button>
     </div>
   )
 }
