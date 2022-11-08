@@ -9,7 +9,6 @@ export function AuthProvider({children}) {
 
     async function getAuth(){
         const {authStatus,user} =await verifyAuth()
-        console.log('verifying Auth...')
         if(authStatus){
             setAuth(true)
             setUser(user)
@@ -17,9 +16,6 @@ export function AuthProvider({children}) {
           setUser(null)
         }
       }
-
-      console.log("This is auth",auth)
-      console.log("This is currentUser",currentUser)
 
       useEffect(()=>{
         getAuth()

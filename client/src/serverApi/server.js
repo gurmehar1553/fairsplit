@@ -9,8 +9,6 @@ const setToken = (jwt) =>{
     window.localStorage.setItem("authToken",jwt)
 }
 
-console.log('token => ',token)
-
 if(localToken){
     setToken(localToken)
 }
