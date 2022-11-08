@@ -1,7 +1,6 @@
 import Header from '../components/Header'
 import Dashboard from '../components/Dashboard'
 import {useContext, useState} from 'react';
-import Loader from '../components/Loader';
 import {Navigate} from 'react-router-dom';
 import AuthContext from '../utils/AuthProvider';
 
@@ -30,7 +29,6 @@ function MainBoard() {
 
   return (
     <div className="App">
-      <Loader />
       <Header />
       <Dashboard {...props} />
     </div>

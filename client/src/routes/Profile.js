@@ -76,8 +76,6 @@ function EachFriendRequest({data}){
         </li>
     )
 }
-
-
 function EachSearchedFriend({data}){
 
     const {currentUser} = useContext(AuthContext)
@@ -105,7 +103,6 @@ function EachSearchedFriend({data}){
         </li>
     )
 }
-
 function AddFriendsTab(){
 
     const {currentUser} = useContext(AuthContext)
@@ -145,7 +142,6 @@ function AddFriendsTab(){
         </div>
     )
 }
-
 function UserDetails({user}){
     return(
         <section>
@@ -209,8 +205,3 @@ export default function Profile() {
         </div>
     )
 }
-
-
-
-// Make friends requests working
-// Make search better

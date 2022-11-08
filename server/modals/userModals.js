@@ -9,24 +9,24 @@ const userSchema = new mongoose.Schema({
         currentFriends:[
             {
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"User"
+                ref:"User",
             }
         ],
         pendingRequests:[
             {
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"User"
+                ref:"User",
             }
         ],
         sentRequests:[
             {
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"User"
+                ref:"User",
             }
         ]
     }
 })
-
+// userSchema.plugin(require('mongoose-autopopulate'))
 const Users = mongoose.model('User',userSchema)
 
 module.exports = Users

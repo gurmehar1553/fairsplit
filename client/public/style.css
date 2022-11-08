@@ -1,17 +1,8 @@
-/* *{
-    font-family: 'Philosopher';
-} */
 body{
     margin: 0%;
     padding: 0%;
     height: 100vh;
 }
-/* div{
-    border: 1px solid;
-} */
-/* nav{
-    background-color: #576F72;
-} */
 .profile-icon{
     --size: 3rem;
 
@@ -233,6 +224,11 @@ a{
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
+    text-decoration: none;
+}
+.loginBtn:hover{
+    background-color: #fff;
+    color: black !important;
 }
 .signUpBtn{
     background-color: #00dd93;
