@@ -17,8 +17,6 @@ function MainBoard() {
 
   const {auth} = useContext(AuthContext)
 
-  console.log(auth)
-
   if(!auth){
     return <Navigate to='/login'/>
   }

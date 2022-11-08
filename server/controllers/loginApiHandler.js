@@ -48,8 +48,8 @@ function authorization(req,res){
 
     jwt.verify(token,SecretKey, async (err, user)=>{
 
-        const userData = await Users.findOne({email:user.email})
-        console.log(userData)
+        const userData = await Users.findOne({email:user.email}).populate({path:'friends', populate:{path:'sentRequests', select:['username','_id']}}).populate({path:'friends', populate:{path:'pendingRequests', select:['username','_id']}}).populate({path:'friends', populate:{path:'currentFriends', select:['username','_id']}})
+        console.log("UserData - >>>>>>>",userData)
         if(err){
             console.log("Error is ->>>>>>>",err.message)
             res.json({

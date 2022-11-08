@@ -2,10 +2,13 @@ import React, {useContext, useState} from 'react'
 import {Navigate} from 'react-router-dom'
 import Header from '../components/Header'
 import {useField} from '../hooks/hooks'
-import {postFriendsSearch} from '../serverApi/server'
+import {postFriendsSearch, requestAcceptReject, sendFriendRequest} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 function FriendsTab({friends}){
+
+    console.log(friends)
+
     return(
         <div className="col-md-6 p-3 h-100">
             <div className="card mb-4 mb-md-0 h-100">
@@ -14,9 +17,9 @@ function FriendsTab({friends}){
                 </div>
                 <div>
                     <ul className='list-group'>
-                        {friends && friends.map((e,i) => {
+                        {friends && friends.currentFriends.map((e,i) => {
                             return(
-                                <li className='list-group-item'>{e.username}</li>
+                                <li key={i + "KeyForCurrentFriends"} className='list-group-item'>{e.username}</li>
                             )
                         })}
                     </ul>
@@ -25,8 +28,40 @@ function FriendsTab({friends}){
         </div>
     )
 }
+function FriendRequests({friends}){
+    return(
+            <div className="card mb-4 mb-md-0 h-100">
+                <div className="card-body">
+                    <h5>New Requests</h5>
+                    <hr/>
+                    <div>
+                        <ul className='list-group'>
+                            {friends && friends.pendingRequests.map((e,i) => {
+                                return(
+                                    <EachFriendRequest key={i + "KeyForFriendRequests"} data={e} />
+                                )
+                            })}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    )
+}
+function EachFriendRequest({data}){
 
-function EachSearchedFriend({data}){
+    const {currentUser} = useContext(AuthContext)
+
+    async function handleAcceptRejeact(e){
+        console.log(e.target.value)
+        const sentResponse = { 
+            sender:data._id,
+            reciver:currentUser._id,
+            reply:e.target.value
+        }
+        const res = await requestAcceptReject(sentResponse)
+        console.log(res)
+    }
+
     return(
         <li className='list-group-item'>
             <div className='d-flex justify-content-between align-items-center'>
@@ -34,7 +69,37 @@ function EachSearchedFriend({data}){
                     <h4>{data.username}</h4>
                 </div>
                 <div>
-                    <button className='btn btn-outline-success' >Add Friend</button>
+                    <button className='btn btn-outline-success' value='accept' onClick={handleAcceptRejeact} >Y</button>
+                    <button className='btn btn-outline-danger' value='reject' onClick={handleAcceptRejeact} >N</button>
+                </div>
+            </div>
+        </li>
+    )
+}
+
+
+function EachSearchedFriend({data}){
+
+    const {currentUser} = useContext(AuthContext)
+
+    async function handleAddFriend(){
+
+        const ids = {
+            sender:currentUser._id,
+            reciver:data._id,
+        }
+        const res = await sendFriendRequest(ids)
+        console.log(res)
+    }
+
+    return(
+        <li className='list-group-item'>
+            <div className='d-flex justify-content-between align-items-center'>
+                <div>
+                    <h4>{data.username}</h4>
+                </div>
+                <div>
+                    <button className='btn btn-outline-success' onClick={handleAddFriend} >Add Friend</button>
                 </div>
             </div>
         </li>
@@ -43,12 +108,17 @@ function EachSearchedFriend({data}){
 
 function AddFriendsTab(){
 
+    const {currentUser} = useContext(AuthContext)
+
     const searchQuery = useField('text')
     const [searchResults,setSearchResults] = useState([])
 
     async function handleSearch(e){
         e.preventDefault()
-        const data = {query:searchQuery.value}
+
+        const friendsIds = currentUser.friends.currentFriends.map(e => e._id)
+
+        const data = {query:searchQuery.value, user:friendsIds}
         const res = await postFriendsSearch(data)
         setSearchResults(res)
     }
@@ -78,7 +148,7 @@ function AddFriendsTab(){
 
 function UserDetails({user}){
     return(
-        <section style={{backgroundColor: '#eee'}}>
+        <section>
             <div className="container py-5">
             <div className="row">
                 <div className="col-lg-4">
@@ -89,6 +159,7 @@ function UserDetails({user}){
                         <div className="d-flex justify-content-center mb-2"></div>
                     </div>
                     </div>
+                    <FriendRequests friends={user.friends} />
                 </div>
                 <div className="col-lg-8">
                     <div className="card mb-4">
@@ -113,7 +184,7 @@ function UserDetails({user}){
                         </div>
                     </div>
                     <div className='row'>
-                        <FriendsTab friends={user.friends.currentFriends} />
+                        <FriendsTab friends={user.friends}/>
                         <AddFriendsTab />
                     </div>
                 </div>

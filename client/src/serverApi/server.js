@@ -9,6 +9,8 @@ const setToken = (jwt) =>{
     window.localStorage.setItem("authToken",jwt)
 }
 
+console.log('token => ',token)
+
 if(localToken){
     setToken(localToken)
 }
@@ -33,5 +35,13 @@ async function postFriendsSearch(data){
     const res = await axios.post(URL + 'friends/search',data)
     return res.data
 }
+async function sendFriendRequest(data){
+    const res = await axios.post(URL + 'friends/sendrequest',data)
+    return res.data
+}
+async function requestAcceptReject(data){
+    const res = await axios.put(URL + 'friends',data)
+    return res.data
+}
 
-export { postResult,postLogin,verifyAuth,setToken,postSignUp,postFriendsSearch }
+export { postResult,postLogin,verifyAuth,setToken,postSignUp,postFriendsSearch,sendFriendRequest,requestAcceptReject }

@@ -8,17 +8,20 @@ const userSchema = new mongoose.Schema({
     {
         currentFriends:[
             {
-                userId:mongoose.Schema.Types.ObjectId,
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User"
             }
         ],
         pendingRequests:[
             {
-                userId:mongoose.Schema.Types.ObjectId,
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User"
             }
         ],
         sentRequests:[
             {
-                userId:mongoose.Schema.Types.ObjectId,
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User"
             }
         ]
     }
