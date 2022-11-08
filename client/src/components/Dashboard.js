@@ -33,9 +33,9 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
     const reformedData = finalData.map(e => {
       return {...e, lenders:e.lenders[0]}
     })
-    console.log("Final Data",[...reformedData,"Jastagar"])
+    // console.log("Final Data",[...reformedData,"Jastagar"])
     const ans=await postResult([...reformedData,"Jastagar"])
-    console.log(resultValue)
+    // console.log(resultValue)
     console.log(ans)
 
     setResultValue(ans)
@@ -86,13 +86,16 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                 Calculate
               </button>
             </div>
-            {resultValue.forEach(e=>{
-              return(
-                <div>
+            <div>
+
+            {resultValue.map((e,i)=>{
+             return (e.amount === 0) ? "":(
+                <div key={i}>
                   Jastagar {e.action? 'lent':'borrowed'} Rs. {e.amount} {e.action? "to":"from"} {e.to}
                 </div>
               )
-            })}
+            })} 
+            </div>
           </div>
         </div>
         
