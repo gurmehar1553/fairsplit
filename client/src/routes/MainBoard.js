@@ -16,12 +16,7 @@ function MainBoard() {
     return <Navigate to='/login'/>
   }
   
-  const props = {
-    setMembers,
-    members,
-    setExpenses,
-    expenses
-  }
+  const props = { setMembers, members, setExpenses, expenses}
 
   return (
     <div className="App">

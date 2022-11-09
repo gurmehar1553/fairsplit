@@ -1,6 +1,7 @@
 require("dotenv").config()
 const friendsRouter =require('express').Router()
 const Users = require('../modals/userModals')
+const {info}=require("../utils/logger")
 
 friendsRouter.post("/search", async (req,res) => {
 
@@ -46,14 +47,14 @@ friendsRouter.put("/", async (req,res) => {
         })
         reciver.friends.currentFriends.push(sender._id)
         reciver.friends.pendingRequests = reciverPending.filter((e)=>{
-            return e.toString() === sender._id.toString()
+            return e.toString() !== sender._id.toString()
         })
-        res.send('Request Accepted') 
+        res.json({status:true}) 
     }
     if(accDec === 'reject'){
         sender.friends.sentRequests = sendersSent.filter((e)=>{return e.toString() !== reciver._id.toString() })
         reciver.friends.pendingRequests = reciverPending.filter((e)=>{ return e.toString() !== sender._id.toString() })
-        res.send('Request Rejected')
+        res.json({status:false})
     }
     sender.save()
     reciver.save()

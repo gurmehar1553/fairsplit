@@ -19,7 +19,7 @@ export function AuthProvider({children}) {
 
       useEffect(()=>{
         getAuth()
-      },[auth])
+      },[auth,setUser])
 
   return (
     <AuthContext.Provider value={{auth,setAuth,currentUser,setUser}}>

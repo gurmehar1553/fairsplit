@@ -15,7 +15,7 @@ function MembersFormInput(){
     console.log(friends)
     return(
         <select name='inputMembersFromFriends' className='form-control w-100'>
-            {friends.map(e => <MembersFormInputOptions key={e._id} data={e} />)}
+            {friends.map((e,i) => <MembersFormInputOptions key={e._id + i} data={e} />)}
         </select>
     )
 }

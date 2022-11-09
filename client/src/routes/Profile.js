@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Navigate} from 'react-router-dom'
 import Header from '../components/Header'
 import {useField} from '../hooks/hooks'
@@ -7,7 +7,7 @@ import AuthContext from '../utils/AuthProvider'
 
 function FriendsTab({friends}){
 
-    console.log(friends)
+    console.log('friends',friends)
 
     return(
         <div className="col-md-6 p-3 h-100">
@@ -17,7 +17,7 @@ function FriendsTab({friends}){
                 </div>
                 <div>
                     <ul className='list-group'>
-                        {friends && friends.currentFriends.map((e,i) => {
+                        {friends && friends.map((e,i) => {
                             return(
                                 <li key={i + "KeyForCurrentFriends"} className='list-group-item'>{e.username}</li>
                             )
@@ -26,81 +26,6 @@ function FriendsTab({friends}){
                 </div>
             </div>
         </div>
-    )
-}
-function FriendRequests({friends}){
-    return(
-            <div className="card mb-4 mb-md-0 h-100">
-                <div className="card-body">
-                    <h5>New Requests</h5>
-                    <hr/>
-                    <div>
-                        <ul className='list-group'>
-                            {friends && friends.pendingRequests.map((e,i) => {
-                                return(
-                                    <EachFriendRequest key={i + "KeyForFriendRequests"} data={e} />
-                                )
-                            })}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-    )
-}
-function EachFriendRequest({data}){
-
-    const {currentUser} = useContext(AuthContext)
-
-    async function handleAcceptRejeact(e){
-        console.log(e.target.value)
-        const sentResponse = { 
-            sender:data._id,
-            reciver:currentUser._id,
-            reply:e.target.value
-        }
-        const res = await requestAcceptReject(sentResponse)
-        console.log(res)
-    }
-
-    return(
-        <li className='list-group-item'>
-            <div className='d-flex justify-content-between align-items-center'>
-                <div>
-                    <h4>{data.username}</h4>
-                </div>
-                <div>
-                    <button className='btn btn-outline-success' value='accept' onClick={handleAcceptRejeact} >Y</button>
-                    <button className='btn btn-outline-danger' value='reject' onClick={handleAcceptRejeact} >N</button>
-                </div>
-            </div>
-        </li>
-    )
-}
-function EachSearchedFriend({data}){
-
-    const {currentUser} = useContext(AuthContext)
-
-    async function handleAddFriend(){
-
-        const ids = {
-            sender:currentUser._id,
-            reciver:data._id,
-        }
-        const res = await sendFriendRequest(ids)
-        console.log(res)
-    }
-
-    return(
-        <li className='list-group-item'>
-            <div className='d-flex justify-content-between align-items-center'>
-                <div>
-                    <h4>{data.username}</h4>
-                </div>
-                <div>
-                    <button className='btn btn-outline-success' onClick={handleAddFriend} >Add Friend</button>
-                </div>
-            </div>
-        </li>
     )
 }
 function AddFriendsTab(){
@@ -142,7 +67,120 @@ function AddFriendsTab(){
         </div>
     )
 }
+function FriendRequestsTab({friends}){
+    if(friends.pendingRequests.length === 0){
+        return (
+        <div className="card mb-4 mb-md-0 h-100">
+            <div className="card-body">
+                <h5>New Requests</h5>
+                <hr/>
+                <div>
+                    No pending requests...
+                </div>
+            </div>
+        </div>)
+    }
+    return(
+            <div className="card mb-4 mb-md-0 h-100">
+                <div className="card-body">
+                    <h5>New Requests</h5>
+                    <hr/>
+                    <div>
+                        <ul className='list-group'>
+                            {friends && friends.pendingRequests.map((e,i) => {
+                                return(
+                                    <EachFriendRequest key={i + "KeyForFriendRequestsTab"} data={e} />
+                                )
+                            })}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    )
+}
+
+
+function EachFriendRequest({data}){
+
+    const {currentUser,setUser} = useContext(AuthContext)
+    const [displayRequest,setDisplayRequest] = useState('block')
+    console.log('data',data)
+
+    async function handleAcceptRejeact(e){
+        
+        console.log(e.target.value)
+        const sentResponse = { 
+            sender:data._id,
+            reciver:currentUser._id,
+            reply:e.target.value
+        }
+        const res = await requestAcceptReject(sentResponse)
+        const requests = currentUser.friends.pendingRequests
+        console.log('aagye yeha')
+        if(res.status){ 
+            currentUser.friends.pendingRequests = requests.filter(e => {
+                console.log('e',e)
+                console.log('friend', sentResponse.sender)
+                return e._id.toString() !== sentResponse.sender
+            })
+            console.log("New pending Requests",currentUser.friends.pendingRequests)
+            console.log(data)
+            currentUser.friends.currentFriends.push(data)
+            console.log('Current Friends',currentUser.friends.currentFriends)
+            console.log('current User->',currentUser)
+        }
+        console.log('settingUser...')
+        setUser(currentUser)
+        console.log(res)
+        setDisplayRequest('none')
+    }
+
+    return(
+        <li style={{display:displayRequest}} className='list-group-item'>
+            <div className='d-flex justify-content-between align-items-center'>
+                <div>
+                    <h4>{data.username}</h4>
+                </div>
+                <div>
+                    <button className='btn btn-outline-success' value='accept' onClick={handleAcceptRejeact} >Y</button>
+                    <button className='btn btn-outline-danger' value='reject' onClick={handleAcceptRejeact} >N</button>
+                </div>
+            </div>
+        </li>
+    )
+}
+function EachSearchedFriend({data}){
+
+    const {currentUser} = useContext(AuthContext)
+
+    async function handleAddFriend(){
+
+        const ids = {
+            sender:currentUser._id,
+            reciver:data._id,
+        }
+        const res = await sendFriendRequest(ids)
+        console.log(res)
+    }
+
+    return(
+        <li className='list-group-item'>
+            <div className='d-flex justify-content-between align-items-center'>
+                <div>
+                    <h4>{data.username}</h4>
+                </div>
+                <div>
+                    <button className='btn btn-outline-success' onClick={handleAddFriend} >Add Friend</button>
+                </div>
+            </div>
+        </li>
+    )
+}
+
+
+
 function UserDetails({user}){
+
     return(
         <section>
             <div className="container py-5">
@@ -155,7 +193,7 @@ function UserDetails({user}){
                         <div className="d-flex justify-content-center mb-2"></div>
                     </div>
                     </div>
-                    <FriendRequests friends={user.friends} />
+                    <FriendRequestsTab friends={user.friends}/>
                 </div>
                 <div className="col-lg-8">
                     <div className="card mb-4">
@@ -180,8 +218,8 @@ function UserDetails({user}){
                         </div>
                     </div>
                     <div className='row'>
-                        <FriendsTab friends={user.friends}/>
-                        <AddFriendsTab />
+                        <FriendsTab friends={user.friends.currentFriends}  />
+                        <AddFriendsTab/>
                     </div>
                 </div>
                 </div>
@@ -193,7 +231,7 @@ function UserDetails({user}){
 export default function Profile() {
 
     const {auth,currentUser} = useContext(AuthContext)
-
+    useEffect(()=>{},[currentUser])
     if(!auth){
         return <Navigate to='/login'/>
     }

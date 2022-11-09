@@ -5,10 +5,10 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors');
 const path = require('path');
-const loginApiHandler=require('./controllers/loginApiHandler.js');
-const signupRouter=require('./controllers/signupRouter.js');
-const friendsRouter=require('./controllers/friendsRouter.js');
-const dashboardRouter=require('./controllers/dashboardRouter.js');
+const loginApiHandler = require('./controllers/loginApiHandler.js');
+const signupRouter = require('./controllers/signupRouter.js');
+const friendsRouter = require('./controllers/friendsRouter.js');
+const dashboardRouter = require('./controllers/dashboardRouter.js');
 
 app.use(express.json())
 app.use(express.static("build"))
