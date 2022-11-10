@@ -1,13 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {Navigate} from 'react-router-dom'
 import Header from '../components/Header'
 import {useField} from '../hooks/hooks'
 import {postFriendsSearch, requestAcceptReject, sendFriendRequest} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
-function FriendsTab({friends}){
+function FriendsTab(){
 
-    console.log('friends',friends)
+    const {currentUser} = useContext(AuthContext)
+
+    const friends = currentUser.friends.currentFriends
 
     return(
         <div className="col-md-6 p-3 h-100">
@@ -103,40 +105,30 @@ function FriendRequestsTab({friends}){
 function EachFriendRequest({data}){
 
     const {currentUser,setUser} = useContext(AuthContext)
-    const [displayRequest,setDisplayRequest] = useState('block')
-    console.log('data',data)
 
     async function handleAcceptRejeact(e){
         
-        console.log(e.target.value)
         const sentResponse = { 
             sender:data._id,
             reciver:currentUser._id,
             reply:e.target.value
         }
+        const oldFriendsArr = currentUser.friends.currentFriends
         const res = await requestAcceptReject(sentResponse)
         const requests = currentUser.friends.pendingRequests
-        console.log('aagye yeha')
         if(res.status){ 
-            currentUser.friends.pendingRequests = requests.filter(e => {
-                console.log('e',e)
-                console.log('friend', sentResponse.sender)
-                return e._id.toString() !== sentResponse.sender
-            })
-            console.log("New pending Requests",currentUser.friends.pendingRequests)
-            console.log(data)
-            currentUser.friends.currentFriends.push(data)
-            console.log('Current Friends',currentUser.friends.currentFriends)
-            console.log('current User->',currentUser)
+            const filteredRequests = requests.filter(e => e._id.toString() !== sentResponse.sender)
+            currentUser.friends.pendingRequests = [...filteredRequests]
+            currentUser.friends.currentFriends = [...oldFriendsArr,data]
+        }else{
+            const filteredRequests = requests.filter(e => e._id.toString() !== sentResponse.sender)
+            currentUser.friends.pendingRequests = [...filteredRequests]
         }
-        console.log('settingUser...')
-        setUser(currentUser)
-        console.log(res)
-        setDisplayRequest('none')
+        setUser({...currentUser})
     }
 
     return(
-        <li style={{display:displayRequest}} className='list-group-item'>
+        <li className='list-group-item'>
             <div className='d-flex justify-content-between align-items-center'>
                 <div>
                     <h4>{data.username}</h4>
@@ -180,7 +172,6 @@ function EachSearchedFriend({data}){
 
 
 function UserDetails({user}){
-
     return(
         <section>
             <div className="container py-5">
@@ -218,7 +209,7 @@ function UserDetails({user}){
                         </div>
                     </div>
                     <div className='row'>
-                        <FriendsTab friends={user.friends.currentFriends}  />
+                        <FriendsTab  />
                         <AddFriendsTab/>
                     </div>
                 </div>
@@ -231,7 +222,7 @@ function UserDetails({user}){
 export default function Profile() {
 
     const {auth,currentUser} = useContext(AuthContext)
-    useEffect(()=>{},[currentUser])
+
     if(!auth){
         return <Navigate to='/login'/>
     }

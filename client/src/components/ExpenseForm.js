@@ -4,7 +4,6 @@ import { v4 as genertateId } from 'uuid'
 
 
 function MemberListItem({member,inputName}){
-    console.log(member.name)
     return(
         <li className='list-group-item' key={member.id + 'key'}>
             <label htmlFor={member.id + 'id' + inputName} className='my-auto' >

@@ -3,6 +3,7 @@ require('dotenv').config()
 const loginApiHandler = require('express').Router()
 const jwt = require('jsonwebtoken')
 const Users = require('../modals/userModals')
+const {info}=require('../utils/logger')
 const SecretKey = process.env.SECRET_JWT_KEY
 
 loginApiHandler.get("/",authorization)
@@ -29,6 +30,7 @@ function authorization(req,res){
     const token = authHeader && authHeader.split(" ")[1]
     
     if(token == null){
+        info(false)
         res.json({authStatus:false,user:null,})
         return
     }
@@ -48,6 +50,7 @@ function authorization(req,res){
 
         if(err){
             console.log("Error is ->>>>>>>",err.message)
+            info(true)
             res.json({authStatus:false,user:null,})
             return
         }

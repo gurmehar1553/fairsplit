@@ -12,7 +12,7 @@ function MembersFormInputOptions({data}){
 function MembersFormInput(){
     const {currentUser} = useContext(AuthContext)
     const friends = currentUser? currentUser.friends.currentFriends:[{name:'NotAuthorized',id:'1'}]
-    console.log(friends)
+    // console.log(friends)
     return(
         <select name='inputMembersFromFriends' className='form-control w-100'>
             {friends.map((e,i) => <MembersFormInputOptions key={e._id + i} data={e} />)}

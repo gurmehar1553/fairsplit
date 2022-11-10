@@ -299,9 +299,6 @@ span{
 
   .feature-main{
     background-image: url('/images/bg-feature.jpg');
-    /* background-repeat: no-repeat; */
-    /* background-position: left; */
-    /* background-size: 1000px; */
   }
   .feature-white{
     background-image: url('/images/bg-white.png');

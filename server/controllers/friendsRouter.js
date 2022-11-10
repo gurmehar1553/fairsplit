@@ -34,9 +34,9 @@ friendsRouter.post('/sendrequest', async (req,res) =>{
 friendsRouter.put("/", async (req,res) => {
 
     const query = req.body
+    const accDec = query.reply
     const sender = await Users.findById(query.sender)
     const reciver = await Users.findById(query.reciver)
-    const accDec = query.reply
     const sendersSent = sender.friends.sentRequests
     const reciverPending = reciver.friends.pendingRequests
 

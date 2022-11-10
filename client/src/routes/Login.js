@@ -34,9 +34,9 @@ export default function Login() {
         }
     }
 
-    if(!auth){
-        return(<Loader />)
-    }
+    // if(!auth){
+    //     return(<Loader />)
+    // }
     return (
         <div className='login-outer'>
             <div className="p-5 my-5 shadow  col-lg-4 col-xl-3 col-sm-12 col-md-6 main-div bg-opacity-10" id="sign-in">
