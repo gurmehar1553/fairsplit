@@ -21,6 +21,14 @@ function MainForm(props){
   )
 }
 
+function EachResult({data}){
+  return(
+    <div className=''>
+      Jastagar {data.action? 'lent':'borrowed'} Rs. {data.amount} {data.action? "to":"from"} {data.to}
+    </div>
+  )
+}
+
 export default function Dashboard({members, setMembers, expenses, setExpenses }) {
   
   const [ lendersAndBorrowers, setlendersAndBorrowers ] = useState([])
@@ -86,19 +94,14 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                 Calculate
               </button>
             </div>
-            <div>
-
             {resultValue.map((e,i)=>{
-             return (e.amount === 0) ? "":(
-                <div key={i}>
-                  Jastagar {e.action? 'lent':'borrowed'} Rs. {e.amount} {e.action? "to":"from"} {e.to}
-                </div>
+              return(
+               <EachResult key={i+"KeyForResultValue"} data={e} />
               )
             })} 
             </div>
           </div>
         </div>
-        
     </div>
   )
 }

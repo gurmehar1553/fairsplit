@@ -1,5 +1,5 @@
 import React from 'react'
-import heroImg from '../routes/images/heroImg.png'
+import heroImg from '../assets/images/heroImg.png'
 
 const HeroSection = () => {
   return (
@@ -16,7 +16,7 @@ const HeroSection = () => {
 
             </div>
             <div className='col-md-6'>
-              <img src={heroImg} height='500px' width='650px'/>
+              <img src={heroImg} height='500px' width='650px' alt="notFound"/>
             </div>
           </div>
           <div style={{marginLeft: "50%"}}>

@@ -311,3 +311,12 @@ span{
   .feature-white{
     background-image: url('/images/bg-white.png');
   }
+  .friendsSearchBtn{
+    border: #ced4da 1px solid;
+    display: inline;
+    padding: 3%;
+  }
+  .friendsSearchInput{
+    border-right: none;
+    border-radius: 3px 0px 0px 3px;
+  }
