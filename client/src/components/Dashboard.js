@@ -21,6 +21,14 @@ function MainForm(props){
   )
 }
 
+function EachResult({data}){
+  return(
+    <div className=''>
+      Jastagar {data.action? 'lent':'borrowed'} Rs. {data.amount} {data.action? "to":"from"} {data.to}
+    </div>
+  )
+}
+
 export default function Dashboard({members, setMembers, expenses, setExpenses }) {
   
   const [ lendersAndBorrowers, setlendersAndBorrowers ] = useState([])
@@ -33,9 +41,9 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
     const reformedData = finalData.map(e => {
       return {...e, lenders:e.lenders[0]}
     })
-    console.log("Final Data",[...reformedData,"Jastagar"])
+    // console.log("Final Data",[...reformedData,"Jastagar"])
     const ans=await postResult([...reformedData,"Jastagar"])
-    console.log(resultValue)
+    // console.log(resultValue)
     console.log(ans)
 
     setResultValue(ans)
@@ -86,16 +94,13 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
                 Calculate
               </button>
             </div>
-            {resultValue.forEach(e=>{
+            {resultValue.map((e,i)=>{
               return(
-                <div>
-                  Jastagar {e.action? 'lent':'borrowed'} Rs. {e.amount} {e.action? "to":"from"} {e.to}
-                </div>
+               <EachResult key={i+"KeyForResultValue"} data={e} />
               )
-            })}
+            })} 
+            </div>
           </div>
         </div>
-        
-    </div>
   )
 }

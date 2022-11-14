@@ -76,6 +76,9 @@ function addValues(ans,newarr,query){
     let ans_arr=[]
     for(let i=1;i<ans[0].length;i++){
         const result=coordinateValue(ans,ans[0][i],query)-coordinateValue(ans,query,ans[0][i])
+        if(result === 0){
+            continue
+        }
         let obj={
             action:result<0,
             amount:Math.abs(result),
