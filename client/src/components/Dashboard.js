@@ -102,6 +102,5 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
             </div>
           </div>
         </div>
-    </div>
   )
 }
