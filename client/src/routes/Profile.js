@@ -133,9 +133,9 @@ function EachFriendRequest({data}){
                 <div>
                     <h4>{data.username}</h4>
                 </div>
-                <div>
-                    <button className='btn btn-outline-success' value='accept' onClick={handleAcceptRejeact} >Y</button>
-                    <button className='btn btn-outline-danger' value='reject' onClick={handleAcceptRejeact} >N</button>
+                <div className='d-flex gap-1'>
+                    <button className='btn btn-outline-success' value='accept' onClick={handleAcceptRejeact} ><i className="fas fa-check"></i></button>
+                    <button className='btn btn-outline-danger' value='reject' onClick={handleAcceptRejeact} ><i className="fas fa-times"></i></button>
                 </div>
             </div>
         </li>
@@ -143,16 +143,36 @@ function EachFriendRequest({data}){
 }
 function EachSearchedFriend({data}){
 
-    const {currentUser} = useContext(AuthContext)
+    const {currentUser,setUser} = useContext(AuthContext)
+    const pendingFriendsIdsString = currentUser.friends.sentRequests.map(e => e._id.toString())
 
-    async function handleAddFriend(){
+    if(pendingFriendsIdsString.includes(data._id.toString())){
+        return(
+            <li className='list-group-item'>
+                <div className='d-flex justify-content-between align-items-center'>
+                    <div>
+                        <h4>{data.username}</h4>
+                    </div>
+                    <div className='text-center'>
+                        <button className='btn disabled'><i>Pending...</i></button>
+                    </div>
+                </div>
+            </li>
+        )
+    }
+
+    async function handleAddFriend(e){
 
         const ids = {
             sender:currentUser._id,
             reciver:data._id,
         }
         const res = await sendFriendRequest(ids)
-        console.log(res)
+
+        if(res === 'Friend Request Sent'){
+            currentUser.friends.sentRequests = currentUser.friends.sentRequests.concat(data)
+            setUser({...currentUser})
+        }
     }
 
     return(
@@ -161,7 +181,7 @@ function EachSearchedFriend({data}){
                 <div>
                     <h4>{data.username}</h4>
                 </div>
-                <div>
+                <div className='text-center'>
                     <button className='btn btn-outline-success' onClick={handleAddFriend} >Add Friend</button>
                 </div>
             </div>
@@ -183,9 +203,11 @@ function EachFriend({data}){
         }
     }
     return(
-        <div className='list-group-item d-flex justify-content-between align-items-center'>
+        <div className='list-group-item list-group-item-action d-flex justify-content-between align-items-center'>
             <div>
-                {data.username}
+                <h4>
+                    {data.username}
+                </h4>
             </div>
             <div>
                 <button onClick={handleRemoveFriend} className='btn btn-danger'>Remove friend <i className="fas fa-trash-alt"></i></button>
