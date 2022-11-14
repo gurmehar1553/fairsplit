@@ -128,9 +128,9 @@ export default function Dashboard({members, setMembers, expenses, setExpenses })
               return(
                <EachResult key={i+"KeyForResultValue"} data={e} />
               )
-            })}
+            })} 
+            </div>
           </div>
         </div>
-    </div>
   )
 }

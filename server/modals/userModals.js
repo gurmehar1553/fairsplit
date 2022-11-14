@@ -24,9 +24,10 @@ const userSchema = new mongoose.Schema({
                 ref:"User",
             }
         ]
-    }
+    },
+    verified: Boolean
 })
-// userSchema.plugin(require('mongoose-autopopulate'))
+
 const Users = mongoose.model('User',userSchema)
 
 module.exports = Users
