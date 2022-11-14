@@ -4,7 +4,7 @@ import {useField} from '../hooks/hooks'
 import {postLogin, setToken} from '../serverApi/server'
 import logo from '../assets/images/logo.png'
 import AuthContext from '../utils/AuthProvider'
-import Loader from '../components/Loader'
+// import Loader from '../components/Loader'
 
 export default function Login() {
 
