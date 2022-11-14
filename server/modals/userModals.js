@@ -21,8 +21,11 @@ const userSchema = new mongoose.Schema({
                 userId:mongoose.Schema.Types.ObjectId,
             }
         ]
-    }
+    },
+    verified: Boolean
 })
+
+
 
 const Users = mongoose.model('User',userSchema)
 
