@@ -5,7 +5,7 @@ const {info}=require("../utils/logger")
 
 friendsRouter.post("/search", async (req,res) => {
 
-    const query = req.body.query
+    const query = new RegExp(req.body.query,'i') 
     const user = req.body.user
     const foundUsers = await Users.find({username:query})
     const searchResults = foundUsers.filter((e) => {
@@ -58,6 +58,30 @@ friendsRouter.put("/", async (req,res) => {
     }
     sender.save()
     reciver.save()
+})
+
+friendsRouter.put('/removeFriend', async (req,res)=>{
+    try{
+        const {remover,removal} = req.body
+        const Remover = await Users.findById(remover)
+        const Removal = await Users.findById(removal)
+        info(Remover)
+        const newFriendsRemover = Remover.friends.currentFriends.filter(e => e._id.toString() !== removal )
+        Remover.friends.currentFriends = newFriendsRemover
+
+        const newFriendsRemoval = Removal.friends.currentFriends.filter(e => e._id.toString() !== remover )
+        Removal.friends.currentFriends = newFriendsRemoval
+        info()
+        info(Remover)
+        info()
+        info(Removal)
+        await Remover.save()
+        res.send(true)
+    }catch(e){
+        console.log(e.message)
+        res.send(false)
+    }
+
 })
 
 module.exports = friendsRouter

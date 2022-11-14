@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 import {Navigate} from 'react-router-dom'
 import Header from '../components/Header'
 import {useField} from '../hooks/hooks'
-import {postFriendsSearch, requestAcceptReject, sendFriendRequest} from '../serverApi/server'
+import {postFriendsSearch, removeFriend, requestAcceptReject, sendFriendRequest} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 function FriendsTab(){
@@ -21,7 +21,7 @@ function FriendsTab(){
                     <ul className='list-group'>
                         {friends && friends.map((e,i) => {
                             return(
-                                <li key={i + "KeyForCurrentFriends"} className='list-group-item'>{e.username}</li>
+                                <EachFriend key={i + "KeyForCurrentFriends"} data={e} />
                             )
                         })}
                     </ul>
@@ -168,7 +168,31 @@ function EachSearchedFriend({data}){
         </li>
     )
 }
-
+function EachFriend({data}){
+    const {currentUser,setUser} = useContext(AuthContext)
+    async function handleRemoveFriend(e){
+        const friendToRemove = {
+            remover:currentUser._id.toString(),
+            removal:data._id.toString()
+        }
+        const res = await removeFriend(friendToRemove)
+        if(res){
+            const newCurrentFrienndsList = currentUser.friends.currentFriends.filter(e => e._id.toString() !== friendToRemove.removal )
+            currentUser.friends.currentFriends = newCurrentFrienndsList
+            setUser({...currentUser})
+        }
+    }
+    return(
+        <div className='list-group-item d-flex justify-content-between align-items-center'>
+            <div>
+                {data.username}
+            </div>
+            <div>
+                <button onClick={handleRemoveFriend} className='btn btn-danger'>Remove friend <i className="fas fa-trash-alt"></i></button>
+            </div>
+        </div>
+    )
+}
 
 
 function UserDetails({user}){

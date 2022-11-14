@@ -41,5 +41,9 @@ async function requestAcceptReject(data){
     const res = await axios.put(URL + 'friends',data)
     return res.data
 }
+async function removeFriend(data){
+    const res = await axios.put(URL + 'friends/removefriend',data)
+    return res.data
+}
 
-export { postResult,postLogin,verifyAuth,setToken,postSignUp,postFriendsSearch,sendFriendRequest,requestAcceptReject }
+export { postResult,postLogin,verifyAuth,setToken,postSignUp,postFriendsSearch,sendFriendRequest,requestAcceptReject,removeFriend }
