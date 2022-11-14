@@ -1,38 +1,27 @@
 import Header from '../components/Header'
 import Dashboard from '../components/Dashboard'
-import {useContext, useState} from 'react';
-import Loader from '../components/Loader';
+import {useContext, useEffect, useState} from 'react';
 import {Navigate} from 'react-router-dom';
 import AuthContext from '../utils/AuthProvider';
 
-const theUser = {
-  name:'You',
-  id:'00000'
-}
-
 function MainBoard() {
 
-  const [members, setMembers] = useState([theUser])
+  const {auth,currentUser} = useContext(AuthContext)
+  const defaultUser = currentUser? {name:currentUser.username,id:currentUser._id}:{name:'User Not Found',id:null}
+  const [members , setMembers] = useState([])
   const [expenses,setExpenses] = useState([])
-
-  const {auth} = useContext(AuthContext)
-
-  console.log(auth)
-
+  useEffect(()=>{
+    setMembers([defaultUser])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[currentUser])
   if(!auth){
     return <Navigate to='/login'/>
   }
   
-  const props = {
-    setMembers,
-    members,
-    setExpenses,
-    expenses
-  }
+  const props = { setMembers, members, setExpenses, expenses}
 
   return (
     <div className="App">
-      <Loader />
       <Header />
       <Dashboard {...props} />
     </div>

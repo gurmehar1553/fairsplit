@@ -5,22 +5,24 @@ const AuthContext = React.createContext()
 
 export function AuthProvider({children}) {
     const [auth,setAuth] = useState(false)
-    const [currentUser,setUser] = useState()
+    const [currentUser,setUser] = useState(null)
 
     async function getAuth(){
         const {authStatus,user} =await verifyAuth()
         if(authStatus){
             setAuth(true)
             setUser(user)
+        }else{
+          setUser(null)
         }
       }
+
       useEffect(()=>{
         getAuth()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      },[])
+      },[auth,setUser])
 
   return (
-    <AuthContext.Provider value={{auth,setAuth,currentUser}}>
+    <AuthContext.Provider value={{auth,setAuth,currentUser,setUser}}>
         {children}
     </AuthContext.Provider>
   )

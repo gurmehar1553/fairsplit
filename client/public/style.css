@@ -1,17 +1,7 @@
-*{
-    /* font-family: 'Philosopher'; */
-}
 body{
     margin: 0%;
     padding: 0%;
-    height: 100vh;
 }
-/* div{
-    border: 1px solid;
-} */
-/* nav{
-    background-color: #576F72;
-} */
 .profile-icon{
     --size: 3rem;
 
@@ -29,7 +19,8 @@ body{
     background-color: #F8F9D7;
 }
 #root, .App{
-    height: 100%;
+    background-color: #eee;
+    min-height: 100vh;
 }
 
 /* 
@@ -161,7 +152,7 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     overflow-x: hidden;
-    height: 100vh;
+    min-height: 100vh;
 
 }
 
@@ -232,6 +223,11 @@ a{
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
+    text-decoration: none;
+}
+.loginBtn:hover{
+    background-color: #fff;
+    color: black !important;
 }
 .signUpBtn{
     background-color: #00dd93;
@@ -308,9 +304,6 @@ span{
 
   .feature-main{
     background-image: url('/images/bg-feature.jpg');
-    /* background-repeat: no-repeat; */
-    /* background-position: left; */
-    /* background-size: 1000px; */
   }
   .feature-white{
     background-image: url('/images/bg-white.png');
