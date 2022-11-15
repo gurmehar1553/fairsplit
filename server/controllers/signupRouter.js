@@ -1,9 +1,12 @@
 const signupRouter = require('express').Router()
 const Users = require('../modals/userModals')
+const bcrypt = require('bcrypt')
 
 signupRouter.post('/',async (req,res)=>{
 
     const {username,email,password} = req.body
+    const saltRounds=10
+    const passwordHash = await bcrypt.hash(password,saltRounds)
     const userResults = await Users.find({$or:[{username},{email}]})
     if(userResults.length){
         res.json({
@@ -15,7 +18,7 @@ signupRouter.post('/',async (req,res)=>{
         const newUser = new Users({
             username,
             email,
-            password,
+            password:passwordHash,
             verified:false
         })
         newUser.save()
