@@ -38,10 +38,10 @@ function borrow(ans,a){
 }
 function addValues(ans,newarr,query){
     newarr.forEach((ele)=>{
+        info('ele ->',ele)
         var [name,amt,borrowers]=ele;
-        borrowers=borrowers.split(',')
         const borr_len=borrowers.length;
-        amt=amt/borr_len;
+        amt=parseFloat((amt/borr_len).toFixed(2));
         for(let i=1;i<ans[0].length;i++){
             if(ans[i][0]===name){
                 borrowers.forEach((ele)=>{
@@ -56,8 +56,8 @@ function addValues(ans,newarr,query){
         }
     })
     info(ans)
-    lent(ans,query);
-    borrow(ans,query)
+    // lent(ans,query);
+    // borrow(ans,query)
     let ans_arr=[]
     for(let i=1;i<ans[0].length;i++){
         const result=coordinateValue(ans,ans[0][i],query)-coordinateValue(ans,query,ans[0][i])
@@ -71,38 +71,27 @@ function addValues(ans,newarr,query){
         }
         ans_arr.push(obj)
     }
+    info(ans_arr)
     return ans_arr
 }
-function soln(newarr,query){
-    const ans=[];
-    const tem = newarr.map((e)=>{
-        return e[2]
+function makeUnfilledArray(newarr,query){
+    const allNames = newarr.reduce((arr,e)=> arr.concat(e[2]),[])
+    const [...NamesSet] = new Set(allNames)
+    const ans=[['.',...NamesSet]]
+    const len=NamesSet.length
+
+    info("set of users:",NamesSet)
+
+    NamesSet.forEach(ele => {
+        const t= new Array(len).fill(0)
+        ans.push([ele,...t])
     })
-    const allNames = tem.join(',')
-    const SplitedAllNames = allNames.split(',')
-    const NamesSet = new Set(SplitedAllNames)
-    info("set of users:",[...NamesSet])
-    const firstArr=['.',...NamesSet];
-    ans.push(firstArr)
-    const a=[...NamesSet]
-    const len=[...NamesSet].length
-    a.forEach(ele => {
-        const t=[]
-        t.push(ele);
-        for(let i=0;i<len;i++){
-            t.push(0)
-        }
-        ans.push(t)
-    })
+    
     return addValues(ans,newarr,query)
 }
-function solve(arr){
-    const query = arr.pop()
-    const transformedArr = arr.map((e)=>{
-        const [name, amount,borrowers] = e.split('-')
-        return [name,parseInt(amount),borrowers]
-    })
-    return soln(transformedArr,query)
-    
+function solve(arr,query){
+    const transformedArr = arr.map(({lenders, amt_lent ,borrowers})=> [lenders,parseInt(amt_lent),borrowers])
+    return makeUnfilledArray(transformedArr,query)   
 }
+
 module.exports=solve

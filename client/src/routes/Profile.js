@@ -107,7 +107,7 @@ function EachFriendRequest({data}){
     const {currentUser,setUser} = useContext(AuthContext)
 
     async function handleAcceptRejeact(e){
-        
+        console.log(e.target.value)
         const sentResponse = { 
             sender:data._id,
             reciver:currentUser._id,

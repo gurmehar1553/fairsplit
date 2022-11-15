@@ -6,10 +6,8 @@ dashboardRouter.post('/handlePost',(req,res)=>{
     info('Req on handlePost')
     const obj=req.body
     const query=obj.pop()
-
-    var input= obj.map(ele=> `${ele.lenders}-${ele.amt_lent}-${ele.borrowers.join(",")}` )
     
-    const final_arr = solve([...input,query])
+    const final_arr = solve(obj,query)
     res.json(final_arr)
 })
 
