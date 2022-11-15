@@ -1,12 +1,5 @@
-// const input = [
-//     'A-200-A,B,C,D',
-//     'A-300-A,B,D',
-//     'C-600-A,B,C',
-//     'D-1000-C',
-//     'B-200-C,D',
-//     'A-600-A,B,C,D',    
-//     'B'
-// ]
+const {info}=require("../utils/logger");
+
 function coordinateValue(arr,a,b){
     const n=arr.length;
     for(let i=0;i<n;i++){
@@ -30,10 +23,6 @@ function lent(ans,a){
         }
         amt+=coordinateValue(ans,a,ans[0][i]);
     }
-    // for(let i=1;i<ans[0].length;i++){
-    //     let b= ans[0][i]!==a? coordinateValue(ans,a,ans[0][i]):'';
-    //     b? console.log(a+" lent "+b+" to "+ans[0][i]):'';
-    // }
 }
 function borrow(ans,a){
     const n=ans.length;
@@ -50,17 +39,13 @@ function borrow(ans,a){
 function addValues(ans,newarr,query){
     newarr.forEach((ele)=>{
         var [name,amt,borrowers]=ele;
-        // console.log("somthing",typeof(borrowers),borrowers)
         borrowers=borrowers.split(',')
         const borr_len=borrowers.length;
         amt=amt/borr_len;
-        // amt=Math.floor(amt)
-        // console.log(`amount: ${amt}`)
-        // console.log("borrowers : ",borrowers)
         for(let i=1;i<ans[0].length;i++){
             if(ans[i][0]===name){
                 borrowers.forEach((ele)=>{
-                    console.log("Element: ",ele )
+                    info("Element: ",ele )
                     for(let j=1;j<=ans[0].length;j++){
                         if(ans[0][j]===ele){
                             ans[i][j]+=amt;
@@ -70,7 +55,7 @@ function addValues(ans,newarr,query){
             }
         }
     })
-    console.log(ans)
+    info(ans)
     lent(ans,query);
     borrow(ans,query)
     let ans_arr=[]
@@ -85,7 +70,6 @@ function addValues(ans,newarr,query){
             to:ans[0][i]
         }
         ans_arr.push(obj)
-        // result<0 ? console.log(query+" lent " +Math.abs(result) +" to "+ans[0][i]) : console.log(query+" borrowed " + result +" from "+ans[0][i])
     }
     return ans_arr
 }
@@ -97,7 +81,7 @@ function soln(newarr,query){
     const allNames = tem.join(',')
     const SplitedAllNames = allNames.split(',')
     const NamesSet = new Set(SplitedAllNames)
-    console.log("set of users:",[...NamesSet])
+    info("set of users:",[...NamesSet])
     const firstArr=['.',...NamesSet];
     ans.push(firstArr)
     const a=[...NamesSet]
@@ -110,7 +94,6 @@ function soln(newarr,query){
         }
         ans.push(t)
     })
-    // console.log("unfilled Answer users:",ans)
     return addValues(ans,newarr,query)
 }
 function solve(arr){
@@ -120,9 +103,6 @@ function solve(arr){
         return [name,parseInt(amount),borrowers]
     })
     return soln(transformedArr,query)
-    // console.log(transformedArr)
-    // console.log(query)
     
 }
-// solve(input)
 module.exports=solve

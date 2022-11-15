@@ -49,7 +49,7 @@ function authorization(req,res){
         })
 
         if(err){
-            console.log("Error is ->>>>>>>",err.message)
+            info("Error is ->>>>>>>",err.message)
             info(true)
             res.json({authStatus:false,user:null,})
             return

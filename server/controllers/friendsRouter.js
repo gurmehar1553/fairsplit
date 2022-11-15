@@ -78,7 +78,7 @@ friendsRouter.put('/removeFriend', async (req,res)=>{
         await Remover.save()
         res.send(true)
     }catch(e){
-        console.log(e.message)
+        info(e.message)
         res.send(false)
     }
 

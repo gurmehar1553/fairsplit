@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
+    "prod": "cross-env NODE_ENV=production nodemon index.js",
     "start": "node index.js",
     "getUi": "rm -rf build && cd ../client && npm run build && cp build ../server"
   },
@@ -22,5 +23,8 @@
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.19",
     "react-cookie": "^4.1.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

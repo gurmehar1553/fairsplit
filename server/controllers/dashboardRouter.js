@@ -1,19 +1,14 @@
 const dashboardRouter = require('express').Router()
 const solve = require('../logic/logic.js')
 
-dashboardRouter.post('/handlePost',(request,response)=>{
-    const transaction = request.body
-    console.log("transaction",transaction)
-    let obj=transaction
+dashboardRouter.post('/handlePost',(req,res)=>{
+    const obj=req.body
     const query=obj.pop()
-    var input= obj.map((ele)=>{
-        var str=`${ele.lenders}-${ele.amt_lent}-${ele.borrowers.join(",")}`
-        console.log(str)
-        return str
-    })
+
+    var input= obj.map(ele=> `${ele.lenders}-${ele.amt_lent}-${ele.borrowers.join(",")}` )
+    
     const final_arr = solve([...input,query])
-    console.log(final_arr)
-    response.json(final_arr)
+    res.json(final_arr)
 })
 
 module.exports = dashboardRouter
