@@ -11,7 +11,10 @@ function MembersFormInputOptions({data}){
 
 function MembersFormInput(){
     const {currentUser} = useContext(AuthContext)
-    const friends = currentUser? currentUser.friends.currentFriends:[{name:'NotAuthorized',id:'1'}]
+    const friends = currentUser? currentUser.friends.currentFriends:[{name:'...loading',id:'1'}]
+    if(!friends.length){
+        return(<div>No friends to add...</div>)
+    }
     // console.log(friends)
     return(
         <select name='inputMembersFromFriends' className='form-control w-100'>

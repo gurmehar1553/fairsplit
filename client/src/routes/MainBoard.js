@@ -7,7 +7,7 @@ import AuthContext from '../utils/AuthProvider';
 function MainBoard() {
 
   const {auth,currentUser} = useContext(AuthContext)
-  const defaultUser = currentUser? {name:currentUser.username,id:currentUser._id}:{name:'User Not Found',id:null}
+  const defaultUser = currentUser? {name:currentUser.username,id:currentUser._id}:{name:'...loading',id:null}
   const [members , setMembers] = useState([])
   const [expenses,setExpenses] = useState([])
   useEffect(()=>{
