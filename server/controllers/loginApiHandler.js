@@ -14,15 +14,32 @@ loginApiHandler.post('/',async (req,res) => {
     const [tempUser] = await Users.find({email:incommingData.email})
     
     if(!tempUser){
-        res.send(false)
+        res.send({
+            status:false, 
+            message:'This account does not exist...'
+        })
+        return
+    }
+    if(!tempUser.verified){
+        res.json({
+            status:false, 
+            message:'This account is not verified'
+        })
         return
     }
     if(incommingData.password === tempUser.password){
         const token = jwt.sign(incommingData,SecretKey,{expiresIn: incommingData.rememberMe? "9999d":"1h"})
-        res.send(token)
+        res.json({
+            status:true, 
+            message:'LoggedIn',
+            token
+        })
         return
     }
-    res.send(false)
+    res.send({
+        status:false, 
+        message:'This account is not verified or does not exist'
+    })
 })
 
 module.exports = loginApiHandler

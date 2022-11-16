@@ -45,7 +45,10 @@ async function removeFriend(data){
     const res = await axios.put(URL + 'friends/removefriend',data)
     return res.data
 }
-
+async function verifyOTP(data){
+    const res = await axios.post(URL + 'signup/verifyOTP',data)
+    return res.data
+}
 export { 
     postResult,
     postLogin,
@@ -55,5 +58,6 @@ export {
     postFriendsSearch,
     sendFriendRequest,
     requestAcceptReject,
-    removeFriend 
+    removeFriend,
+    verifyOTP,
 }
