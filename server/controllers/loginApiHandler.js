@@ -2,6 +2,9 @@ const Users = require('../modals/userModals')
 const loginApiHandler = require('express').Router()
 const {info}=require('../utils/logger')
 const {authorization}=require('../utils/middleware')
+const jwt = require('jsonwebtoken')
+const SecretKey = process.env.SECRET_JWT_KEY
+
 
 loginApiHandler.get("/",authorization)
 
