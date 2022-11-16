@@ -7,8 +7,8 @@ signupRouter.post('/',async (req,res)=>{
     const userResults = await Users.find({$or:[{username},{email}]})
     if(userResults.length){
         res.json({
-            status : "Failed",
-            message : "User with the provided email or username already exists"
+            status : 'Failed',
+            message : 'User with the provided email or username already exists'
         })
     }
     else{
@@ -20,8 +20,8 @@ signupRouter.post('/',async (req,res)=>{
         })
         newUser.save()
         res.send({
-            status: "Passed",
-            message: "User account created"
+            status: 'Passed',
+            message: 'User account created'
         })
     }
 })
