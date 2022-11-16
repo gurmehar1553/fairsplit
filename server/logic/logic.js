@@ -56,7 +56,7 @@ function addValues(ans,newarr,query){
         }
     })
     info(ans)
-    // lent(ans,query);
+    // lent(ans,query)
     // borrow(ans,query)
     let ans_arr=[]
     for(let i=1;i<ans[0].length;i++){

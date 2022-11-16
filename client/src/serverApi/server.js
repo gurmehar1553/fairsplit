@@ -46,4 +46,14 @@ async function removeFriend(data){
     return res.data
 }
 
-export { postResult,postLogin,verifyAuth,setToken,postSignUp,postFriendsSearch,sendFriendRequest,requestAcceptReject,removeFriend }
+export { 
+    postResult,
+    postLogin,
+    verifyAuth,
+    setToken,
+    postSignUp,
+    postFriendsSearch,
+    sendFriendRequest,
+    requestAcceptReject,
+    removeFriend 
+}
