@@ -71,7 +71,7 @@ async function CheckOTP(req){
     }
     catch(error){
         return {
-            status:"FAILED",
+            status:false,
             message:error.message
         }
     }
