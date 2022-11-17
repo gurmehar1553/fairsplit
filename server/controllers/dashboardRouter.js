@@ -1,14 +1,14 @@
-const dashboardRouter = require('express').Router()
-const solve = require('../logic/logic.js')
-const {info}=require('../utils/logger.js')
+const dashboardRouter = require('express').Router();
+const solve = require('../logic/logic');
+const { info } = require('../utils/logger');
 
-dashboardRouter.post('/handlePost',(req,res)=>{
-    info('Req on handlePost')
-    const obj=req.body
-    const query=obj.pop()
-    
-    const final_arr = solve(obj,query)
-    res.json(final_arr)
-})
+dashboardRouter.post('/handlePost', (req, res) => {
+  info('Req on handlePost');
+  const obj = req.body;
+  const query = obj.pop();
 
-module.exports = dashboardRouter
+  const finalArr = solve(obj, query);
+  res.json(finalArr);
+});
+
+module.exports = dashboardRouter;
