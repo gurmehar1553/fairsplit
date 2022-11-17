@@ -14,51 +14,54 @@ signupRouter.post('/',async (req,res)=>{
             status : "Failed",
             message : "User with the provided email already exists"
         })
+        return
     }
-    else{
+    const checkOTPres = await CheckOTP(req)
+    console.log('OTP checking result',checkOTPres.status)
+    if(checkOTPres.status){
         const newUser = new Users({
             username:req.body.username,
             email:req.body.email,
             password:req.body.password,
-            verified:false
         })
-        console.log(CheckOTP(req))
-        // const result = await newUser.save()
-        // sendOTPVerificationEmail(newUser,res)
+        const result = await newUser.save()
         res.send(true)
+        return
     }
+    res.send(false)
 })
 
 
 async function CheckOTP(req){
     try{
-        let {userId,otp} = req.body;
-        if(!userId || !otp){
+        let {email,otp} = req.body;
+        if(!email || !otp){
             throw Error("Empty otp details are not allowed");
         }
         else{
             const UserOTPVerificationRecords=await UserOTPVerification.find({
-                userId
+                email
             })
             if(UserOTPVerificationRecords.length<=0){
                 throw new Error("Account record doesn't exist or has been verified already. Please sign up or log in.")
             }
             else{
                 const {expiresAt} = UserOTPVerificationRecords[0];
-                const otpReceived=UserOTPVerificationRecords[0].otp;
+                const otpReceived=  UserOTPVerificationRecords[0].otp;
                 if(expiresAt < Date.now()){
-                    await UserOTPVerification.deleteMany({userId})
+                    await UserOTPVerification.deleteMany({email})
                     throw new Error("Code has expired. Please request again.");
                 }
                 else{
                     if(otpReceived !== otp){
+                        console.log('recivedOTP',otpReceived)
+                        console.log('ourOTP',otp)
                         throw new Error("Invalid code passed. Check your inbox.")
                     }
                     else{
-                        await Users.updateOne({_id:userId},{verified:true})
-                        await UserOTPVerification.deleteMany({userId})
+                        await UserOTPVerification.deleteMany({email})
                         return{
-                            status:"VERIFIED",
+                            status:true,
                             message:"User email verified successfully"
                         }
                     }
@@ -74,8 +77,8 @@ async function CheckOTP(req){
     }
 }
 
-signupRouter.get('/sendOTP',async (req,res)=>{
-    const _id = req.body.id
+signupRouter.post('/sendOTP',async (req,res)=>{
+    // const _id = req.body.id
     const email = req.body.email
     try{
         const otp=`${Math.floor(1000 + Math.random()*9000)}`
@@ -86,8 +89,8 @@ signupRouter.get('/sendOTP',async (req,res)=>{
             html : `<p>Enter <b>${otp}</b> in the app to verify your email address.</p><p>This code <b>expires in 1 hour</b></p>`
         }
         const newOTPVerification = await new UserOTPVerification({
-            userId: _id,
-            otp:otp,
+            email,
+            otp,
             createdAt: Date.now(),
             expiresAt: Date.now() + 3600000
         })
@@ -105,7 +108,6 @@ signupRouter.get('/sendOTP',async (req,res)=>{
             status:"PENDING",
             message:"Verification otp email sent",
             data:{
-                userId: _id,
                 email
             }
         })
@@ -116,7 +118,7 @@ signupRouter.get('/sendOTP',async (req,res)=>{
             message:error.message
         })
     }
-})/// workin here
+})
 
 signupRouter.post("/verifyOTP", async (req,res)=>{
     try{

@@ -49,6 +49,10 @@ async function verifyOTP(data){
     const res = await axios.post(URL + 'signup/verifyOTP',data)
     return res.data
 }
+async function sendOTP(data){
+    const res = await axios.post(URL + 'signup/sendOTP',data)
+    return res.data
+}
 export { 
     postResult,
     postLogin,
@@ -60,4 +64,5 @@ export {
     requestAcceptReject,
     removeFriend,
     verifyOTP,
+    sendOTP,
 }

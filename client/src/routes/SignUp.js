@@ -2,37 +2,8 @@ import React from 'react'
 import logo from '../assets/images/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useField } from '../hooks/hooks'
-import {postSignUp, verifyOTP} from '../serverApi/server'
+import {postSignUp, sendOTP} from '../serverApi/server'
 
-function OTPVerify(){
-
-    const inputOTP = useField('number')
-
-    async function handleSubmit(e){
-        const OTPdata = {
-            OTP: inputOTP.value
-        }
-        verifyOTP(OTPdata)
-    }
-
-    return(
-        <div className='login-outer'>
-            <div className="p-5 my-5 shadow col-lg-4 col-xl-3 col-sm-12 col-md-6 main-div bg-opacity-10 sign-up">
-                <div className="mx-auto col-md-5">
-                    <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
-                </div>
-                <h3 className="mt-4 text-center">Verify OTP</h3>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4 mt-3">
-                        <input className="form-control" required placeholder="Username" {...inputOTP} />
-                    </div>
-                    <button type="submit" className="btn btn-success w-100 mb-4">Verify</button>
-                </form>
-                <p>Change email? <Link id="signInLink" to='/login'>SignUp</Link></p>
-            </div>
-        </div>
-    )
-}
 
 export default function SignUp() {
 
@@ -44,14 +15,16 @@ export default function SignUp() {
 
     const navigate = useNavigate()
 
-    async function sendOTP(){
-
-    }
-    async function handleOTPVerify(e){
-        const OTPdata = {
-            OTP: inputOTP.value
+    async function handleSendOTP(){
+        if(!inputEmail.value){
+            console.log('Dont send empty mails')
+            return
         }
-        verifyOTP(OTPdata)
+        const SendingMail = {
+            email:inputEmail.value,
+        }
+        const res = await sendOTP(SendingMail)
+        console.log(res)
     }
     async function handleSubmit(e){
         e.preventDefault()
@@ -61,6 +34,7 @@ export default function SignUp() {
         const signUpData = {
             username: inputUsername.value,
             email:inputEmail.value,
+            otp:inputOTP.value,
             password:inputPassword.value
         }
 
@@ -80,14 +54,16 @@ export default function SignUp() {
                     <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
                 </div>
                 <h3 className="mt-4 text-center">Create New Account</h3>
-                <form  onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-4 mt-3">
                         <input className="form-control" required placeholder="Username" {...inputUsername} />
                     </div>
                     <div className="mb-4 mt-3">
                         <input className="form-control" required placeholder="Email" {...inputEmail} />
                     </div>
-                    <button onClick={sendOTP}>Send OTP</button>
+                    <div className='mb-4 mt-3'>
+                        <button className='btn btn-outline-success' type='button' onClick={handleSendOTP}>Send OTP</button>
+                    </div>
                     <div className="mb-4">
                         <input className="form-control" required placeholder="OTP" {...inputOTP} />
                     </div>
