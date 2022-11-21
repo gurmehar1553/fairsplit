@@ -73,7 +73,6 @@ signupRouter.post('/', async (req, res) => {
 });
 
 signupRouter.post('/sendOTP', async (req, res) => {
-  // const _id = req.body.id
   const { email } = req.body;
   try {
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
