@@ -1,23 +1,24 @@
 require('dotenv').config();
 
-const express = require('express')
-const morgan = require('morgan')
+const express = require('express');
+const morgan = require('morgan');
 const cors = require('cors');
-const mongoose = require('mongoose')
-const app = express()
-const path = require('path');
-const loginApiHandler = require('./controllers/loginApiHandler.js');
-const signupRouter = require('./controllers/signupRouter.js');
-const friendsRouter = require('./controllers/friendsRouter.js');
-const dashboardRouter = require('./controllers/dashboardRouter.js');
-const { info } = require('console');
-const { requestLogger } = require('./utils/middleware.js')
+const mongoose = require('mongoose');
 
-app.use(express.json())
-app.use(cors())
-app.use(morgan('tiny'))
-app.use(express.static("build"))
-app.use(requestLogger)
+const app = express();
+const path = require('path');
+const { info } = require('console');
+const loginApiHandler = require('./controllers/loginApiHandler');
+const signupRouter = require('./controllers/signupRouter');
+const friendsRouter = require('./controllers/friendsRouter');
+const dashboardRouter = require('./controllers/dashboardRouter');
+const { requestLogger } = require('./utils/middleware');
+
+app.use(express.json());
+app.use(cors());
+app.use(morgan('tiny'));
+app.use(express.static('build'));
+app.use(requestLogger);
 
 app.use(express.json());
 app.use(express.static('build'));

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
 const friendsRouter = require('express').Router();
@@ -14,16 +13,14 @@ friendsRouter.post('/search', async (req, res) => {
 });
 
 friendsRouter.post('/sendrequest', async (req, res) => {
-    const query = new RegExp(req.body.query,'i') 
-    const user = req.body.user
-    info(user)
-    const foundUsers = await Users.find({username:query})
-    info(foundUsers)
-    const searchResults = foundUsers.filter((e) => {
-        return !user.includes(e._id.toString())
-    })
-    res.json(searchResults)
-})
+  const query = new RegExp(req.body.query, 'i');
+  const { user } = req.body;
+  info(user);
+  const foundUsers = await Users.find({ username: query });
+  info(foundUsers);
+  const searchResults = foundUsers.filter((e) => !user.includes(e._id.toString()));
+  res.json(searchResults);
+});
 
 friendsRouter.put('/', async (req, res) => {
   const query = req.body;
