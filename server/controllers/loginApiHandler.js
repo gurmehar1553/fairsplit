@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const Users = require('../modals/userModals')
 const { info } = require('../utils/logger')
 const { authorization } = require('../utils/middleware')
+const bcrypt = require('bcrypt')
 
 const SecretKey = process.env.SECRET_JWT_KEY
 
@@ -29,13 +30,10 @@ loginApiHandler.post('/', async (req, res) => {
         })
         return
     }
-    if (incommingData.password === tempUser.password) {
-        const token = jwt.sign(incommingData, SecretKey, { expiresIn: incommingData.rememberMe ? '9999d' : '1h' })
-        res.json({
-            status: true,
-            message: 'LoggedIn',
-            token,
-        })
+    const matchPass = await bcrypt.compare(incommingData.password, tempUser.password)
+    if(matchPass){
+        const token = jwt.sign(incommingData,SecretKey,{expiresIn: incommingData.rememberMe? "9999d":"1h"})
+        res.send(token)
         return
     }
     res.send({

@@ -4,27 +4,30 @@ const signupRouter = require('express').Router()
 const Users = require('../modals/userModals')
 const nodemailer = require("nodemailer");
 const UserOTPVerification = require('../modals/UserOTPVerification')
+const bcrypt = require('bcrypt')
 
 signupRouter.post('/',async (req,res)=>{
     console.log("got the hit")
-
-    const usersList = await Users.find({email:req.body.email}) 
-    if(usersList.length){
+    const {username,email,password} = req.body
+    const saltRounds=10
+    const userResults = await Users.find({$or:[{username},{email}]})
+    if(userResults.length){
         res.json({
             status : "Failed",
             message : "User with the provided email already exists"
         })
         return
     }
+    const passwordHash = await bcrypt.hash(password,saltRounds)
     const checkOTPres = await CheckOTP(req)
     console.log('OTP checking result',checkOTPres.status)
     if(checkOTPres.status){
         const newUser = new Users({
             username:req.body.username,
             email:req.body.email,
-            password:req.body.password,
+            password:passwordHash,
         })
-        const result = await newUser.save()
+        await newUser.save()
         res.send(true)
         return
     }
