@@ -42,8 +42,9 @@ function AddFriendsTab(){
 
         const friendsIds = currentUser.friends.currentFriends.map(e => e._id)
 
-        const data = {query:searchQuery.value, user:friendsIds}
+        const data = {query:searchQuery.value, user:[currentUser._id,...friendsIds]}
         const res = await postFriendsSearch(data)
+        
         setSearchResults(res)
     }
 

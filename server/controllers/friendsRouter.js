@@ -14,20 +14,16 @@ friendsRouter.post('/search', async (req, res) => {
 });
 
 friendsRouter.post('/sendrequest', async (req, res) => {
-  const data = req.body;
-  const sender = await Users.findById(data.sender);
-  const reciver = await Users.findById(data.reciver);
-  const condition = reciver.friends.pendingRequests.includes(data.sender);
-  if (condition) {
-    res.send('Requested Already');
-    return;
-  }
-  sender.friends.sentRequests.push(data.reciver);
-  reciver.friends.pendingRequests.push(data.sender);
-  sender.save();
-  reciver.save();
-  res.send('Friend Request Sent');
-});
+    const query = new RegExp(req.body.query,'i') 
+    const user = req.body.user
+    info(user)
+    const foundUsers = await Users.find({username:query})
+    info(foundUsers)
+    const searchResults = foundUsers.filter((e) => {
+        return !user.includes(e._id.toString())
+    })
+    res.json(searchResults)
+})
 
 friendsRouter.put('/', async (req, res) => {
   const query = req.body;

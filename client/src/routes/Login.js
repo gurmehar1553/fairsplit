@@ -26,7 +26,7 @@ export default function Login() {
             password: inputPass.value,
             rememberMe
         } 
-        const token = await postLogin(loginData)
+        const {token} = await postLogin(loginData)
         if(token){
             setToken(token)
             setAuth(true)
