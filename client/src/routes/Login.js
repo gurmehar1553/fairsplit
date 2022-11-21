@@ -61,9 +61,7 @@ export default function Login() {
                     </div>
                     <div className="mb-5 password-field">
                         <input className="form-control" type="password" required placeholder="Password" {...inputPass} />
-                        {/* <button type="button" name="remember"> */}
-                            <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPass}/>
-                        {/* </button> */}
+                        <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPass}/>
                     </div>
                     <div className="form-check mb-4">
                         <label className="form-check-label ">
