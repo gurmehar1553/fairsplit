@@ -1,22 +1,37 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useRef, useState} from 'react'
 import {Link, Navigate, useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
 import {postLogin, setToken} from '../serverApi/server'
 import logo from '../assets/images/logo.png'
 import AuthContext from '../utils/AuthProvider'
-// import Loader from '../components/Loader'
 
 export default function Login() {
 
     const inputEmail = useField('email')
     const inputPass = useField('password')
     const [rememberMe,setRememberMe] = useState(false)
+    const [showPass,setShowPass] = useState(false)
+
+    
 
     const navigate = useNavigate()
     const {auth,setAuth} = useContext(AuthContext)
     
     if(auth){
         return <Navigate to='/app'/>
+    }
+    
+    function handleShowPass(e){
+        inputPass.ref.current.type = !showPass ? 'type':'password'
+        const classListHere = e.target.classList
+        if (classListHere.contains('fa-eye')) {
+            classListHere.remove('fa-eye')
+            classListHere.add('fa-eye-slash')
+        } else {
+            classListHere.remove('fa-eye-slash')
+            classListHere.add('fa-eye')
+        }
+        setShowPass(!showPass)
     }
 
     async function handleSubmit(e){
@@ -34,9 +49,6 @@ export default function Login() {
         }
     }
 
-    // if(!auth){
-    //     return(<Loader />)
-    // }
     return (
         <div className='login-outer'>
             <div className="p-5 my-5 shadow  col-lg-4 col-xl-3 col-sm-12 col-md-6 main-div bg-opacity-10" id="sign-in">
@@ -47,8 +59,11 @@ export default function Login() {
                     <div className="my-5">
                         <input className="form-control" required placeholder="Username" {...inputEmail}/>
                     </div>
-                    <div className="mb-5">
-                        <input className="form-control" required placeholder="Password" {...inputPass} />
+                    <div className="mb-5 password-field">
+                        <input className="form-control" type="password" required placeholder="Password" {...inputPass} />
+                        {/* <button type="button" name="remember"> */}
+                            <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPass}/>
+                        {/* </button> */}
                     </div>
                     <div className="form-check mb-4">
                         <label className="form-check-label ">

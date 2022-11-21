@@ -319,3 +319,18 @@ span{
     border-right: none;
     border-radius: 3px 0px 0px 3px;
   }
+
+  .visibility-button{
+    position: absolute;
+    top: 0%;
+    right: 0;
+    color: gray !important;
+  }
+  .visibility-button:active{
+    position: absolute;
+    top: 0%;
+    right: 0;
+  }
+  .password-field{
+    position: relative;
+  }
