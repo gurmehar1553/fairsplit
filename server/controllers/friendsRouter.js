@@ -37,16 +37,14 @@ friendsRouter.put('/', async (req, res) => {
   const sendersSent = sender.friends.sentRequests;
   const reciverPending = reciver.friends.pendingRequests;
 
+  sender.friends.sentRequests = sendersSent.filter((e) => e.toString() !== reciver._id.toString());
+  reciver.friends.pendingRequests = reciverPending.filter((e) => e.toString() !== sender._id.toString());
   if (accDec === 'accept') {
     sender.friends.currentFriends.push(reciver._id);
-    sender.friends.sentRequests = sendersSent.filter((e) => e.toString() !== reciver._id.toString());
     reciver.friends.currentFriends.push(sender._id);
-    reciver.friends.pendingRequests = reciverPending.filter((e) => e.toString() !== sender._id.toString());
     res.json({ status: true });
   }
   if (accDec === 'reject') {
-    sender.friends.sentRequests = sendersSent.filter((e) => e.toString() !== reciver._id.toString());
-    reciver.friends.pendingRequests = reciverPending.filter((e) => e.toString() !== sender._id.toString());
     res.json({ status: false });
   }
   sender.save();
