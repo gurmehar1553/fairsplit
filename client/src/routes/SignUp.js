@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import logo from '../assets/images/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useField } from '../hooks/hooks'
@@ -8,14 +8,50 @@ import {postSignUp, sendOTP} from '../serverApi/server'
 export default function SignUp() {
 
     const inputUsername = useField('text')
-    const inputEmail = useField('email')
+    const {onChange,...inputEmail} = useField('email')
     const inputPassword = useField('password')
     const inputConfirmPassword = useField('password')
     const inputOTP = useField('number')
+    const [showPass,setShowPass] = useState(false)
+    const [showPassConfirmed,setShowPassConfirmed] = useState(false)
+    const [otpStatus,setOTPStatus] = useState(false)
 
     const navigate = useNavigate()
 
-    async function handleSendOTP(){
+    const nullCondition = otpStatus && inputUsername.value && inputPassword.value && inputEmail.value && inputConfirmPassword.value && inputOTP.value
+
+    function handleEmailOnChange(e){
+        setOTPStatus(false)
+        onChange(e)
+    }
+
+    function handleShowPass(e){
+        inputPassword.ref.current.type = !showPass ? 'type':'password'
+        const classListHere = e.target.classList
+        if (classListHere.contains('fa-eye')) {
+            classListHere.remove('fa-eye')
+            classListHere.add('fa-eye-slash')
+        } else {
+            classListHere.remove('fa-eye-slash')
+            classListHere.add('fa-eye')
+        }
+        setShowPass(!showPass)
+    }
+
+    function handleShowPassConfirmed(e){
+        inputConfirmPassword.ref.current.type = !showPassConfirmed ? 'type':'password'
+        const classListHere = e.target.classList
+        if (classListHere.contains('fa-eye')) {
+            classListHere.remove('fa-eye')
+            classListHere.add('fa-eye-slash')
+        } else {
+            classListHere.remove('fa-eye-slash')
+            classListHere.add('fa-eye')
+        }
+        setShowPassConfirmed(!showPassConfirmed)
+    }
+
+    async function handleSendOTP(e){
         if(!inputEmail.value){
             console.log('Dont send empty mails')
             return
@@ -24,8 +60,11 @@ export default function SignUp() {
             email:inputEmail.value,
         }
         const res = await sendOTP(SendingMail)
-        console.log(res)
+        if (res.status==='PENDING'){
+            setOTPStatus(true)
+        }
     }
+
     async function handleSubmit(e){
         e.preventDefault()
 
@@ -59,21 +98,27 @@ export default function SignUp() {
                         <input className="form-control" required placeholder="Username" {...inputUsername} />
                     </div>
                     <div className="mb-4 mt-3">
-                        <input className="form-control" required placeholder="Email" {...inputEmail} />
+                        <input onChange={handleEmailOnChange} className="form-control" required placeholder="Email" {...inputEmail} />
                     </div>
                     <div className='mb-4 mt-3'>
-                        <button className='btn btn-outline-success' type='button' onClick={handleSendOTP}>Send OTP</button>
+                        <button disabled={otpStatus} className='btn btn-outline-success' type='button' onClick={handleSendOTP}>
+                            {otpStatus ?'sent':'Send OTP'}
+                        </button>
                     </div>
                     <div className="mb-4">
                         <input className="form-control" required placeholder="OTP" {...inputOTP} />
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-4 password-field">
                         <input className="form-control" required placeholder="Password" {...inputPassword} />
+                        <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPass}/>
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-4 password-field">
                         <input className="form-control" required placeholder="Confirm Password" {...inputConfirmPassword} />
+                        <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPassConfirmed}/>
                     </div>
-                    <button type="submit" className="btn btn-success w-100 mb-4">Sign Up</button>
+                    <button type="submit" className={`btn btn-success ${!nullCondition && 'disabled'} w-100 mb-4`}>
+                        Sign Up
+                    </button>
                 </form>
                 <p className="">Already have an account? <Link id="signInLink" to='/login'>Login</Link></p>
             </div>
