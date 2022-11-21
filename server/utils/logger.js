@@ -1,18 +1,22 @@
-require('dotenv').config()
+require('dotenv').config();
 
-var NodeMode=true;
-const envMode = process.env.NODE_ENV
+let NodeMode = true;
+const envMode = process.env.NODE_ENV;
 
-if(envMode === 'production'){
-    console.log('Production Mode')
-    NodeMode = false
+if (envMode === 'production') {
+  console.log('Production Mode');
+  NodeMode = false;
 }
 
-function info(...arguments){
-    NodeMode? console.log(...arguments):''
+function info(...args) {
+  if (NodeMode) {
+    console.log(...args);
+  }
 }
-function ShowError(...arguments){
-    NodeMode? console.error(...arguments):''
+function ShowError(...args) {
+  if (NodeMode) {
+    console.error(...args);
+  }
 }
 
-module.exports = {info,ShowError}
+module.exports = { info, ShowError };

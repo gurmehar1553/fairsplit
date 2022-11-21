@@ -1,97 +1,76 @@
-const {info}=require("../utils/logger");
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
+/* eslint-disable max-len */
+const { info } = require('../utils/logger');
 
-function coordinateValue(arr,a,b){
-    const n=arr.length;
-    for(let i=0;i<n;i++){
-        if(arr[i][0]!==a){
-            continue
+function coordinateValue(arr, a, b) {
+  const n = arr.length;
+  for (let i = 0; i < n; i++) {
+    if (arr[i][0] === a) {
+      for (let j = 0; j < arr[0].length; j++) {
+        if (arr[0][j] === b) {
+          return arr[i][j];
         }
-        else{
-            for(let j=0;j<arr[0].length;j++){
-                if(arr[0][j]===b){
-                    return arr[i][j]
-                }
+      }
+    }
+  }
+  return false;
+}
+function addValues(ans, newarr, query) {
+  newarr.forEach((ele) => {
+    info('ele ->', ele);
+    const name = ele[0];
+    let amt = ele[1];
+    const borrowers = ele[2];
+    const borrLen = borrowers.length;
+    amt = parseFloat((amt / borrLen).toFixed(2));
+    for (let i = 1; i < ans[0].length; i++) {
+      if (ans[i][0] === name) {
+        borrowers.forEach((eleB) => {
+          info('Element: ', eleB);
+          for (let j = 1; j <= ans[0].length; j++) {
+            if (ans[0][j] === eleB) {
+              ans[i][j] += amt;
             }
-        }
+          }
+        });
+      }
     }
-}
-function lent(ans,a){
-    var amt=0;
-    for(let i=0;i<ans[0].length;i++){
-        if(ans[0][i]==='.' || ans[i][0]===a){
-            continue
-        }
-        amt+=coordinateValue(ans,a,ans[0][i]);
+  });
+  info(ans);
+  const ansArr = [];
+  for (let i = 1; i < ans[0].length; i++) {
+    const result = coordinateValue(ans, ans[0][i], query) - coordinateValue(ans, query, ans[0][i]);
+    if (result !== 0) {
+      const obj = {
+        action: result < 0,
+        amount: Math.abs(result),
+        to: ans[0][i],
+      };
+      ansArr.push(obj);
     }
+  }
+  info(ansArr);
+  return ansArr;
 }
-function borrow(ans,a){
-    const n=ans.length;
-    var amt=0;
-    for(let i=0;i<n;i++){
-        if(ans[i][0]==='.' || ans[i][0]===a){
-            continue
-        }
-        amt+=coordinateValue(ans,ans[i][0],a);
-    }
-    
-    
-}
-function addValues(ans,newarr,query){
-    newarr.forEach((ele)=>{
-        info('ele ->',ele)
-        var [name,amt,borrowers]=ele;
-        const borr_len=borrowers.length;
-        amt=parseFloat((amt/borr_len).toFixed(2));
-        for(let i=1;i<ans[0].length;i++){
-            if(ans[i][0]===name){
-                borrowers.forEach((ele)=>{
-                    info("Element: ",ele )
-                    for(let j=1;j<=ans[0].length;j++){
-                        if(ans[0][j]===ele){
-                            ans[i][j]+=amt;
-                        }
-                    }
-                })
-            }
-        }
-    })
-    info(ans)
-    // lent(ans,query)
-    // borrow(ans,query)
-    let ans_arr=[]
-    for(let i=1;i<ans[0].length;i++){
-        const result=coordinateValue(ans,ans[0][i],query)-coordinateValue(ans,query,ans[0][i])
-        if(result === 0){
-            continue
-        }
-        let obj={
-            action:result<0,
-            amount:Math.abs(result),
-            to:ans[0][i]
-        }
-        ans_arr.push(obj)
-    }
-    info(ans_arr)
-    return ans_arr
-}
-function makeUnfilledArray(newarr,query){
-    const allNames = newarr.reduce((arr,e)=> arr.concat(e[2]),[])
-    const [...NamesSet] = new Set(allNames)
-    const ans=[['.',...NamesSet]]
-    const len=NamesSet.length
+function makeUnfilledArray(newarr, query) {
+  const allNames = newarr.reduce((arr, e) => arr.concat(e[2]), []);
+  const [...NamesSet] = new Set(allNames);
+  const ans = [['.', ...NamesSet]];
+  const len = NamesSet.length;
 
-    info("set of users:",NamesSet)
+  info('set of users:', NamesSet);
 
-    NamesSet.forEach(ele => {
-        const t= new Array(len).fill(0)
-        ans.push([ele,...t])
-    })
-    
-    return addValues(ans,newarr,query)
+  NamesSet.forEach((ele) => {
+    const t = new Array(len).fill(0);
+    ans.push([ele, ...t]);
+  });
+
+  return addValues(ans, newarr, query);
 }
-function solve(arr,query){
-    const transformedArr = arr.map(({lenders, amt_lent ,borrowers})=> [lenders,parseInt(amt_lent),borrowers])
-    return makeUnfilledArray(transformedArr,query)   
+function solve(arr, query) {
+  const transformedArr = arr.map(({ lenders, amtLent, borrowers }) => [lenders, parseInt(amtLent, 10), borrowers]);
+  return makeUnfilledArray(transformedArr, query);
 }
 
-module.exports=solve
+module.exports = solve;
