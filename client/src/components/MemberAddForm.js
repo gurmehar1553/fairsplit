@@ -15,7 +15,6 @@ function MembersFormInput(){
     if(!friends.length){
         return(<div>No friends to add...</div>)
     }
-    // console.log(friends)
     return(
         <select name='inputMembersFromFriends' className='form-control w-100'>
             {friends.map((e,i) => <MembersFormInputOptions key={e._id + i} data={e} />)}

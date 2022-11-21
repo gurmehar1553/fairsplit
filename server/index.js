@@ -1,19 +1,23 @@
 require('dotenv').config()
 
 const express = require('express')
-const app = express()
-const mongoose = require('mongoose')
+const morgan = require('morgan')
 const cors = require('cors');
+const mongoose = require('mongoose')
+const app = express()
 const path = require('path');
 const loginApiHandler = require('./controllers/loginApiHandler.js');
 const signupRouter = require('./controllers/signupRouter.js');
 const friendsRouter = require('./controllers/friendsRouter.js');
 const dashboardRouter = require('./controllers/dashboardRouter.js');
-const {info}=require('console');
+const { info } = require('console');
+const { requestLogger } = require('./utils/middleware.js')
 
 app.use(express.json())
-app.use(express.static("build"))
 app.use(cors())
+app.use(morgan('tiny'))
+app.use(express.static("build"))
+app.use(requestLogger)
 
 mongoose.connect(process.env.DATABASE_URL).then(()=>{
     info('Connected to Mongoose Database')
