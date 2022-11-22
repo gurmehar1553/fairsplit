@@ -39,9 +39,11 @@ function authorization(req, res, next) {
 }
 
 function requestLogger(req, res, next) {
+  info('');
   info('Method:', req.method);
   info('Path', req.path);
   info('Body', req.body);
+  info('');
   next();
 }
 

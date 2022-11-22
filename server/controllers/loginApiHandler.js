@@ -26,13 +26,18 @@ loginApiHandler.post('/', async (req, res) => {
     res.send({
       status: false,
       message: 'This account does not exist...',
+      token: null,
     });
     return;
   }
   const matchPass = await bcrypt.compare(incommingData.password, tempUser.password);
   if (matchPass) {
     const token = jwt.sign(incommingData, SecretKey, { expiresIn: incommingData.rememberMe ? '9999d' : '1h' });
-    res.send(token);
+    res.send({
+      status: true,
+      message: 'Logging in',
+      token,
+    });
     return;
   }
   res.send({

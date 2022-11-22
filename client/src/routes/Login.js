@@ -41,12 +41,13 @@ export default function Login() {
             password: inputPass.value,
             rememberMe
         } 
-        const {token} = await postLogin(loginData)
-        if(token){
-            setToken(token)
+        const authData = await postLogin(loginData)
+        if(authData.status){
+            setToken(authData.token)
             setAuth(true)
             navigate('/app')
         }
+        console.log(authData)
     }
 
     return (
