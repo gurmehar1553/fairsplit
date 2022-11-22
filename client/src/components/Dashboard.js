@@ -21,7 +21,6 @@ function MainForm(props){
     </div>
   )
 }
-
 function EachResult({data}){
   return(
     <div className=''>
@@ -29,7 +28,6 @@ function EachResult({data}){
     </div>
   )
 }
-
 function CurrentMembers({members}){
   return(
     <div className='col-md-3'>
