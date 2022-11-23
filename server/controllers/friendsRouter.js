@@ -23,8 +23,8 @@ friendsRouter.post('/sendrequest', async (req, res) => {
   }
   sender.friends.sentRequests.push(data.reciver);
   reciver.friends.pendingRequests.push(data.sender);
-  sender.save();
-  reciver.save();
+  await sender.save();
+  await reciver.save();
   res.send('Friend Request Sent');
 });
 
@@ -41,13 +41,15 @@ friendsRouter.put('/', async (req, res) => {
   if (accDec === 'accept') {
     sender.friends.currentFriends.push(reciver._id);
     reciver.friends.currentFriends.push(sender._id);
+    await sender.save();
+    await reciver.save();
     res.json({ status: true });
   }
   if (accDec === 'reject') {
+    await sender.save();
+    await reciver.save();
     res.json({ status: false });
   }
-  sender.save();
-  reciver.save();
 });
 
 friendsRouter.put('/removeFriend', async (req, res) => {

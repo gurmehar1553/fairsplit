@@ -5,6 +5,7 @@ import Login from "./routes/Login";
 import LandingPage from "./routes/LandingPage";
 import SignUp from "./routes/SignUp"
 import Profile from "./routes/Profile";
+import GroupsForm from "./components/GroupsForm";
 
 function RouterComp() {
   return (
@@ -16,6 +17,7 @@ function RouterComp() {
             <Route path='/app' element={<MainBoard/>} exact />
             <Route path="/signup" element={<SignUp />} exact />
             <Route path="/profile" element={<Profile />} exact />
+            <Route path="/groupsform" element={<GroupsForm />} exact />
           </Routes>
         </Router>
       </div>
