@@ -1,19 +1,20 @@
-const dashboardRouter = require('express').Router()
-const solve = require('../logic/logic.js')
+/* eslint-disable no-underscore-dangle */
+const dashboardRouter = require('express').Router();
+const solve = require('../logic/logic');
+const { info } = require('../utils/logger');
 
-dashboardRouter.post('/handlePost',(request,response)=>{
-    const transaction = request.body
-    console.log("transaction",transaction)
-    let obj=transaction
-    const query=obj.pop()
-    var input= obj.map((ele)=>{
-        var str=`${ele.lenders}-${ele.amt_lent}-${ele.borrowers.join(",")}`
-        console.log(str)
-        return str
-    })
-    const final_arr = solve([...input,query])
-    console.log(final_arr)
-    response.json(final_arr)
-})
+dashboardRouter.post('/handlePost', async (req, res) => {
+  info('Req on handlePost');
+  const obj = req.body;
+  const { expenses, query, members } = obj;
+  const mappedMembers = members.map((e) => e._id.toString());
+  const finalArr = solve(expenses, query, mappedMembers);
 
-module.exports = dashboardRouter
+  // eslint-disable-next-line no-return-assign, prefer-destructuring
+  const userifiedFinalArr = finalArr.map((e) => ({ ...e, to: members.filter(({ _id }) => _id.toString() === e.to)[0] }));
+  info('userifiedFinalArr', userifiedFinalArr);
+
+  res.json(userifiedFinalArr);
+});
+
+module.exports = dashboardRouter;

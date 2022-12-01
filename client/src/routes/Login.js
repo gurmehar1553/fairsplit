@@ -10,12 +10,28 @@ export default function Login() {
     const inputEmail = useField('email')
     const inputPass = useField('password')
     const [rememberMe,setRememberMe] = useState(false)
+    const [showPass,setShowPass] = useState(false)
+
+    
 
     const navigate = useNavigate()
     const {auth,setAuth} = useContext(AuthContext)
     
     if(auth){
         return <Navigate to='/app'/>
+    }
+    
+    function handleShowPass(e){
+        inputPass.ref.current.type = !showPass ? 'type':'password'
+        const classListHere = e.target.classList
+        if (classListHere.contains('fa-eye')) {
+            classListHere.remove('fa-eye')
+            classListHere.add('fa-eye-slash')
+        } else {
+            classListHere.remove('fa-eye-slash')
+            classListHere.add('fa-eye')
+        }
+        setShowPass(!showPass)
     }
 
     async function handleSubmit(e){
@@ -25,14 +41,14 @@ export default function Login() {
             password: inputPass.value,
             rememberMe
         } 
-        const token = await postLogin(loginData)
-        if(token){
-            setToken(token)
+        const authData = await postLogin(loginData)
+        if(authData.status){
+            setToken(authData.token)
             setAuth(true)
-            navigate('/app')
+            navigate('/profile')
         }
+        console.log(authData)
     }
-
 
     return (
         <div className='login-outer'>
@@ -44,8 +60,9 @@ export default function Login() {
                     <div className="my-5">
                         <input className="form-control" required placeholder="Username" {...inputEmail}/>
                     </div>
-                    <div className="mb-5">
-                        <input className="form-control" required placeholder="Password" {...inputPass} />
+                    <div className="mb-5 password-field">
+                        <input className="form-control" type="password" required placeholder="Password" {...inputPass} />
+                        <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPass}/>
                     </div>
                     <div className="form-check mb-4">
                         <label className="form-check-label ">

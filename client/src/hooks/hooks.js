@@ -1,7 +1,9 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 function useField(type){
     const [value, setValue] = useState('');
+
+    const ref = useRef()
 
     function onChange(e){
         if(e===''){
@@ -10,10 +12,12 @@ function useField(type){
         }
         setValue(e.target.value)
     }
+
     return ({
         value,
         onChange,
-        type
+        type,
+        ref
     })
 }
 

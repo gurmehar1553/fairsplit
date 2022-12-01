@@ -22,8 +22,8 @@ async function postLogin(data){
     return response.data
 }
 async function verifyAuth(){
-    const varification = await axios.get(URL+'login',{headers:{Authorization: token}})
-    return varification.data
+    const verification = await axios.get(URL+'login',{headers:{Authorization: token}})
+    return verification.data
 }
 async function postSignUp(data){
     const res = await axios.post(URL + 'signup',data)
@@ -33,5 +33,57 @@ async function postFriendsSearch(data){
     const res = await axios.post(URL + 'friends/search',data)
     return res.data
 }
+async function sendFriendRequest(data){
+    const res = await axios.post(URL + 'friends/sendrequest',data)
+    return res.data
+}
+async function requestAcceptReject(data){
+    const res = await axios.put(URL + 'friends',data)
+    return res.data
+}
+async function removeFriend(data){
+    const res = await axios.put(URL + 'friends/removefriend',data)
+    return res.data
+}
+async function sendOTP(data){
+    const res = await axios.post(URL + 'signup/sendOTP',data)
+    return res.data
+}
+async function groupsData(data){
+    const res = await axios.post(URL + 'groups',data,{headers:{Authorization: token}})
+    return res.data
+}
+async function getGroupData(id){
+    const res = await axios.get(URL + 'groups/' + id )
+    return res.data
+}
+async function updateGroupDataExpense(id,data){
+    const res = await axios.put(URL + 'groups/' + id, data)
+    return res.data
+}
+async function deleteGroupDataExpense(id,eid){
+    const res = await axios.delete(URL + 'groups/' + id + '/expense/' + eid)
+    return res.data
+}
+async function deleteGroupReq(id){
+    const res = await axios.delete(URL+ 'groups/'+id,{headers:{Authorization: token}})
+    return res.data
+}
 
-export { postResult,postLogin,verifyAuth,setToken,postSignUp,postFriendsSearch }
+export { 
+    postResult,
+    postLogin,
+    verifyAuth,
+    setToken,
+    postSignUp,
+    postFriendsSearch,
+    sendFriendRequest,
+    requestAcceptReject,
+    removeFriend,
+    sendOTP,
+    groupsData,
+    getGroupData,
+    updateGroupDataExpense,
+    deleteGroupDataExpense,
+    deleteGroupReq,
+}

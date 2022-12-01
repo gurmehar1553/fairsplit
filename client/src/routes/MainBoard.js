@@ -1,38 +1,34 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Header from '../components/Header'
 import Dashboard from '../components/Dashboard'
-import {useContext, useState} from 'react';
-import Loader from '../components/Loader';
+import {useContext, useEffect, useState} from 'react';
 import {Navigate} from 'react-router-dom';
 import AuthContext from '../utils/AuthProvider';
-
-const theUser = {
-  name:'You',
-  id:'00000'
-}
+import {getGroupData} from '../serverApi/server';
 
 function MainBoard() {
 
-  const [members, setMembers] = useState([theUser])
+  const {auth,currentUser} = useContext(AuthContext)
+  const defaultUser = currentUser? {name:currentUser.username,id:currentUser._id,groups:currentUser.groups}:{name:'...loading',id:null}
+  const [group , setGroup] = useState({id:null, members:[]})
   const [expenses,setExpenses] = useState([])
 
-  const {auth} = useContext(AuthContext)
-
-  console.log(auth)
-
+  useEffect(()=>{
+    if(auth && defaultUser.groups[0]){
+      getGroupData(defaultUser.groups[0]._id.toString()).then(e =>{
+        setGroup(e)
+        setExpenses(e.expenses)
+      })
+    }
+  },[auth,setGroup])
   if(!auth){
     return <Navigate to='/login'/>
   }
   
-  const props = {
-    setMembers,
-    members,
-    setExpenses,
-    expenses
-  }
+  const props = { setGroup, group, setExpenses, expenses}
 
   return (
     <div className="App">
-      <Loader />
       <Header />
       <Dashboard {...props} />
     </div>

@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
+    "prod": "cross-env NODE_ENV=production nodemon index.js",
     "start": "node index.js",
+    "lint": "npx eslint .",
+    "lintFix": "npx eslint . --fix",
     "getUi": "rm -rf build && cd ../client && npm run build && cp build ../server"
   },
   "author": "Gurmehar and Jastagar",
@@ -19,7 +22,18 @@
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.3",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.8.0",
     "nodemon": "^2.0.19",
     "react-cookie": "^4.1.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.27.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

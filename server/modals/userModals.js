@@ -1,29 +1,37 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    username:String,
-    email:String,
-    password:String,
-    friends: 
+  username: String,
+  email: String,
+  password: String,
+  groups: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Group',
+  }],
+  friends:
     {
-        currentFriends:[
-            {
-                userId:mongoose.Schema.Types.ObjectId,
-            }
-        ],
-        pendingRequests:[
-            {
-                userId:mongoose.Schema.Types.ObjectId,
-            }
-        ],
-        sentRequests:[
-            {
-                userId:mongoose.Schema.Types.ObjectId,
-            }
-        ]
-    }
-})
+      currentFriends: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      ],
+      pendingRequests: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      ],
+      sentRequests: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      ],
+    },
+  verified: Boolean,
+});
 
-const Users = mongoose.model('User',userSchema)
+const Users = mongoose.model('User', userSchema);
 
-module.exports = Users
+module.exports = Users;
