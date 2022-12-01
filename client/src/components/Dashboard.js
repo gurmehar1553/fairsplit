@@ -1,7 +1,8 @@
 import React, {useContext, useState} from 'react'
+import { Link } from 'react-router-dom'
 import Toggelable from './Toggelable'
 import ExpenseForm from './ExpenseForm'
-import {getGroupData, postResult} from '../serverApi/server'
+import {deleteGroupReq, getGroupData, postResult} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 function MainForm({groups,setGroup,...props}){
@@ -20,7 +21,8 @@ function MainForm({groups,setGroup,...props}){
   )
 }
 function GroupsNav({groups,setGroup,setExpenses}){
-  const [activeGroup,setActiveGroup] = useState(groups[0]._id.toString());
+  console.log(groups)
+  const [activeGroup,setActiveGroup] = useState(groups[0]? groups[0]._id.toString():'');
 
   const props={
     setActiveGroup,
@@ -30,13 +32,17 @@ function GroupsNav({groups,setGroup,setExpenses}){
   }
 
   return(
-    <div className='list-group'>
-      {groups.map((e,i) => <EachGroupInGroupNav key={e._id + 'GroupsKey' + i} data={e} {...props} />)}
+    <div>
+      <div className='list-group'>
+        {groups && groups.map((e,i) => <EachGroupInGroupNav key={e._id + 'GroupsKey' + i} data={e} {...props} />)}
+      </div>
+      <Link className='btn loginBtn my-auto' to='/groupsForm'>Add Group</Link>
     </div>
   )
 }
 function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpenses}){
   const condition = data._id.toString() === activeGroup
+
   async function handleChangeActiveGroup(){
     if(condition){
       return
@@ -47,14 +53,27 @@ function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpens
     setActiveGroup(data._id)
     setExpenses([...newGroupData.expenses])
   }
+
+  async function deleteGroup(){
+    const res = await deleteGroupReq(data._id.toString())
+    console.log(res)
+  }
+
   return(
-    <div onClick={handleChangeActiveGroup} className={`list-group-item ${condition? 'active':''} `}>{data.name}</div>
+    <div className={`list-group-item ${condition? 'active':''} `}>
+      <div className='d-flex justify-content-between align-items-center'>
+        <div onClick={handleChangeActiveGroup} className='EachGroupNav'>{data.name}</div>
+        <button className='btn btn-danger' onClick={deleteGroup}>
+          <i className="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
   )
 }
 function EachResult({data}){
   return(
     <div className=''>
-      You {data.action? 'lent':'borrowed'} Rs. {data.amount} {data.action? "to":"from"} {data.to.username}
+      You {data.action? 'need to take back':'need to pay'} Rs. {data.amount} {!data.action? "to":"from"} {data.to.username}
     </div>
   )
 }

@@ -18,7 +18,7 @@ function LogoutBtn(){
   }
 
   return(
-    <div className='d-flex justify-content-around mx-5 gap-1' style={{width:'15%'}}>
+    <div className='d-flex flex-wrap justify-content-around mx-5 gap-1'>
         <Link className='loginBtn my-auto' to='/app'>App</Link>
         <Link className='loginBtn my-auto' to='/profile'>Profile</Link>
         <button onClick={handleLogout} className='loginBtn my-auto'>LogOut</button>
@@ -28,7 +28,7 @@ function LogoutBtn(){
 
 function LoginSignupBtn(){
   return(
-    <div className='d-flex justify-content-around mx-5' style={{width:'15%'}}>
+    <div className='d-flex flex-wrap justify-content-around mx-5 gap-1'>
         <Link className='loginBtn my-auto' to='/login'>Login</Link>
         <Link className='loginBtn my-auto' to='/signup'>SignUp</Link>
     </div>

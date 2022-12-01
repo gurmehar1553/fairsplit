@@ -10,11 +10,13 @@ if (envMode === 'production') {
 
 function info(...args) {
   if (NodeMode) {
+    console.log('-------------------------------------------------------------------');
     console.log(...args);
   }
 }
 function ShowError(...args) {
   if (NodeMode) {
+    console.log('-------------------------------------------------------------------');
     console.error(...args);
   }
 }

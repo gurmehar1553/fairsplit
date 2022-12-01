@@ -10,7 +10,7 @@ function MainBoard() {
 
   const {auth,currentUser} = useContext(AuthContext)
   const defaultUser = currentUser? {name:currentUser.username,id:currentUser._id,groups:currentUser.groups}:{name:'...loading',id:null}
-  const [group , setGroup] = useState({members:[]})
+  const [group , setGroup] = useState({id:null, members:[]})
   const [expenses,setExpenses] = useState([])
   console.log(defaultUser)
 

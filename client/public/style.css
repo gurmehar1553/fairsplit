@@ -334,3 +334,7 @@ span{
   .password-field{
     position: relative;
   }
+
+  .EachGroupNav:hover{
+    cursor: pointer;
+  }

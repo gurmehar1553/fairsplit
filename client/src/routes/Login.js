@@ -45,7 +45,7 @@ export default function Login() {
         if(authData.status){
             setToken(authData.token)
             setAuth(true)
-            navigate('/groupsform')
+            navigate('/profile')
         }
         console.log(authData)
     }

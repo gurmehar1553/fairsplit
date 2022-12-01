@@ -73,7 +73,7 @@ function AddFriendsTab(){
 function FriendRequestsTab({friends}){
     if(friends.pendingRequests.length === 0){
         return (
-        <div className="card mb-4 mb-md-0 h-100">
+        <div className="card mb-4 mb-md-0">
             <div className="card-body">
                 <h5>New Requests</h5>
                 <hr/>
@@ -211,7 +211,7 @@ function EachFriend({data}){
                 </h4>
             </div>
             <div>
-                <button onClick={handleRemoveFriend} className='btn btn-danger'>Remove friend <i className="fas fa-trash-alt"></i></button>
+                <button onClick={handleRemoveFriend} className='btn btn-danger'>Remove <i className="fas fa-trash-alt"></i></button>
             </div>
         </div>
     )

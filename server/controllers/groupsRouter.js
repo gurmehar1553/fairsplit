@@ -15,7 +15,7 @@ groupsRouter.post('/', authorization, async (req, res) => {
   members.forEach(async (e) => {
     const usr = await Users.findById(e);
     usr.groups.push(modeledGroupData._id);
-    usr.save();
+    await usr.save();
     info(usr);
   });
 
@@ -47,6 +47,27 @@ groupsRouter.put('/:id', async (req, res) => {
   info('Saved User', populatedGroup);
   res.send(populatedGroup);
   // res.send(group);
+});
+
+groupsRouter.delete('/:id', authorization, async (req, res) => {
+  const { id } = req.params;
+  const { user } = req.authData;
+  info(id);
+  info(user);
+  const group = await Groups.findById(id);
+  info(group);
+  if (group.leader._id.toString() === user._id.toString()) {
+    await group.remove();
+    res.send({
+      status: true,
+      message: 'Group Deleted',
+    });
+    return;
+  }
+  res.send({
+    status: false,
+    message: 'Only leader can delete the group',
+  });
 });
 
 module.exports = groupsRouter;

@@ -1,6 +1,5 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext} from 'react'
 import {useNavigate} from 'react-router-dom'
-// import { v4 as genertateId } from 'uuid'
 import {useField} from '../hooks/hooks'
 import {groupsData} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
@@ -24,7 +23,7 @@ function MembersFormInput({user}){
         return(<div>No friends to add...</div>)
     }
     return(
-        <ul>
+        <ul className='list-group'>
             {friends.map((e,i) => <MembersFormInputOptions key={e._id + i} data={e} />)}
         </ul>
     )
@@ -66,10 +65,10 @@ export default function MemberAddForm() {
         <form className='form p-4' onSubmit={handleSubmit}>
             <h1>New Members</h1>
             <div className="my-5">
-                <input className='form-control' required {...nameField} />
+                <input placeholder='Group Name' className='form-control' required {...nameField} />
             </div>
             <div className="my-5">
-                <textarea className='form-control' required {...descriptionField} />
+                <textarea placeholder='Description' className='form-control' required {...descriptionField} />
             </div>
             <MembersFormInput user={currentUser} />
             <button className='btn loginBtn my-2' type='submit'>Create Group</button>
