@@ -1,6 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
-/* eslint-disable max-len */
 const { info } = require('../utils/logger');
 
 function coordinateValue(arr, a, b) {
@@ -17,9 +17,10 @@ function coordinateValue(arr, a, b) {
   return false;
 }
 function addValues(ans, newarr, query) {
+  console.log('incomming newArr', newarr);
   newarr.forEach((ele) => {
     info('ele ->', ele);
-    const name = ele[0];
+    const name = ele[0][0];
     let amt = ele[1];
     const borrowers = ele[2];
     const borrLen = borrowers.length;
@@ -37,10 +38,11 @@ function addValues(ans, newarr, query) {
       }
     }
   });
-  info(ans);
+  info('prevArr', ans);
   const ansArr = [];
   for (let i = 1; i < ans[0].length; i++) {
     const result = coordinateValue(ans, ans[0][i], query) - coordinateValue(ans, query, ans[0][i]);
+    info(result);
     if (result !== 0) {
       const obj = {
         action: result < 0,
@@ -50,27 +52,26 @@ function addValues(ans, newarr, query) {
       ansArr.push(obj);
     }
   }
-  info(ansArr);
+  info('Answer Array', ansArr);
   return ansArr;
 }
-function makeUnfilledArray(newarr, query) {
-  const allNames = newarr.reduce((arr, e) => arr.concat(e[2]), []);
-  const [...NamesSet] = new Set(allNames);
-  const ans = [['.', ...NamesSet]];
-  const len = NamesSet.length;
+function makeUnfilledArray(newarr, query, members) {
+  console.log('Members -> ', members);
+  const ans = [['.', ...members]];
+  const len = members.length;
 
-  info('set of users:', NamesSet);
+  info('set of users:', members);
 
-  NamesSet.forEach((ele) => {
+  members.forEach((ele) => {
     const t = new Array(len).fill(0);
     ans.push([ele, ...t]);
   });
 
   return addValues(ans, newarr, query);
 }
-function solve(arr, query) {
-  const transformedArr = arr.map(({ lenders, amtLent, borrowers }) => [lenders, parseInt(amtLent, 10), borrowers]);
-  return makeUnfilledArray(transformedArr, query);
+function solve(arr, query, members) {
+  const transformedArr = arr.map(({ paidBy, amount, paidTo }) => [paidBy.map((e) => e._id.toString()), parseInt(amount, 10), paidTo.map((e) => e._id.toString())]);
+  return makeUnfilledArray(transformedArr, query, members);
 }
 
 module.exports = solve;

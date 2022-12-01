@@ -4,6 +4,10 @@ const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
+  groups: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Group',
+  }],
   friends:
     {
       currentFriends: [

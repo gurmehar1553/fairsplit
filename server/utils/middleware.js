@@ -32,16 +32,18 @@ function authorization(req, res, next) {
           { path: 'pendingRequests', select: ['username', '_id'] },
           { path: 'currentFriends', select: ['username', '_id'] },
         ],
-      });
+      }).populate('groups', { name: 1 });
     req.authData = { authStatus: true, user: userData, err: null };
     next();
   });
 }
 
 function requestLogger(req, res, next) {
+  info('');
   info('Method:', req.method);
   info('Path', req.path);
   info('Body', req.body);
+  info('');
   next();
 }
 
