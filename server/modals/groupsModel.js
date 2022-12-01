@@ -13,6 +13,7 @@ const groupsSchema = new mongoose.Schema({
   }],
   expenses: [{
     name: String,
+    id: String,
     paidBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     paidTo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     amount: Number,

@@ -32,6 +32,21 @@ groupsRouter.get('/:id', async (req, res) => {
   res.send(group);
 });
 
+groupsRouter.delete('/:id/expense/:eid', async (req, res) => {
+  const { id, eid } = req.params;
+  const group = await Groups.findById(id);
+  info(group);
+  group.expenses = group.expenses.filter((e) => e.id !== eid);
+  info(group);
+  await group.save();
+  const populatedGroup = await Groups.findById(id)
+    .populate({ path: 'expenses', populate: [{ path: 'paidBy' }, { path: 'paidTo' }] })
+    .populate('members');
+  info('Saved User', populatedGroup);
+  res.send(populatedGroup);
+  // res.send(group);
+});
+
 groupsRouter.put('/:id', async (req, res) => {
   const { id } = req.params;
   const expense = req.body;

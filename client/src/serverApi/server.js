@@ -61,6 +61,10 @@ async function updateGroupDataExpense(id,data){
     const res = await axios.put(URL + 'groups/' + id, data)
     return res.data
 }
+async function deleteGroupDataExpense(id,eid){
+    const res = await axios.delete(URL + 'groups/' + id + '/expense/' + eid)
+    return res.data
+}
 async function deleteGroupReq(id){
     const res = await axios.delete(URL+ 'groups/'+id,{headers:{Authorization: token}})
     return res.data
@@ -80,5 +84,6 @@ export {
     groupsData,
     getGroupData,
     updateGroupDataExpense,
+    deleteGroupDataExpense,
     deleteGroupReq,
 }

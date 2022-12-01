@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 import { Link } from 'react-router-dom'
 import Toggelable from './Toggelable'
 import ExpenseForm from './ExpenseForm'
-import {deleteGroupReq, getGroupData, postResult} from '../serverApi/server'
+import {deleteGroupDataExpense, deleteGroupReq, getGroupData, postResult} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 function MainForm({groups,setGroup,...props}){
@@ -21,7 +21,6 @@ function MainForm({groups,setGroup,...props}){
   )
 }
 function GroupsNav({groups,setGroup,setExpenses}){
-  console.log(groups)
   const [activeGroup,setActiveGroup] = useState(groups[0]? groups[0]._id.toString():'');
 
   const props={
@@ -87,22 +86,32 @@ function CurrentMembers({group}){
       </div>
   )
 }
-function EachExpenseItem({expense}){
-  console.log(expense)
+function EachExpenseItem({expense, group, setExpenses}){
+  async function handleDeleteFuntion(){
+    const res = await deleteGroupDataExpense(group._id.toString(),expense.id)
+    setExpenses(res.expenses)
+  }
+
   return(
     <li className='list-group-item'>
-      <div className='d-flex flex-column'>
-          <div>Spent <strong>Rs.{expense.amount}</strong> at <strong>{expense.name}</strong></div>
-          <div className='ms-3'>
-            <div><strong>PaidBy</strong>:  {expense.paidBy.map(e => e.username).join(',  ')}</div>
-            <div><strong>PaidTo</strong>:  {expense.paidTo.map(e => e.username).join(',  ')}</div>
+      <div className='d-flex justify-content-between'>
+          <div>
+            <div>Spent <strong>Rs.{expense.amount}</strong> at <strong>{expense.name}</strong></div>
+            <div className='ms-3'>
+              <div><strong>PaidBy</strong>:  {expense.paidBy.map(e => e.username).join(',  ')}</div>
+              <div><strong>PaidTo</strong>:  {expense.paidTo.map(e => e.username).join(',  ')}</div>
+            </div>
+          </div>
+          <div>
+            <button onClick={handleDeleteFuntion} className='btn btn-danger'>
+              <i className="fas fa-trash-alt"></i>
+            </button>
           </div>
       </div>
     </li>
   )
 }
-function Expenses({expenses}){
-
+function Expenses({expenses, group, setExpenses}){
   if(expenses.length === 0){
     return(
       <div className='col-md-9'>
@@ -118,7 +127,7 @@ function Expenses({expenses}){
       <ul className='list-group'>
         {expenses && expenses.map((e) => {
           return (
-            <EachExpenseItem key={e._id} expense={e}/>
+            <EachExpenseItem key={e._id} expense={e} group={group} setExpenses={setExpenses} />
           )
         })}
       </ul>
@@ -156,7 +165,7 @@ export default function Dashboard({group, setGroup, expenses, setExpenses }) {
           <MainForm {...props} />
           <div className='col-md-9 row'>
             <CurrentMembers group={group} />
-            <Expenses expenses={expenses} />
+            <Expenses expenses={expenses} group={group} setExpenses={setExpenses} />
             <div className='text-center m-3'>
               <button className='btn btn-outline-primary' onClick={prePostObjectConctatination}>
                 Calculate
