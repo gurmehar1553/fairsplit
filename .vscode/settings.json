@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/09c851ff-ec9c-4596-b39f-c22abbd15999/AppServices/subscriptions/09c851ff-ec9c-4596-b39f-c22abbd15999/resourceGroups/fairsplit_group/providers/Microsoft.Web/sites/fairsplit",
+    "appService.deploySubpath": "server"
+}
