@@ -8,7 +8,8 @@ export function AuthProvider({children}) {
     const [currentUser,setUser] = useState(null)
 
     async function getAuth(){
-        const {authStatus,user} =await verifyAuth()
+        const {authStatus,user,err} =await verifyAuth()
+        console.log(err? err:'No errors')
         if(authStatus){
             setAuth(true)
             setUser(user)

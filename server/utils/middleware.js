@@ -10,17 +10,14 @@ function authorization(req, res, next) {
   const token = authHeader && authHeader.split(' ')[1];
   info('Incomming Token ->>', token);
   if (token == null) {
-    info(false);
-    res.json({ authStatus: false, user: null });
+    res.json({ authStatus: false, user: null, err: 'There is no token' });
     return;
   }
 
   jwt.verify(token, SecretKey, async (err, user) => {
     if (err) {
       info('Error is ->>>>>>>', err.message);
-      info(true);
-      req.authData = { authStatus: false, user: null, err };
-      next();
+      res.json({ authStatus: false, user: null, err: err.message });
       return;
     }
     const userData = await Users
@@ -39,11 +36,11 @@ function authorization(req, res, next) {
 }
 
 function requestLogger(req, res, next) {
-  info('');
+  info('==============================================================');
   info('Method:', req.method);
   info('Path', req.path);
   info('Body', req.body);
-  info('');
+  info('==============================================================');
   next();
 }
 

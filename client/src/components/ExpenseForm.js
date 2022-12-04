@@ -4,7 +4,7 @@ import { v4 as genertateId } from 'uuid'
 import {updateGroupDataExpense} from '../serverApi/server'
 
 
-function MemberListItem({member,inputName}){
+function MemberListItemPaidTo({member,inputName}){
     return(
         <li className='list-group-item' key={member._id + 'key'}>
             <label htmlFor={member._id + 'id' + inputName} className='my-auto' >
@@ -14,15 +14,14 @@ function MemberListItem({member,inputName}){
         </li>
     )
 }
-
-function MemberListings({members, name, inputName}){
+function MemberListingsPaidTo({members, name, inputName}){
     return(
         <div className='col-md-6'>
             {name}:
             <div className='text-start'>
                 <ul className='list-group'>
                     {members.map((member) => {
-                        return <MemberListItem member={member} inputName={inputName} key={member._id + 'key'} />
+                        return <MemberListItemPaidTo member={member} inputName={inputName} key={member._id + 'key'} />
                     })}
                 </ul>
             </div>
@@ -30,7 +29,32 @@ function MemberListings({members, name, inputName}){
     )
 }
 
-export default function Form({setExpenses, expenses, setGroup, group}) {
+function MemberListItemPaidBy({member,inputName}){
+    return(
+        <li className='list-group-item' key={member._id + 'key'}>
+            <label htmlFor={member._id + 'id' + inputName} className='my-auto' >
+                <input className='mx-2' id={member._id + 'id' + inputName} value={member._id.toString()} type='radio' name='payer' />
+                {member.username}
+            </label>  
+        </li>
+    )
+}
+function MemberListingsPaidBy({members, name, inputName}){
+    return(
+        <div className='col-md-6'>
+            {name}:
+            <div className='text-start'>
+                <ul className='list-group'>
+                    {members.map((member) => {
+                        return <MemberListItemPaidBy member={member} inputName={inputName} key={member._id + 'key'} />
+                    })}
+                </ul>
+            </div>
+        </div>
+    )
+}
+
+export default function Form({setExpenses, setGroup, group}) {
     
     const inputName = useField('text')
     const inputExpense = useField('number')
@@ -38,35 +62,27 @@ export default function Form({setExpenses, expenses, setGroup, group}) {
     async function handleSubmit(event){
 
         event.preventDefault()
-        const newLenders = [...event.target.involvedMembers].filter(element => element.checked? element.value:false);
+        const nameLenders = event.target.payer.value
         const newBorrowers = [...event.target.paidForMembers].filter(element => element.checked? element.value:false);
-        const nameLenders = newLenders.map(e => e.value)
         const nameBorrowers = newBorrowers.map(e => e.value)
-
 
         const newExpense = {
             name:inputName.value,
             amount:inputExpense.value,
             id:genertateId().split('-').join('')
         }
-        const objectedLendersAndBorrowers = {
-            lenders: nameLenders,
-            borrowers: nameBorrowers
-        }
-        
         
         inputName.onChange('')
         inputExpense.onChange('')
         
         const formedData = {
             ...newExpense,
-            paidBy:objectedLendersAndBorrowers.lenders,
-            paidTo:objectedLendersAndBorrowers.borrowers,
+            paidBy:nameLenders,
+            paidTo:nameBorrowers,
         }
         const res = await updateGroupDataExpense(group._id.toString(),formedData)
-        console.log('This is res', res)
-        setGroup(res)
-        setExpenses(res.expenses)
+        setGroup(res.group)
+        setExpenses(res.group.expenses)
     }
 
     return (
@@ -75,8 +91,8 @@ export default function Form({setExpenses, expenses, setGroup, group}) {
             <input className='form-control my-2' required placeholder='Expense Name' name='Text' {...inputName} />
             <input className='form-control my-2' required placeholder='Expense Amount' name='w' {...inputExpense} />
             <div className='row justify-content-center'>
-                <MemberListings members={group.members} name='Paid By' inputName={'involvedMembers'} />
-                <MemberListings members={group.members} name='Paid To' inputName={'paidForMembers'} />
+                <MemberListingsPaidBy members={group.members} name='Paid By' inputName={'involvedMembers'} />
+                <MemberListingsPaidTo members={group.members} name='Paid To' inputName={'paidForMembers'} />
             </div>
             <button className='btn loginBtn my-2' >Add Expense</button>
         </form>

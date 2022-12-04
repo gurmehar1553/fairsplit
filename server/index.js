@@ -14,6 +14,7 @@ const friendsRouter = require('./controllers/friendsRouter');
 const dashboardRouter = require('./controllers/dashboardRouter');
 const { requestLogger } = require('./utils/middleware');
 const groupsRouter = require('./controllers/groupsRouter');
+const { ShowError } = require('./utils/logger');
 
 app.use(express.json());
 app.use(cors());
@@ -28,8 +29,8 @@ app.use(cors());
 mongoose.connect(process.env.DATABASE_URL).then(() => {
   info('Connected to Mongoose Database');
 }).catch((e) => {
-  info("Couldn't connect to Database due to error: ");
-  info(e.message);
+  ShowError("Couldn't connect to Database due to error: ");
+  ShowError(e.message);
 });
 
 app.use('/', dashboardRouter);

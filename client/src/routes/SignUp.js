@@ -51,7 +51,7 @@ export default function SignUp() {
         setShowPassConfirmed(!showPassConfirmed)
     }
 
-    async function handleSendOTP(e){
+    async function handleSendOTP(){
         if(!inputEmail.value){
             console.log('Dont send empty mails')
             return
@@ -77,18 +77,18 @@ export default function SignUp() {
             password:inputPassword.value
         }
 
-        const result = await postSignUp(signUpData)
-        console.log(result)
-        if(result){
+        const res = await postSignUp(signUpData)
+        console.log(res)
+        if(res.status){
             navigate('/login')
         }else{
-            console.log('Cannot create a new user')
+            console.log(res.message)
         }
     }
 
     return (
-        <div className='login-outer'>
-            <div className="p-5 my-5 shadow col-lg-4 col-xl-3 col-sm-12 col-md-6 main-div bg-opacity-10 sign-up">
+        <div className='login-outer row'>
+            <div className="p-5 my-5 shadow col-xl-4 col-lg-5  col-sm-10 col-md-6 main-div bg-opacity-10 sign-up">
                 <div className="mx-auto col-md-5">
                     <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
                 </div>

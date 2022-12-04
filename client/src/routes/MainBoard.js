@@ -16,8 +16,9 @@ function MainBoard() {
   useEffect(()=>{
     if(auth && defaultUser.groups[0]){
       getGroupData(defaultUser.groups[0]._id.toString()).then(e =>{
-        setGroup(e)
-        setExpenses(e.expenses)
+        setGroup(e.group)
+        // console.log(e.group)
+        setExpenses(e.group.expenses)
       })
     }
   },[auth,setGroup])

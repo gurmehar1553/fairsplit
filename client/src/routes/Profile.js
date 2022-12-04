@@ -44,8 +44,7 @@ function AddFriendsTab(){
 
         const data = {query:searchQuery.value, user:[currentUser._id,...friendsIds]}
         const res = await postFriendsSearch(data)
-        
-        setSearchResults(res)
+        res.status && setSearchResults(res.result)
     }
 
     return(
@@ -107,12 +106,11 @@ function EachFriendRequest({data}){
 
     const {currentUser,setUser} = useContext(AuthContext)
 
-    async function handleAcceptRejeact(e){
-        console.log(e.target.value)
+    async function handleAcceptRejeact(reply){
         const sentResponse = { 
             sender:data._id,
             reciver:currentUser._id,
-            reply:e.target.value
+            reply
         }
         const oldFriendsArr = currentUser.friends.currentFriends
         const res = await requestAcceptReject(sentResponse)
@@ -135,8 +133,8 @@ function EachFriendRequest({data}){
                     <h4>{data.username}</h4>
                 </div>
                 <div className='d-flex gap-1'>
-                    <button className='btn btn-outline-success' value='accept' onClick={handleAcceptRejeact} ><i className="fas fa-check"></i></button>
-                    <button className='btn btn-outline-danger' value='reject' onClick={handleAcceptRejeact} ><i className="fas fa-times"></i></button>
+                    <button className='btn btn-outline-success' onClick={() => handleAcceptRejeact(true)} ><i className="fas fa-check"></i></button>
+                    <button className='btn btn-outline-danger' onClick={() => handleAcceptRejeact(false)} ><i className="fas fa-times"></i></button>
                 </div>
             </div>
         </li>
@@ -170,7 +168,7 @@ function EachSearchedFriend({data}){
         }
         const res = await sendFriendRequest(ids)
 
-        if(res === 'Friend Request Sent'){
+        if(res.status){
             currentUser.friends.sentRequests = currentUser.friends.sentRequests.concat(data)
             setUser({...currentUser})
         }
@@ -197,7 +195,7 @@ function EachFriend({data}){
             removal:data._id.toString()
         }
         const res = await removeFriend(friendToRemove)
-        if(res){
+        if(res.status){
             const newCurrentFrienndsList = currentUser.friends.currentFriends.filter(e => e._id.toString() !== friendToRemove.removal )
             currentUser.friends.currentFriends = newCurrentFrienndsList
             setUser({...currentUser})
@@ -269,7 +267,6 @@ function UserDetails({user}){
 export default function Profile() {
 
     const {auth,currentUser} = useContext(AuthContext)
-
     if(!auth){
         return <Navigate to='/login'/>
     }
