@@ -4,6 +4,7 @@ import {useField} from '../hooks/hooks'
 import {postLogin, setToken} from '../serverApi/server'
 import logo from '../assets/images/logo.png'
 import AuthContext from '../utils/AuthProvider'
+import NotifyContext from '../utils/Notify'
 
 export default function Login() {
 
@@ -12,6 +13,7 @@ export default function Login() {
     const [rememberMe,setRememberMe] = useState(false)
     const [showPass,setShowPass] = useState(false)
     const {auth,setAuth,setUser} = useContext(AuthContext)
+    const {notify} = useContext(NotifyContext)
     
     if (auth) {
         return <Navigate to='/profile'/>
@@ -37,6 +39,7 @@ export default function Login() {
             rememberMe
         } 
         const authData = await postLogin(loginData)
+        notify(authData.message)
         if(authData.status){
             setToken(authData.token)
             setAuth(true)
