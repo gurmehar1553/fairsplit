@@ -148,7 +148,6 @@ body{
 */
 
 .login-outer{
-    /* background-image: url('images/signInBackgroundjpg.jpg'); */
     background-color: #000;
     background-image: linear-gradient(135deg,#fff 50%,#00dd93 50%);
     background-size: cover;
@@ -325,6 +324,7 @@ span{
     top: 0%;
     right: 0;
     color: gray !important;
+    background-color: white;
   }
   .visibility-button:active{
     position: absolute;
