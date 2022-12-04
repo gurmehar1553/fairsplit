@@ -17,7 +17,7 @@ function coordinateValue(arr, a, b) {
   return false;
 }
 function addValues(ans, newarr, query) {
-  console.log('incomming newArr', newarr);
+  info('incomming newArr', newarr);
   newarr.forEach((ele) => {
     info('ele ->', ele);
     const name = ele[0][0];
@@ -56,7 +56,7 @@ function addValues(ans, newarr, query) {
   return ansArr;
 }
 function makeUnfilledArray(newarr, query, members) {
-  console.log('Members -> ', members);
+  info('Members -> ', members);
   const ans = [['.', ...members]];
   const len = members.length;
 

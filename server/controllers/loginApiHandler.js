@@ -21,12 +21,20 @@ loginApiHandler.get('/', authorization, async (req, res) => {
 
 loginApiHandler.post('/', async (req, res) => {
   const incommingData = req.body;
-  const [tempUser] = await Users.find({ email: incommingData.email });
+  const tempUser = await Users.findOne({ email: incommingData.email }).populate({
+    path: 'friends',
+    populate: [
+      { path: 'sentRequests', select: ['username', '_id'] },
+      { path: 'pendingRequests', select: ['username', '_id'] },
+      { path: 'currentFriends', select: ['username', '_id'] },
+    ],
+  }).populate('groups', { name: 1 });
   if (!tempUser) {
     res.send({
       status: false,
       message: 'This account does not exist...',
       token: null,
+      user: null,
     });
     return;
   }
@@ -37,6 +45,7 @@ loginApiHandler.post('/', async (req, res) => {
       status: true,
       message: 'Logging in',
       token,
+      user: tempUser,
     });
     return;
   }

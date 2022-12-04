@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const Users = require('../modals/userModals');
 const UserOTPVerification = require('../modals/UserOTPVerification');
+const { info } = require('../utils/logger');
 
 async function CheckOTP(req) {
   try {
@@ -24,8 +25,8 @@ async function CheckOTP(req) {
           await UserOTPVerification.deleteMany({ email });
           throw new Error('Code has expired. Please request again.');
         } else if (otpReceived !== otp) {
-          console.log('recivedOTP', otpReceived);
-          console.log('ourOTP', otp);
+          info('recivedOTP', otpReceived);
+          info('ourOTP', otp);
           throw new Error('Invalid code passed. Check your inbox.');
         } else {
           await UserOTPVerification.deleteMany({ email });
@@ -45,31 +46,39 @@ async function CheckOTP(req) {
 }
 
 signupRouter.post('/', async (req, res) => {
-  console.log('got the hit');
-  const { username, email, password } = req.body;
-  const saltRounds = 10;
-  const userResults = await Users.find({ $or: [{ username }, { email }] });
-  if (userResults.length) {
-    res.json({
-      status: 'Failed',
-      message: 'User with the provided email already exists',
+  try {
+    const { username, email, password } = req.body;
+    const saltRounds = 10;
+    const userResults = await Users.find({ $or: [{ username }, { email }] });
+    if (userResults.length) {
+      res.json({
+        status: false,
+        message: 'User with the provided email already exists',
+      });
+      return;
+    }
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+    const checkOTPres = await CheckOTP(req);
+    info('OTP checking result', checkOTPres.status);
+    if (checkOTPres.status) {
+      const newUser = new Users({
+        username: req.body.username,
+        email: req.body.email,
+        password: passwordHash,
+      });
+      await newUser.save();
+      res.send({
+        status: true,
+        message: 'User created Successfully',
+      });
+      return;
+    }
+  } catch (e) {
+    res.send({
+      status: false,
+      message: `Unable to create User due to: ${e.message}`,
     });
-    return;
   }
-  const passwordHash = await bcrypt.hash(password, saltRounds);
-  const checkOTPres = await CheckOTP(req);
-  console.log('OTP checking result', checkOTPres.status);
-  if (checkOTPres.status) {
-    const newUser = new Users({
-      username: req.body.username,
-      email: req.body.email,
-      password: passwordHash,
-    });
-    await newUser.save();
-    res.send(true);
-    return;
-  }
-  res.send(false);
 });
 
 signupRouter.post('/sendOTP', async (req, res) => {
@@ -97,7 +106,7 @@ signupRouter.post('/sendOTP', async (req, res) => {
     });
     await newOTPVerification.save();
     const mailRes = await transporter.sendMail(mailOptions);
-    console.log(mailRes);
+    info(mailRes);
     res.json({
       status: 'PENDING',
       message: 'Verification otp email sent',

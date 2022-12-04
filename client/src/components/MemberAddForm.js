@@ -42,7 +42,7 @@ export default function MemberAddForm() {
         event.preventDefault()
         const inputMembers = [...event.target.selected_Members]
 
-        inputMembers.forEach(e => console.log(e.checked))
+        // inputMembers.forEach(e => console.log(e.checked))
 
         const selectedMembers = inputMembers.filter(e => e.checked)
         const idsOfSelectedMembers = selectedMembers.map(e => e.id)
@@ -55,9 +55,9 @@ export default function MemberAddForm() {
             description: descriptionField.value,
             members: [...mappedSelectedMembers,currentUser._id],
         }
-        console.log('mapped selected Mebers', groupData)
+        // console.log('mapped selected Mebers', groupData)
         const res = await groupsData(groupData)
-        res && navigate('/app')
+        res.status && navigate('/app')
 
     }
 

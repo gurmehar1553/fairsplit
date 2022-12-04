@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import {Link, Navigate, useNavigate} from 'react-router-dom'
+import {Link, Navigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
 import {postLogin, setToken} from '../serverApi/server'
 import logo from '../assets/images/logo.png'
@@ -11,16 +11,11 @@ export default function Login() {
     const inputPass = useField('password')
     const [rememberMe,setRememberMe] = useState(false)
     const [showPass,setShowPass] = useState(false)
-
+    const {auth,setAuth,setUser} = useContext(AuthContext)
     
-
-    const navigate = useNavigate()
-    const {auth,setAuth} = useContext(AuthContext)
-    
-    if(auth){
-        return <Navigate to='/app'/>
+    if (auth) {
+        return <Navigate to='/profile'/>
     }
-    
     function handleShowPass(e){
         inputPass.ref.current.type = !showPass ? 'type':'password'
         const classListHere = e.target.classList
@@ -45,14 +40,14 @@ export default function Login() {
         if(authData.status){
             setToken(authData.token)
             setAuth(true)
-            navigate('/profile')
+            setUser(authData.user)
+            return <Navigate to='/profile'/>
         }
-        console.log(authData)
     }
 
     return (
-        <div className='login-outer'>
-            <div className="p-5 my-5 shadow  col-lg-4 col-xl-3 col-sm-12 col-md-6 main-div bg-opacity-10" id="sign-in">
+        <div className='login-outer row'>
+            <div className="p-5 my-5 shadow col-xl-4 col-lg-5 col-sm-10 col-md-6 main-div bg-opacity-10" id="sign-in">
                 <div className="mx-auto col-md-5">
                     <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
                 </div>

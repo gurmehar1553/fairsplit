@@ -9,46 +9,79 @@ friendsRouter.post('/search', async (req, res) => {
   const { user } = req.body;
   const foundUsers = await Users.find({ username: query });
   const searchResults = foundUsers.filter((e) => !user.includes(e._id.toString()));
-  res.json(searchResults);
+  if (searchResults.length) {
+    res.json({
+      status: true,
+      message: 'Found User(s)',
+      result: searchResults,
+    });
+    return;
+  }
+  res.json({
+    status: false,
+    message: 'No users Found',
+    result: null,
+  });
 });
 
 friendsRouter.post('/sendrequest', async (req, res) => {
   const data = req.body;
-  const sender = await Users.findById(data.sender);
   const reciver = await Users.findById(data.reciver);
   const condition = reciver.friends.pendingRequests.includes(data.sender);
   if (condition) {
-    res.send('Requested Already');
+    res.send({
+      status: false,
+      message: 'Requested Already',
+    });
     return;
   }
+  const sender = await Users.findById(data.sender);
   sender.friends.sentRequests.push(data.reciver);
   reciver.friends.pendingRequests.push(data.sender);
   await sender.save();
   await reciver.save();
-  res.send('Friend Request Sent');
+  res.send({
+    status: true,
+    message: 'Friend Request Sent',
+  });
 });
 
 friendsRouter.put('/', async (req, res) => {
   const query = req.body;
+  info('');
+  info('query ->', query);
   const accDec = query.reply;
+  info('reply', accDec);
   const sender = await Users.findById(query.sender);
+  info('Sender', sender);
   const reciver = await Users.findById(query.reciver);
+  info('Reciver', reciver);
   const sendersSent = sender.friends.sentRequests;
+  info('Senders Sent requests', sendersSent);
   const reciverPending = reciver.friends.pendingRequests;
+  info('Recivers Pending requests', reciverPending);
 
   sender.friends.sentRequests = sendersSent.filter((e) => e.toString() !== reciver._id.toString());
   reciver.friends.pendingRequests = reciverPending.filter((e) => e.toString() !== sender._id.toString());
-  if (accDec === 'accept') {
+  if (accDec) {
     sender.friends.currentFriends.push(reciver._id);
+    info('Senders Friends after Accepting:', sender.friends.currentFriends);
     reciver.friends.currentFriends.push(sender._id);
+    info('Recivers Friends after Accepting:', reciver.friends.currentFriends);
     await sender.save();
     await reciver.save();
-    res.json({ status: true });
+    res.json({
+      status: true,
+      message: 'Request Accepted',
+    });
   }
-  if (accDec === 'reject') {
+  if (!accDec) {
     await sender.save();
     await reciver.save();
-    res.json({ status: false });
+    res.json({
+      status: false,
+      message: 'Request Declined',
+    });
   }
 });
 
@@ -68,10 +101,16 @@ friendsRouter.put('/removeFriend', async (req, res) => {
     info();
     info(Removal);
     await Remover.save();
-    res.send(true);
+    res.send({
+      status: true,
+      message: 'Friend Removed Successfully',
+    });
   } catch (e) {
     info(e.message);
-    res.send(false);
+    res.send({
+      status: false,
+      message: `Unable to remove friend due to : ${e.message}`,
+    });
   }
 });
 

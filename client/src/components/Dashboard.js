@@ -7,7 +7,7 @@ import AuthContext from '../utils/AuthProvider'
 
 function MainForm({groups,setGroup,...props}){
   return(
-    <div className='col-md-3'>
+    
       <div className='btn-div'>
           <Toggelable show='Add Expense' hide='Hide' >
             <ExpenseForm {...props} setGroup={setGroup}/>
@@ -17,7 +17,6 @@ function MainForm({groups,setGroup,...props}){
             <GroupsNav groups={groups} setGroup={setGroup} setExpenses={props.setExpenses} />
           </div>
       </div>
-    </div>
   )
 }
 function GroupsNav({groups,setGroup,setExpenses}){
@@ -32,7 +31,7 @@ function GroupsNav({groups,setGroup,setExpenses}){
 
   return(
     <div>
-      <div className='list-group'>
+      <div className='list-group my-4'>
         {groups && groups.map((e,i) => <EachGroupInGroupNav key={e._id + 'GroupsKey' + i} data={e} {...props} />)}
       </div>
       <Link className='btn loginBtn my-auto' to='/groupsForm'>Add Group</Link>
@@ -46,11 +45,10 @@ function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpens
     if(condition){
       return
     }
-    const newGroupData = await getGroupData(data._id.toString())
-    console.log(newGroupData.expenses)
-    setGroup(newGroupData)
+    const res = await getGroupData(data._id.toString())
+    setGroup(res.group)
     setActiveGroup(data._id)
-    setExpenses([...newGroupData.expenses])
+    setExpenses([...res.group.expenses])
   }
 
   async function deleteGroup(){
@@ -78,7 +76,7 @@ function EachResult({data}){
 }
 function CurrentMembers({group}){
   return(
-    <div className='col-md-3'>
+    <div className='col-md-12 col-lg-5 col-xl-4'>
         <h3>Current members:</h3>
         <ul className='list-group'>
           {group.members.map(e => <li className='list-group-item' key={e._id}>{e.username}</li>)}
@@ -89,7 +87,9 @@ function CurrentMembers({group}){
 function EachExpenseItem({expense, group, setExpenses}){
   async function handleDeleteFuntion(){
     const res = await deleteGroupDataExpense(group._id.toString(),expense.id)
-    setExpenses(res.expenses)
+    if(res.status){
+      setExpenses(res.group.expenses)
+    }
   }
 
   return(
@@ -114,7 +114,7 @@ function EachExpenseItem({expense, group, setExpenses}){
 function Expenses({expenses, group, setExpenses}){
   if(expenses.length === 0){
     return(
-      <div className='col-md-9'>
+      <div className='col-md-12 col-lg-7 col-xl-8'>
         <h3>Expenses:</h3>
         <div className='list-group'>Use the form to add an Expense</div>
       </div>
@@ -122,7 +122,7 @@ function Expenses({expenses, group, setExpenses}){
   }
 
   return(
-    <div className='col-md-9'>
+    <div className='col-md-12'>
       <h3>Expenses:</h3>
       <ul className='list-group'>
         {expenses && expenses.map((e) => {
@@ -142,14 +142,13 @@ export default function Dashboard({group, setGroup, expenses, setExpenses }) {
 
   async function prePostObjectConctatination(){
 
-    // const finalDataToSend = [...expenses,currentUser._id.toString()]
     const finalDataToSend = {
       expenses,
       query: currentUser._id,
       members: group.members,
     }
     const ans=await postResult(finalDataToSend)
-    setResultValue([...ans])
+    setResultValue([...ans.result])
   }
 
   const props = {
@@ -162,8 +161,10 @@ export default function Dashboard({group, setGroup, expenses, setExpenses }) {
   return (
     <div className='container-fluid px-0 dashBoard-main'>
         <div className='row m-0 shadow p-2'>
-          <MainForm {...props} />
-          <div className='col-md-9 row'>
+          <div className='col-md-6 col-lg-5 col-xl-4'>
+            <MainForm {...props} />
+          </div>
+          <div className='col-md-6 col-lg-7 col-xl-8 row'>
             <CurrentMembers group={group} />
             <Expenses expenses={expenses} group={group} setExpenses={setExpenses} />
             <div className='text-center m-3'>
