@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import logo from '../assets/images/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useField } from '../hooks/hooks'
 import {postSignUp, sendOTP} from '../serverApi/server'
+import NotifyContext from '../utils/Notify'
 
 
 export default function SignUp() {
@@ -15,6 +16,7 @@ export default function SignUp() {
     const [showPass,setShowPass] = useState(false)
     const [showPassConfirmed,setShowPassConfirmed] = useState(false)
     const [otpStatus,setOTPStatus] = useState(false)
+    const {notify} = useContext(NotifyContext)
 
     const navigate = useNavigate()
 
@@ -78,11 +80,9 @@ export default function SignUp() {
         }
 
         const res = await postSignUp(signUpData)
-        console.log(res)
+        notify(res.message)
         if(res.status){
             navigate('/login')
-        }else{
-            console.log(res.message)
         }
     }
 

@@ -1,0 +1,40 @@
+.notification{
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    min-width: 0%;
+    background-color: white;
+    border: 1px solid;
+    border-radius: 10px;
+    height: 100px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    padding: 1%;
+
+}
+.popup{
+    display: inline-block;
+    animation-name: popup;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+}
+.popdown{
+    display: inline-block;
+    animation-name: popup;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+    animation-direction: reverse;
+    animation-iteration-count: 1;
+}
+
+@keyframes popup {
+    0%{
+        width: 0px;
+    }
+    100%{
+        min-width: 30vw;
+    }
+}

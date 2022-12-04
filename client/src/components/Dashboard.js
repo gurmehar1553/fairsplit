@@ -4,6 +4,7 @@ import Toggelable from './Toggelable'
 import ExpenseForm from './ExpenseForm'
 import {deleteGroupDataExpense, deleteGroupReq, getGroupData, postResult} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
+import NotifyContext from '../utils/Notify'
 
 function MainForm({groups,setGroup,...props}){
   return(
@@ -40,12 +41,14 @@ function GroupsNav({groups,setGroup,setExpenses}){
 }
 function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpenses}){
   const condition = data._id.toString() === activeGroup
+  const {notify} = useContext(NotifyContext)
 
   async function handleChangeActiveGroup(){
     if(condition){
       return
     }
     const res = await getGroupData(data._id.toString())
+    notify(res.message)
     setGroup(res.group)
     setActiveGroup(data._id)
     setExpenses([...res.group.expenses])
@@ -53,6 +56,7 @@ function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpens
 
   async function deleteGroup(){
     const res = await deleteGroupReq(data._id.toString())
+    notify(res.message)
     console.log(res)
   }
 
@@ -85,8 +89,12 @@ function CurrentMembers({group}){
   )
 }
 function EachExpenseItem({expense, group, setExpenses}){
+
+  const {notify} = useContext(NotifyContext)
+
   async function handleDeleteFuntion(){
     const res = await deleteGroupDataExpense(group._id.toString(),expense.id)
+    notify(res.message)
     if(res.status){
       setExpenses(res.group.expenses)
     }
@@ -139,6 +147,7 @@ export default function Dashboard({group, setGroup, expenses, setExpenses }) {
   
   const {currentUser} = useContext(AuthContext)
   const [resultValue, setResultValue] = useState([])
+  const {notify} = useContext(NotifyContext)
 
   async function prePostObjectConctatination(){
 
@@ -148,6 +157,7 @@ export default function Dashboard({group, setGroup, expenses, setExpenses }) {
       members: group.members,
     }
     const ans=await postResult(finalDataToSend)
+    notify(ans.message)
     setResultValue([...ans.result])
   }
 
