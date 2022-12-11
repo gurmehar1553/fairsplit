@@ -16,7 +16,7 @@ const HeroSection = () => {
 
             </div>
             <div className='col-md-6'>
-              <img src={heroImg} height='500px' width='650px' alt="notFound"/>
+              <img src={heroImg} width='100%' alt="notFound"/>
             </div>
           </div>
           <div className="scroll-chevron-div">

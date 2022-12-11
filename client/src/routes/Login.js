@@ -44,6 +44,7 @@ export default function Login() {
             setToken(authData.token)
             setAuth(true)
             setUser(authData.user)
+            console.log("passed")
             return <Navigate to='/profile'/>
         }
     }

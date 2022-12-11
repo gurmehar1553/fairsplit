@@ -1,5 +1,9 @@
 import React from 'react'
 import heroImg from '../assets/images/heroImg.png'
+import NewGroup from '../assets/images/NewGroup.png'
+import NewExpense from '../assets/images/NewExpense.png'
+import YourExpense from '../assets/images/YourExpense.png'
+import debtFree from '../assets/images/debtFree.png'
 
 const Features = () => {
   return (
@@ -14,13 +18,13 @@ const Features = () => {
                 </h4>
             </div>
             <div className='col-md-6'>
-                <img src={heroImg} alt='NotFound' />
+                <img src={NewGroup} width='100%' alt='NotFound' />
             </div>
         </div>
         <div>
             <div className='row p-5 feature-white'>
                 <div className='col-md-6'>
-                    <img src={heroImg} alt='NotFound' />
+                    <img src={NewExpense} width='100%' alt='NotFound' />
                 </div>
                 <div className='col-md-6  p-5' height="400px">
                     <h1 className='text-success'>Add Expenses Made By Individuals</h1>
@@ -37,14 +41,14 @@ const Features = () => {
                     <h4 className='my-5'>You can view your debts for a certain destination in a certain group to a certain member anytime according to your convenience</h4>
                 </div>
                 <div className='col-md-6'>
-                    <img src={heroImg} alt='NotFound' />
+                    <img src={YourExpense} width='100%' alt='NotFound' />
                 </div>
             </div>
         </div>
         <div>
             <div className='row p-5 feature-white'>
                 <div className='col-md-6'>
-                    <img src={heroImg} alt='NotFound' />
+                    <img src={debtFree} width='100%' alt='NotFound' />
                 </div>
                 <div className='col-md-6  p-5' height="400px">
                     <h1 className='text-success'>Find and Clear Your Debts</h1>
