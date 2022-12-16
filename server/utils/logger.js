@@ -9,13 +9,13 @@ const envMode = process.env.NODE_ENV;
 // }
 
 function info(...args) {
-  if (!envMode === 'production') {
+  if (envMode === 'development') {
     console.log('-------------------------------------------------------------------');
     console.log(...args);
   }
 }
 function ShowError(...args) {
-  if (!envMode === 'production') {
+  if (envMode === 'development') {
     console.log('-------------------------------------------------------------------');
     console.error(...args);
   }
