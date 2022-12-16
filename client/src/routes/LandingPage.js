@@ -6,6 +6,7 @@ import Features from '../components/Features'
 import Footer from '../components/Footer'
 import UseCases from '../components/UseCases'
 import Team from '../components/Team'
+import FeaturePoints from '../components/FeaturePoints'
 
 export default function LandingPage() {
   return (
@@ -13,6 +14,7 @@ export default function LandingPage() {
         <Loader />
         <Header />
         <HeroSection />
+        <FeaturePoints />
         <UseCases />
         <Features />
         <Team />

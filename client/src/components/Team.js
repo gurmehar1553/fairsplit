@@ -4,7 +4,7 @@ const Team = () => {
   return (
     <>
         <div>
-            <h1 className='text-center'>Our Team</h1>
+            <h1 className='text-center'>Meet Our Team</h1>
             <div className='d-flex justify-content-around'>
                 <div className="card col-md-3 m-3  use-cards" >
                         <img className="card-img-top" src="" alt="Card" height="300px" />
