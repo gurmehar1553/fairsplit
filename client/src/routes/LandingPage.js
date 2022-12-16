@@ -4,6 +4,8 @@ import Header from '../components/Header'
 import HeroSection from '../components/HeroSection'
 import Features from '../components/Features'
 import Footer from '../components/Footer'
+import UseCases from '../components/UseCases'
+import Team from '../components/Team'
 
 export default function LandingPage() {
   return (
@@ -11,7 +13,9 @@ export default function LandingPage() {
         <Loader />
         <Header />
         <HeroSection />
+        <UseCases />
         <Features />
+        <Team />
         <Footer />
     </div>
   )

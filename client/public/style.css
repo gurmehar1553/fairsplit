@@ -304,12 +304,12 @@ span{
     }
   }
 
-  .feature-main{
+  /* .feature-main{
     background-image: url('/images/bg-feature.jpg');
   }
   .feature-white{
     background-image: url('/images/bg-white.png');
-  }
+  } */
   .friendsSearchBtn{
     border: #ced4da 1px solid;
     display: inline;
@@ -338,4 +338,14 @@ span{
 
   .EachGroupNav:hover{
     cursor: pointer;
+  }
+
+  .use-cards{
+    background: #d8dcd8 !important;
+    border: none !important;
+    transition: all 0.3s;
+  }
+
+  .use-cards:hover{
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   }
