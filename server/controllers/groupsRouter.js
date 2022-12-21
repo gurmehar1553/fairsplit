@@ -85,7 +85,7 @@ groupsRouter.put('/:id', async (req, res) => {
   info('Saved User', populatedGroup);
   res.send({
     status: true,
-    messgae: 'Expense Added',
+    message: 'Expense Added',
     group: populatedGroup,
   });
 });

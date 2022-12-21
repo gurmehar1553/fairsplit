@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import {useField} from '../hooks/hooks'
 import {postFriendsSearch, removeFriend, requestAcceptReject, sendFriendRequest} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
+import NotifyContext from '../utils/Notify'
 
 function FriendsTab(){
 
@@ -33,6 +34,7 @@ function FriendsTab(){
 function AddFriendsTab(){
 
     const {currentUser} = useContext(AuthContext)
+    const {notify} = useContext(NotifyContext)
 
     const searchQuery = useField('text')
     const [searchResults,setSearchResults] = useState([])
@@ -44,6 +46,7 @@ function AddFriendsTab(){
 
         const data = {query:searchQuery.value, user:[currentUser._id,...friendsIds]}
         const res = await postFriendsSearch(data)
+        notify(res.message)
         res.status && setSearchResults(res.result)
     }
 
@@ -105,6 +108,7 @@ function FriendRequestsTab({friends}){
 function EachFriendRequest({data}){
 
     const {currentUser,setUser} = useContext(AuthContext)
+    const {notify} = useContext(NotifyContext)
 
     async function handleAcceptRejeact(reply){
         const sentResponse = { 
@@ -114,6 +118,7 @@ function EachFriendRequest({data}){
         }
         const oldFriendsArr = currentUser.friends.currentFriends
         const res = await requestAcceptReject(sentResponse)
+        notify(res.message)
         const requests = currentUser.friends.pendingRequests
         if(res.status){ 
             const filteredRequests = requests.filter(e => e._id.toString() !== sentResponse.sender)
@@ -143,6 +148,8 @@ function EachFriendRequest({data}){
 function EachSearchedFriend({data}){
 
     const {currentUser,setUser} = useContext(AuthContext)
+    const {notify} = useContext(NotifyContext)
+
     const pendingFriendsIdsString = currentUser.friends.sentRequests.map(e => e._id.toString())
 
     if(pendingFriendsIdsString.includes(data._id.toString())){
@@ -167,7 +174,7 @@ function EachSearchedFriend({data}){
             reciver:data._id,
         }
         const res = await sendFriendRequest(ids)
-
+        notify(res.message)
         if(res.status){
             currentUser.friends.sentRequests = currentUser.friends.sentRequests.concat(data)
             setUser({...currentUser})
@@ -189,12 +196,15 @@ function EachSearchedFriend({data}){
 }
 function EachFriend({data}){
     const {currentUser,setUser} = useContext(AuthContext)
+    const {notify} = useContext(NotifyContext)
+
     async function handleRemoveFriend(e){
         const friendToRemove = {
             remover:currentUser._id.toString(),
             removal:data._id.toString()
         }
         const res = await removeFriend(friendToRemove)
+        notify(res.message)
         if(res.status){
             const newCurrentFrienndsList = currentUser.friends.currentFriends.filter(e => e._id.toString() !== friendToRemove.removal )
             currentUser.friends.currentFriends = newCurrentFrienndsList

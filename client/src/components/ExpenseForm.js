@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {useField} from '../hooks/hooks'
 import { v4 as genertateId } from 'uuid'
 import {updateGroupDataExpense} from '../serverApi/server'
+import NotifyContext from '../utils/Notify'
 
 
 function MemberListItemPaidTo({member,inputName}){
@@ -58,6 +59,7 @@ export default function Form({setExpenses, setGroup, group}) {
     
     const inputName = useField('text')
     const inputExpense = useField('number')
+    const {notify} = useContext(NotifyContext)
 
     async function handleSubmit(event){
 
@@ -81,6 +83,8 @@ export default function Form({setExpenses, setGroup, group}) {
             paidTo:nameBorrowers,
         }
         const res = await updateGroupDataExpense(group._id.toString(),formedData)
+        console.log(res)
+        notify(res.message)
         setGroup(res.group)
         setExpenses(res.group.expenses)
     }
