@@ -6,6 +6,7 @@ import {deleteGroupDataExpense, deleteGroupReq, getGroupData, postResult} from '
 import AuthContext from '../utils/AuthProvider'
 import NotifyContext from '../utils/Notify'
 
+
 function MainForm({groups,setGroup,...props}){
   return(
     
