@@ -6,10 +6,10 @@ const FeaturePoints = () => {
     <>
         <div className='m-5 p-5 d-flex justify-content-around'>
             <div className='mx-auto my-5 col-md-6'>
-                <h1 className='mx-5 text-success'>Features</h1>
+                <h1 className='mx-5'>Features</h1>
                 <h5 className='p-3'>
-                    FairSplit solves the problems of sharing expenses efficiently and effectively.
-                    You can travel without any stress or tension about your contribution in your expenses.
+                Whether you're splitting the cost of a group vacation or simply trying to settle up after a night out, FairSplit has you covered. With its intuitive interface and easy-to-use tools, you can easily divide costs and settle debts in just a few clicks.
+
                 </h5>
                 <div className='bg-success bg-opacity-10 p-5'> 
                     <ul className="list-st" style={{"list-style-type":"square"}}>

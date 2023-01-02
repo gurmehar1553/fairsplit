@@ -9,7 +9,7 @@ const Team = () => {
                 <div className="card col-md-3 m-3  use-cards" >
                         <img className="card-img-top" src="" alt="Card" height="300px" />
                         <div className="card-body">
-                            <h2 className="card-title text-success">
+                            <h2 className="card-title text-warning">
                                 Jastagar Singh Brar
                             </h2>
                             <p className="card-text">
@@ -22,7 +22,7 @@ const Team = () => {
                 <div className="card col-md-3 m-3  use-cards" >
                         <img className="card-img-top" src="" alt="Card" height="300px" />
                         <div className="card-body">
-                            <h2 className="card-title text-success">
+                            <h2 className="card-title text-warning">
                                 Gurmehar Kaur
                             </h2>
                             <p className="card-text">

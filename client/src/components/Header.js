@@ -39,7 +39,7 @@ export default function Header() {
   const {auth} = useContext(AuthContext)
   return (
     <header>
-        <nav className="navbar navbar-light" style={{backgroundColor:"#339568"}}>
+        <nav className="navbar navbar-light" style={{backgroundColor:"#2a251f"}}>
             <div className="navbar-brand ms-3 px-5 text-light">
               <h1 className="display-6">
                 <Link to='/'>
