@@ -14,7 +14,7 @@ function LogoutBtn(){
     setAuth(false)
     setUser(null)
     setToken('')
-    navigate('/')
+    navigate('/', { replace:true })
   }
 
   return(

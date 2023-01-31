@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react'
-import {Navigate} from 'react-router-dom'
 import Header from '../components/Header'
 import {useField} from '../hooks/hooks'
 import {postFriendsSearch, removeFriend, requestAcceptReject, sendFriendRequest} from '../serverApi/server'
@@ -58,7 +57,7 @@ function AddFriendsTab(){
                 </div>
                 <form onSubmit={handleSearch} className="mx-auto">
                     <div className="input-group mb-3">
-                        <input className="form-control" placeholder="Username" {...searchQuery} />
+                        <input className="form-control" placeholder="Username" required {...searchQuery} />
                         <button className="input-group-text" id="basic-addon2">Search</button>
                     </div>
                 </form>
@@ -276,11 +275,7 @@ function UserDetails({user}){
 
 export default function Profile() {
 
-    const {auth,currentUser} = useContext(AuthContext)
-    if(!auth){
-        return <Navigate to='/login'/>
-    }
-
+    const {currentUser} = useContext(AuthContext)
     return (
         <div>
             <Header />

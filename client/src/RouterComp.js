@@ -1,16 +1,22 @@
 import React, {useContext} from "react";
 import MainBoard from "./routes/MainBoard";
-import { BrowserRouter as Router,Routes, Route, Outlet, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router,Routes, Route, Outlet, Navigate, useLocation } from 'react-router-dom'
 import Login from "./routes/Login";
 import LandingPage from "./routes/LandingPage";
 import SignUp from "./routes/SignUp"
 import Profile from "./routes/Profile";
 import GroupsForm from "./components/GroupsForm";
 import AuthContext from "./utils/AuthProvider";
+import Buffering from "./components/Buffering";
 
 function PrivateRoutes(){
-  const {auth} = useContext(AuthContext);
-  return auth ? <Outlet />: <Navigate to='/login' />
+  const location = useLocation()
+  const {auth,authLoading} = useContext(AuthContext);
+
+  if(authLoading){
+    return <Buffering/>
+  }
+  return auth ? <Outlet />: <Navigate to='/login' state={{ path: location.pathname}}  replace />
 }
 
 

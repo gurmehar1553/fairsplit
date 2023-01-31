@@ -339,3 +339,14 @@ span{
   .EachGroupNav:hover{
     cursor: pointer;
   }
+  .buffering_wrapper{
+    position: relative;
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .groupNavItem:hover{
+    cursor: pointer;
+  }

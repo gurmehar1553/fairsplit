@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import {Link, Navigate} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
 import {postLogin, setToken} from '../serverApi/server'
 import logo from '../assets/images/logo.png'
@@ -14,10 +14,13 @@ export default function Login() {
     const [showPass,setShowPass] = useState(false)
     const {auth,setAuth,setUser} = useContext(AuthContext)
     const {notify} = useContext(NotifyContext)
-    
-    if (auth) {
-        return <Navigate to='/profile'/>
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    if(auth){
+        console.log(location.state.path)
     }
+
     function handleShowPass(e){
         inputPass.ref.current.type = !showPass ? 'type':'password'
         const classListHere = e.target.classList
@@ -33,6 +36,7 @@ export default function Login() {
 
     async function handleSubmit(e){
         e.preventDefault()
+        const redirectPath = location.state?.path || '/'
         const loginData = {
             email: inputEmail.value,
             password: inputPass.value,
@@ -44,7 +48,7 @@ export default function Login() {
             setToken(authData.token)
             setAuth(true)
             setUser(authData.user)
-            return <Navigate to='/profile'/>
+            navigate(redirectPath, { replace:true })
         }
     }
 
@@ -56,10 +60,10 @@ export default function Login() {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="my-5">
-                        <input className="form-control" required placeholder="Username" {...inputEmail}/>
+                        <input className="form-control" autoComplete='username' required placeholder="Username" {...inputEmail}/>
                     </div>
                     <div className="mb-5 password-field">
-                        <input className="form-control" type="password" required placeholder="Password" {...inputPass} />
+                        <input className="form-control" type="password" autoComplete="current-password" required placeholder="Password" {...inputPass} />
                         <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPass}/>
                     </div>
                     <div className="form-check mb-4">
