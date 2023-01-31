@@ -83,7 +83,7 @@ export default function Form({setExpenses, setGroup, group}) {
             paidTo:nameBorrowers,
         }
         const res = await updateGroupDataExpense(group._id.toString(),formedData)
-        console.log(res)
+        // console.log(res)
         notify(res.message)
         setGroup(res.group)
         setExpenses(res.group.expenses)

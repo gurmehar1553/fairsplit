@@ -10,11 +10,6 @@ const SecretKey = process.env.SECRET_JWT_KEY;
 loginApiHandler.get('/', authorization, async (req, res) => {
   const { authData } = req;
   const { user, authStatus } = authData;
-  if (!authStatus) {
-    info('Invalid Token');
-    res.json({ authStatus, user: null });
-    return;
-  }
   info('User Found: ', user);
   res.json({ authStatus, user });
 });
@@ -51,7 +46,7 @@ loginApiHandler.post('/', async (req, res) => {
   }
   res.send({
     status: false,
-    message: 'This account is not verified or does not exist',
+    message: 'Wrong Password',
   });
 });
 
