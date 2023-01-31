@@ -17,7 +17,7 @@ function MainForm({groups,setGroup,...props}){
           </Toggelable>
           <div className='my-3 p-2'>
             <h2 className='display-5'>Groups</h2>
-            {groups.length? <GroupsNav setLoading={props.setLoading} groups={groups} setGroup={setGroup} setExpenses={props.setExpenses} />:"No Groups...."}
+            <GroupsNav setLoading={props.setLoading} groups={groups} setGroup={setGroup} setExpenses={props.setExpenses} />
           </div>
       </div>
   )
@@ -25,6 +25,9 @@ function MainForm({groups,setGroup,...props}){
 function GroupsNav({groups,setGroup,setExpenses,setLoading}){
   const [activeGroup,setActiveGroup] = useState(groups[0]._id.toString());
 
+  if(groups.length===0) {
+    setLoading(false)
+  }
   const props={
     setLoading,
     setActiveGroup,
@@ -37,7 +40,7 @@ function GroupsNav({groups,setGroup,setExpenses,setLoading}){
   return(
     <div>
       <div className='list-group my-4'>
-        {groups && groups.map((e,i) => <EachGroupInGroupNav key={e._id + 'GroupsKey' + i} data={e} {...props} />)}
+        {groups.length? groups.map((e,i) => <EachGroupInGroupNav key={e._id + 'GroupsKey' + i} data={e} {...props} />):"No groups Found"}
       </div>
       <Link className='btn loginBtn my-auto' to='/groupsForm'>Add Group</Link>
     </div>

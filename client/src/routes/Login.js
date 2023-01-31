@@ -12,14 +12,14 @@ export default function Login() {
     const inputPass = useField('password')
     const [rememberMe,setRememberMe] = useState(false)
     const [showPass,setShowPass] = useState(false)
-    const {auth,setAuth,setUser} = useContext(AuthContext)
+    const {setAuth,setUser} = useContext(AuthContext)
     const {notify} = useContext(NotifyContext)
     const navigate = useNavigate()
     const location = useLocation()
 
-    if(auth){
-        console.log(location.state.path)
-    }
+    // if(auth){
+    //     console.log(location.state.path)
+    // }
 
     function handleShowPass(e){
         inputPass.ref.current.type = !showPass ? 'type':'password'
@@ -53,14 +53,14 @@ export default function Login() {
     }
 
     return (
-        <div className='login-outer row'>
+        <div className='login-outer row text-light'>
             <div className="p-5 my-5 shadow col-xl-4 col-lg-5 col-sm-10 col-md-6 main-div bg-opacity-10" id="sign-in">
                 <div className="mx-auto col-md-5">
                     <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="my-5">
-                        <input className="form-control" autoComplete='username' required placeholder="Username" {...inputEmail}/>
+                        <input className="form-control" autoComplete='username' required placeholder="Email" {...inputEmail}/>
                     </div>
                     <div className="mb-5 password-field">
                         <input className="form-control" type="password" autoComplete="current-password" required placeholder="Password" {...inputPass} />

@@ -55,7 +55,7 @@ export default function SignUp() {
 
     async function handleSendOTP(){
         if(!inputEmail.value){
-            console.log('Dont send empty mails')
+            // console.log('Dont send empty mails')
             return
         }
         const SendingMail = {

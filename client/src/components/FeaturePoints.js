@@ -12,7 +12,7 @@ const FeaturePoints = () => {
 
                 </h5>
                 <div className='bg-success bg-opacity-10 p-5'> 
-                    <ul className="list-st" style={{"list-style-type":"square"}}>
+                    <ul className="list-st" style={{listStyleType:"square"}}>
                         <li><h5>Split your expenses among <span>friends,colleagues or family</span></h5></li>
                         <li><h5><span>Easy maintenance </span>of records of your expenses</h5></li>
                         <li><h5>Tracks <span>individual expenses</span> to whom you need to pay </h5></li>

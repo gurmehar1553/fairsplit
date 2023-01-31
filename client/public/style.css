@@ -385,3 +385,14 @@ span{
   .groupNavItem:hover{
     cursor: pointer;
   }
+
+  .noGroupComp{
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
