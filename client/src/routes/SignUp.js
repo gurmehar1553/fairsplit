@@ -55,7 +55,7 @@ export default function SignUp() {
 
     async function handleSendOTP(){
         if(!inputEmail.value){
-            console.log('Dont send empty mails')
+            // console.log('Dont send empty mails')
             return
         }
         const SendingMail = {
@@ -82,7 +82,7 @@ export default function SignUp() {
         const res = await postSignUp(signUpData)
         notify(res.message)
         if(res.status){
-            navigate('/login')
+            navigate('/login', { replace:true })
         }
     }
 
