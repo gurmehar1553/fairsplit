@@ -50,14 +50,14 @@ export default function Login() {
     }
 
     return (
-        <div className='login-outer row'>
+        <div className='login-outer row text-light'>
             <div className="p-5 my-5 shadow col-xl-4 col-lg-5 col-sm-10 col-md-6 main-div bg-opacity-10" id="sign-in">
                 <div className="mx-auto col-md-5">
                     <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="my-5">
-                        <input className="form-control" required placeholder="Username" {...inputEmail}/>
+                        <input className="form-control" required placeholder="Email" {...inputEmail}/>
                     </div>
                     <div className="mb-5 password-field">
                         <input className="form-control" type="password" required placeholder="Password" {...inputPass} />
@@ -68,7 +68,7 @@ export default function Login() {
                             <input onChange={()=>{setRememberMe(!rememberMe)}} className="form-check-input checkbox" type="checkbox" name="remember" /> Remember me
                         </label>
                     </div>
-                    <button type="submit" className="btn btn-success w-100 mb-4">Login</button>
+                    <button type="submit" className="btn btn-warning w-100 mb-4">Login</button>
                 </form>
                 <p className="">Create a new account? <Link id="signUpLink" to='/signup'>Sign Up</Link></p>
             </div>

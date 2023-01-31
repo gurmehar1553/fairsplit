@@ -13,12 +13,12 @@ function FriendsTab(){
     const friends = currentUser.friends.currentFriends
 
     return(
-        <div className="col-md-6 p-3 h-100">
-            <div className="card mb-4 mb-md-0 h-100">
-                <div className="card-body">
+        <div className="col-md-6 p-3 h-100 ">
+            <div className="card mb-4 mb-md-0 h-100 btn-div">
+                <div className="card-body btn-div">
                     <h1>Your friends</h1>
                 </div>
-                <div>
+                <div className='btn-div'>
                     <ul className='list-group'>
                         {friends && friends.map((e,i) => {
                             return(
@@ -52,7 +52,7 @@ function AddFriendsTab(){
 
     return(
         <div className="col-md-6 p-3 h-100">
-            <div className="card mb-4 mb-md-0 h-100">
+            <div className="card mb-4 mb-md-0 h-100 btn-div">
                 <div className="card-body">
                     <h1>Search New Friends</h1>
                 </div>
@@ -75,7 +75,7 @@ function AddFriendsTab(){
 function FriendRequestsTab({friends}){
     if(friends.pendingRequests.length === 0){
         return (
-        <div className="card mb-4 mb-md-0">
+        <div className="card mb-4 mb-md-0 btn-div">
             <div className="card-body">
                 <h5>New Requests</h5>
                 <hr/>
@@ -212,7 +212,7 @@ function EachFriend({data}){
         }
     }
     return(
-        <div className='list-group-item list-group-item-action d-flex justify-content-between align-items-center'>
+        <div className='list-group-item list-group-item-action d-flex justify-content-between align-items-center btn-div'>
             <div>
                 <h4>
                     {data.username}
@@ -232,7 +232,7 @@ function UserDetails({user}){
             <div className="container py-5">
             <div className="row">
                 <div className="col-lg-4">
-                    <div className="card mb-4">
+                    <div className="card mb-4 btn-div">
                     <div className="card-body text-center">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" className="rounded-circle img-fluid" style={{width:"150px"}} />
                         <h5 className="my-3">{user.username}</h5>
@@ -242,7 +242,7 @@ function UserDetails({user}){
                     <FriendRequestsTab friends={user.friends}/>
                 </div>
                 <div className="col-lg-8">
-                    <div className="card mb-4">
+                    <div className="card mb-4  btn-div">
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-sm-3">

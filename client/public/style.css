@@ -167,7 +167,8 @@ h1{
 .login-outer{
     background-color: #000;
     /* background-image: linear-gradient(135deg,#fff 50%,#00dd93 50%); */
-    background-image: linear-gradient(135deg,#2a251f 50%,#fbc45b 50%);
+    /* background-image: linear-gradient(135deg,#2a251f 50%,#fbc45b 50%); */
+    background-image: linear-gradient(135deg,#be9344 1%,#2a251f 35%);
     background-size: cover;
     background-repeat: no-repeat;
     overflow-x: hidden;
@@ -176,8 +177,8 @@ h1{
 }
 
 .checkbox:checked{
-    border-color: #00dd93;
-    background-color: #00dd93;
+    border-color: #fbc45b;
+    background-color: #fbc45b;
 }
 
 
@@ -193,7 +194,7 @@ a:hover{
     border: none;
     outline: none;
     text-decoration: none;
-    color: #000 !important;
+    /* color: #000 !important; */
 }
 
 #signInLink,#signUpLink:hover{
