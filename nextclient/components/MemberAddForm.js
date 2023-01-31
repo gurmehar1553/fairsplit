@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useRouter } from 'next/router'
 import {useField} from '../hooks/hooks'
-import {addNewgroup, getGroupData} from '../serverApi/server'
+import {groupsData} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 
@@ -34,31 +34,30 @@ export default function MemberAddForm() {
 
     const nameField = useField('text')
     const descriptionField = useField('text')
-    const {currentUser,setUser} = useContext(AuthContext)
-    const navigate = useNavigate()
-    
+    const {currentUser} = useContext(AuthContext)
+
+    const navigate = useRouter()
+
     async function handleSubmit(event){
-        // console.log(currentUser)
         event.preventDefault()
         const inputMembers = [...event.target.selected_Members]
-        const selectedMembers = inputMembers.filter(e => e.checked) //filter Checked Members from all members
-        const idsOfSelectedMembers = selectedMembers.map(e => e.id) //maps the ids of checkedMembers
+
+        // inputMembers.forEach(e => console.log(e.checked))
+
+        const selectedMembers = inputMembers.filter(e => e.checked)
+        const idsOfSelectedMembers = selectedMembers.map(e => e.id)
+        const currentfriendsIdOnly = currentUser.friends.currentFriends.map(e => e._id)
+        const mappedSelectedMembers = currentfriendsIdOnly.filter((e) => idsOfSelectedMembers.includes(e.toString()))
         
         const groupData = {
             name: nameField.value,
             leader: currentUser._id,
             description: descriptionField.value,
-            members: [...idsOfSelectedMembers,currentUser._id],
-            expenses:[],
+            members: [...mappedSelectedMembers,currentUser._id],
         }
         // console.log('mapped selected Mebers', groupData)
-        const res = await addNewgroup(groupData)
-        if(res.status){
-            // console.log(res.createdGroup)
-            const newGroups = currentUser.groups.concat(res.createdGroup)
-            setUser({...currentUser,groups: newGroups})
-            navigate('/app', { replace:true })
-        }
+        const res = await groupsData(groupData)
+        res.status && navigate.push('/app')
 
     }
 

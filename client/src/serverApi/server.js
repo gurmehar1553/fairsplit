@@ -49,7 +49,7 @@ async function sendOTP(data){
     const res = await axios.post(URL + 'signup/sendOTP',data)
     return res.data
 }
-async function groupsData(data){
+async function addNewgroup(data){
     const res = await axios.post(URL + 'groups',data,{headers:{Authorization: token}})
     return res.data
 }
@@ -81,7 +81,7 @@ export {
     requestAcceptReject,
     removeFriend,
     sendOTP,
-    groupsData,
+    addNewgroup,
     getGroupData,
     updateGroupDataExpense,
     deleteGroupDataExpense,

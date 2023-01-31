@@ -82,7 +82,7 @@ export default function SignUp() {
         const res = await postSignUp(signUpData)
         notify(res.message)
         if(res.status){
-            navigate('/login')
+            navigate('/login', { replace:true })
         }
     }
 

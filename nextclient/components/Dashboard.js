@@ -1,12 +1,10 @@
 import React, {useContext, useState} from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Toggelable from './Toggelable'
 import ExpenseForm from './ExpenseForm'
 import {deleteGroupDataExpense, deleteGroupReq, getGroupData, postResult} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 import NotifyContext from '../utils/Notify'
-import Buffering from './Buffering'
-
 
 function MainForm({groups,setGroup,...props}){
   return(
@@ -17,21 +15,19 @@ function MainForm({groups,setGroup,...props}){
           </Toggelable>
           <div className='my-3 p-2'>
             <h2 className='display-5'>Groups</h2>
-            {groups.length? <GroupsNav setLoading={props.setLoading} groups={groups} setGroup={setGroup} setExpenses={props.setExpenses} />:"No Groups...."}
+            <GroupsNav groups={groups} setGroup={setGroup} setExpenses={props.setExpenses} />
           </div>
       </div>
   )
 }
-function GroupsNav({groups,setGroup,setExpenses,setLoading}){
-  const [activeGroup,setActiveGroup] = useState(groups[0]._id.toString());
+function GroupsNav({groups,setGroup,setExpenses}){
+  const [activeGroup,setActiveGroup] = useState(groups[0]? groups[0]._id.toString():'');
 
   const props={
-    setLoading,
     setActiveGroup,
     setGroup,
     activeGroup,
     setExpenses,
-    groups
   }
 
   return(
@@ -43,45 +39,31 @@ function GroupsNav({groups,setGroup,setExpenses,setLoading}){
     </div>
   )
 }
-function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpenses,setLoading,groups}){
+function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpenses}){
   const condition = data._id.toString() === activeGroup
   const {notify} = useContext(NotifyContext)
-  const {currentUser, setUser} = useContext(AuthContext)
 
   async function handleChangeActiveGroup(){
     if(condition){
       return
     }
-    setLoading(true)
     const res = await getGroupData(data._id.toString())
-    // notify("Group switched")
+    notify(res.message)
     setGroup(res.group)
     setActiveGroup(data._id)
     setExpenses([...res.group.expenses])
-    setLoading(false)
   }
-  
+
   async function deleteGroup(){
     const res = await deleteGroupReq(data._id.toString())
-    if(res.status){
-      
-      const newGroups = currentUser.groups.filter(e => e._id.toString() !== data._id.toString()) 
-      setUser({...currentUser, groups:newGroups})
-      const resGroup = await getGroupData(groups[groups.length-2]._id +"")
-      setGroup(resGroup.group)
-      setExpenses([...resGroup.group.expenses])
-      setActiveGroup(groups.length? groups[groups.length-2]._id:'')
-      notify(res.message)
-    }
-    else{
-      notify(res.message)
-    }
+    notify(res.message)
+    console.log(res)
   }
 
   return(
-    <div onClick={handleChangeActiveGroup} className={`list-group-item ${condition? 'active':''} list-group-item-action groupNavItem`}>
+    <div className={`list-group-item ${condition? 'active':''} `}>
       <div className='d-flex justify-content-between align-items-center'>
-        <div className='EachGroupNav'>{data.name}</div>
+        <div onClick={handleChangeActiveGroup} className='EachGroupNav'>{data.name}</div>
         <button className='btn btn-danger' onClick={deleteGroup}>
           <i className="fas fa-trash-alt"></i>
         </button>
@@ -98,20 +80,12 @@ function EachResult({data}){
 }
 function CurrentMembers({group}){
   return(
-    <>
-    <div className='col-md-12 col-lg-7 col-xl-8'>
-      <h3>Description:</h3>
-      <div>
-        {group.description}
-      </div> 
-    </div>
     <div className='col-md-12 col-lg-5 col-xl-4'>
-      <h3>Current members:</h3>
-      <ul className='list-group'>
-        {group.members.map(e => <li className='list-group-item' key={e._id}>{e.username}</li>)}
-      </ul>
-    </div>
-    </>
+        <h3>Current members:</h3>
+        <ul className='list-group'>
+          {group.members.map(e => <li className='list-group-item' key={e._id}>{e.username}</li>)}
+        </ul>
+      </div>
   )
 }
 function EachExpenseItem({expense, group, setExpenses}){
@@ -168,11 +142,15 @@ function Expenses({expenses, group, setExpenses}){
     </div>
   )
 }
-function ShowPage({group,expenses,setExpenses, currentUser}){
+
+export default function Dashboard({group, setGroup, expenses, setExpenses }) {
+  
+  const {currentUser} = useContext(AuthContext)
   const [resultValue, setResultValue] = useState([])
   const {notify} = useContext(NotifyContext)
 
   async function prePostObjectConctatination(){
+
     const finalDataToSend = {
       expenses,
       query: currentUser._id,
@@ -182,31 +160,8 @@ function ShowPage({group,expenses,setExpenses, currentUser}){
     notify(ans.message)
     setResultValue([...ans.result])
   }
-  return(
-    <>
-      <CurrentMembers group={group} />
-      <Expenses expenses={expenses} group={group} setExpenses={setExpenses} />
-      <div className='text-center m-3'>
-        <button className='btn btn-outline-primary' onClick={prePostObjectConctatination}>
-          Calculate
-        </button>
-      </div>
-      {resultValue.map((e,i)=>{
-        return(
-          <EachResult key={i+"KeyForResultValue"} data={e} />
-        )
-      })} 
-    </>
-  )
-}
-
-export default function Dashboard({group, setGroup, expenses, setExpenses }) {
-  const {currentUser} = useContext(AuthContext)
-  const [loading,setLoading] = useState(false)
 
   const props = {
-    setLoading,
-    currentUser,
     expenses,
     setExpenses,
     group,
@@ -220,9 +175,20 @@ export default function Dashboard({group, setGroup, expenses, setExpenses }) {
             <MainForm {...props} />
           </div>
           <div className='col-md-6 col-lg-7 col-xl-8 row'>
-            {loading? <Buffering />:<ShowPage {...props} />}
+            <CurrentMembers group={group} />
+            <Expenses expenses={expenses} group={group} setExpenses={setExpenses} />
+            <div className='text-center m-3'>
+              <button className='btn btn-outline-primary' onClick={prePostObjectConctatination}>
+                Calculate
+              </button>
+            </div>
+            {resultValue.map((e,i)=>{
+              return(
+               <EachResult key={i+"KeyForResultValue"} data={e} />
+              )
+            })} 
+            </div>
           </div>
         </div>
-      </div>
   )
 }
