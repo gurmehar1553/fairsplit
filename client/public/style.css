@@ -46,17 +46,18 @@ h1{
     overflow: hidden;
     position: absolute;
     top: 0;
+    background-color:#2a251f;
     z-index: 3;
 }
 .wrapper{
     display: flex;
     top: -50%;
+    /* background-color:#2a251f; */
     height: 100%;
     justify-content: center;
     align-items: center;
     opacity: 1;
     animation: clear 0.7s 2s forwards;
-    background-color: white;
 
 }
 .innerWrapper{
