@@ -4,6 +4,7 @@
     <title>FairSplit - Pay dept, Pay Fair </title>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="manifest" href="manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="This is a webapp that helps you to split the money you spent with your friends fairly &#x2F; easily. Just sit back and let us ease your calculations. It is super easy." />
@@ -16,5 +17,12 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      const isProd = "%NODE_ENV%"==='production'
+      if(isProd && ('serviceWorker' in navigator)){
+        console.log("%NODE_ENV%")
+        navigator.serviceWorker.register('sw.js')
+      }
+    </script>
   </body>
 </html>
