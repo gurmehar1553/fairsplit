@@ -1,0 +1,46 @@
+{
+    "name":"FairSplit - Pay Dept, Pay Fair",
+    "short_name":"FairSplit",
+    "icons": [
+        {
+            "src":"images/72x72.png",
+            "sizes":"72x72",
+            "type":"image/png"
+        },
+        {
+            "src":"images/192x192.png",
+            "sizes":"192x192",
+            "type":"image/png"
+        },
+        {
+            "src":"images/256x256.png",
+            "sizes":"256x256",
+            "type":"image/png"
+        },
+        {
+            "src":"images/384x384.png",
+            "sizes":"384x384",
+            "type":"image/png"
+        },
+        {
+            "src":"images/512x512.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        },
+        {
+            "src":"images/mx128.png",
+            "sizes":"128x128",
+            "type":"image/png",
+            "purpose":"any maskable"
+        },
+        {
+            "src":"images/144x144.png",
+            "sizes":"144x144",
+            "type":"image/png"
+        }
+    ],
+    "start_url":"/",
+    "display":"standalone",
+    "theme_color":"#000000",
+    "background_color":"transparent"
+}
