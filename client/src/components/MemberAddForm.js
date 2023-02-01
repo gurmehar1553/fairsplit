@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
-import {addNewgroup, getGroupData} from '../serverApi/server'
+import {addNewgroup} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 
