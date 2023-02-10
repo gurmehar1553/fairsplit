@@ -95,7 +95,9 @@ function EachGroupInGroupNav({data,setGroup,setActiveGroup,activeGroup,setExpens
 function EachResult({data}){
   return(
     <div className=''>
-      You {data.action? 'need to take back':'need to pay'} Rs. {data.amount} {!data.action? "to":"from"} {data.to.username}
+      -{'>'} You {data.action? 'need to take back':'need to pay'} Rs. {data.amount} {!data.action? "to":"from"} {data.to.username}
+      <br/>
+      <br/>
     </div>
   )
 }
@@ -218,11 +220,11 @@ export default function Dashboard({group, setGroup, expenses, setExpenses }) {
   }
   return (
     <div className='container-fluid px-0 dashBoard-main'>
-        <div className='row m-0 shadow p-2'>
+        <div className='row m-0 shadow p-2 justify-content-center'>
           <div className='col-md-6 col-lg-5 col-xl-4'>
             <MainForm {...props} />
           </div>
-          <div className='col-md-6 col-lg-7 col-xl-8 row'>
+          <div className='col-md-6 col-lg-7 col-xl-8 row text-light'>
             {loading? <Buffering />:<ShowPage {...props} />}
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
 import {postLogin, setToken} from '../serverApi/server'
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/logo.webp'
 import AuthContext from '../utils/AuthProvider'
 import NotifyContext from '../utils/Notify'
 
@@ -71,7 +71,7 @@ export default function Login() {
                             <input onChange={()=>{setRememberMe(!rememberMe)}} className="form-check-input checkbox" type="checkbox" name="remember" /> Remember me
                         </label>
                     </div>
-                    <button type="submit" className="btn btn-success w-100 mb-4">Login</button>
+                    <button type="submit" className="btn btn-warning w-100 mb-4">Login</button>
                 </form>
                 <p className="">Create a new account? <Link id="signUpLink" to='/signup'>Sign Up</Link></p>
             </div>
