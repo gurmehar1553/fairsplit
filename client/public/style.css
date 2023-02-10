@@ -89,14 +89,14 @@ h1{
 }
 .slash{
     font-size: 0;
-    border: solid 2px rgb(0, 221, 147);
-    background-color: rgb(0, 221, 147);
+    border: solid 2px #fbc45b;
+    background-color: #fbc45b;
     height: 0rem;
     rotate: z 20deg;
     animation: slashInc 1s 0.5s forwards;
 }
 .split{
-    color: rgb(0, 221, 147);
+    color: #fbc45b;
 }
 
 @keyframes clear {
