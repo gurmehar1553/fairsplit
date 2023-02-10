@@ -41,7 +41,7 @@ const Team = () => {
     <>
         <div>
             <h1 className='text-center display-3'>Meet Our Team</h1>
-            <div className='row absjustify-content-around'>
+            <div className='row justify-content-center'>
                 {propsToPass.map(e => <TeamMemberCard {...e}/>)}
             </div>
         </div>
