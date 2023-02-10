@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
-import {addNewgroup, getGroupData} from '../serverApi/server'
+import {addNewgroup} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 
@@ -69,7 +69,7 @@ export default function MemberAddForm() {
                 <input placeholder='Group Name' className='form-control' required {...nameField} />
             </div>
             <div className="my-5">
-                <textarea placeholder='Description' className='form-control' required {...descriptionField} />
+                <textarea placeholder='Description' className='form-control' {...descriptionField} />
             </div>
             <MembersFormInput user={currentUser} />
             <button className='btn loginBtn my-2' type='submit'>Create Group</button>
