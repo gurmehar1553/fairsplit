@@ -1,11 +1,28 @@
 const loginApiHandler = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 const { info } = require('../utils/logger');
 const { authorization } = require('../utils/middleware');
 const Users = require('../modals/userModals');
 
 const SecretKey = process.env.SECRET_JWT_KEY;
+
+loginApiHandler.get('/authGoogleLogin', passport.authenticate('google'));
+
+loginApiHandler.get('/authGoogle/callBack', passport.authenticate('google', {
+  failureRedirect: '/failurePoint',
+  successRedirect: '/successPoint',
+}));
+
+loginApiHandler.get('/failurePoint', (req, res) => {
+  console.log('Failed');
+  res.end();
+});
+loginApiHandler.get('/successPoint', (req, res) => {
+  console.log('Success');
+  res.end();
+});
 
 loginApiHandler.get('/', authorization, async (req, res) => {
   const { authData } = req;

@@ -8,8 +8,8 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
     "start": "cross-env NODE_ENV=production node index.js",
     "lint": "npx eslint .",
-    "lintFix": "npx eslint . --fix",
-    "getUi": "rm -rf build && cd ../client && npm run build && cp build ../server"
+    "lint:fix": "npx eslint . --fix",
+    "getUi": "rm -rf build && cd ../client && npm run build && cp -r build ../server"
   },
   "author": "Gurmehar and Jastagar",
   "license": "ISC",
@@ -26,6 +26,9 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.19",
+    "passport": "^0.6.0",
+    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0",
     "react-cookie": "^4.1.1",
     "supertest": "^6.3.3"
   },

@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./utils/Oauth');
 
 const express = require('express');
 const morgan = require('morgan');
@@ -7,29 +8,36 @@ const mongoose = require('mongoose');
 
 const app = express();
 const path = require('path');
-const { info } = require('./utils/logger');
 
 const loginApiHandler = require('./controllers/loginApiHandler');
 const signupRouter = require('./controllers/signupRouter');
 const friendsRouter = require('./controllers/friendsRouter');
 const dashboardRouter = require('./controllers/dashboardRouter');
-const { requestLogger } = require('./utils/middleware');
 const groupsRouter = require('./controllers/groupsRouter');
+const { info } = require('./utils/logger');
+const { requestLogger } = require('./utils/middleware');
 const { ShowError } = require('./utils/logger');
+
+console.log(process.env.NODE_ENV);
+
+const database = process.env.NODE_ENV === 'test'
+  ? process.env.DATABASE_URL_TEST
+  : process.env.DATABASE_URL;
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static('build'));
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('tiny'));
 }
-app.use(express.static('build'));
+
 app.use(requestLogger);
 
 app.use(express.json());
-app.use(express.static('build'));
 app.use(cors());
 
-mongoose.connect(process.env.DATABASE_URL).then(() => {
+mongoose.connect(database).then(() => {
   info('Connected to Mongoose Database');
 }).catch((e) => {
   ShowError("Couldn't connect to Database due to error: ");

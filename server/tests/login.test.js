@@ -7,6 +7,7 @@ const api = supertest(app);
 
 const testToken = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imphc3RhZ2FyYnJhckBnbWFpbC5jb20iLCJwYXNzd29yZCI6Imphc3RhZ2FyYnJhcm1rczEyMyIsInJlbWVtYmVyTWUiOnRydWUsImlhdCI6MTY3MDE1MDUyMSwiZXhwIjoyNTM0MDY0MTIxfQ.hlclOe-puYIj-2kNFJciIxruWERoPo7a-9-bv5Q79ls';
 const testTokenExpired = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imphc3RhZ2FyYnJhckBnbWFpbC5jb20iLCJwYXNzd29yZCI6Imphc3RhZ2FyYnJhcm1rczEyMyIsInJlbWVtYmVyTWUiOmZhbHNlLCJpYXQiOjE2NzExNzY4NzUsImV4cCI6MTY3MTE3NjkzNX0.DqPYTcg85AEmXtrjTn6ymvpfSYdQWEP7saXafgdW3FI';
+
 describe('Testing Authorization middleware and login', () => {
   const routerAddress = '/login';
   test('get request with good token', async () => {
