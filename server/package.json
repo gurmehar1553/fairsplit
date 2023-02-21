@@ -9,7 +9,7 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "lint": "npx eslint .",
     "lintFix": "npx eslint . --fix",
-    "getUi": "rm -rf build && cd ../client && npm run build && cp build ../server"
+    "getUi": "rm -rf build && cd ../client && npm run build && cp -r build ../server"
   },
   "author": "Gurmehar and Jastagar",
   "license": "ISC",
