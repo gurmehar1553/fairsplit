@@ -45,6 +45,7 @@ jobs:
 
     - name: npm install, build, and test
       run: |
+        ls
         cd client
         npm install
         cd ../server
