@@ -25,6 +25,7 @@ jobs:
 
     - name: npm install, build, and test
       run: |
+        cd ./server
         npm install
         npm run getUi --if-present
     - name: Upload artifact for deployment job
