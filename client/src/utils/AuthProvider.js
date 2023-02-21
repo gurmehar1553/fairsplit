@@ -4,6 +4,7 @@ import {verifyAuth} from '../serverApi/server'
 const AuthContext = React.createContext()
 
 export function AuthProvider({children}) {
+    const [authLoading, setAuthLoading] = useState(true)
     const [auth,setAuth] = useState(false)
     const [currentUser,setUser] = useState(null)
 
@@ -13,8 +14,10 @@ export function AuthProvider({children}) {
         if(authStatus){
             setAuth(true)
             setUser(user)
-        }else{
-          setUser(null)
+            setAuthLoading(false)
+          }else{
+            setUser(null)
+            setAuthLoading(true)
         }
       }
 
@@ -23,7 +26,7 @@ export function AuthProvider({children}) {
       },[auth,setUser])
 
   return (
-    <AuthContext.Provider value={{auth,setAuth,currentUser,setUser}}>
+    <AuthContext.Provider value={{auth,setAuth,currentUser,setUser,authLoading,setAuthLoading}}>
         {children}
     </AuthContext.Provider>
   )

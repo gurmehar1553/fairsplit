@@ -8,7 +8,6 @@ const { authorization } = require('../utils/middleware');
 groupsRouter.post('/', authorization, async (req, res) => {
   try {
     const groupData = req.body;
-    groupData.expenses = [];
     const modeledGroupData = new Groups(groupData);
     const savedData = await modeledGroupData.save();
     const { members } = groupData;
@@ -22,6 +21,7 @@ groupsRouter.post('/', authorization, async (req, res) => {
     res.send({
       status: true,
       message: 'Group Created',
+      createdGroup: savedData,
     });
   } catch (e) {
     res.send({

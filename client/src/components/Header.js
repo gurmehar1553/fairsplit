@@ -1,10 +1,10 @@
 import {useContext} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/logo.webp'
 import {setToken} from '../serverApi/server';
 import AuthContext from '../utils/AuthProvider';
 
-function LogoutBtn(){
+function LogoutBtns(){
 
   const {setAuth,setUser} = useContext(AuthContext)
   const navigate = useNavigate()
@@ -14,24 +14,24 @@ function LogoutBtn(){
     setAuth(false)
     setUser(null)
     setToken('')
-    navigate('/')
+    navigate('/', { replace:true })
   }
 
   return(
-    <div className='d-flex flex-wrap justify-content-around mx-5 gap-1'>
-        <Link className='loginBtn my-auto' to='/app'>App</Link>
-        <Link className='loginBtn my-auto' to='/profile'>Profile</Link>
-        <button onClick={handleLogout} className='loginBtn my-auto'>LogOut</button>
-    </div>
+    <>
+      <Link className='loginBtn my-auto' to='/app'>App</Link>
+      <Link className='loginBtn my-auto' to='/profile'>Profile</Link>
+      <button onClick={handleLogout} className='loginBtn my-auto'>LogOut</button>
+    </>
   )
 }
 
-function LoginSignupBtn(){
+function LoginSignupBtns(){
   return(
-    <div className='d-flex flex-wrap justify-content-around mx-5 gap-1'>
-        <Link className='loginBtn my-auto' to='/login'>Login</Link>
-        <Link className='loginBtn my-auto' to='/signup'>SignUp</Link>
-    </div>
+    <>
+      <Link className='loginBtn my-auto' to='/login'>Login</Link>
+      <Link className='loginBtn my-auto' to='/signup'>SignUp</Link>
+    </>
   )
 }
 
@@ -39,16 +39,17 @@ export default function Header() {
   const {auth} = useContext(AuthContext)
   return (
     <header>
-        <nav className="navbar navbar-light" style={{backgroundColor:"#339568"}}>
-            <div className="navbar-brand ms-3 px-5 text-light">
-              <h1 className="display-6">
-                <Link to='/'>
-                  <img src={logo} style={{height:'50px'}} alt='notFound' />
-                </Link>
-              </h1>
+        <nav className="navbar navbar-light d-flex justify-content-center" style={{backgroundColor:"#2a251f"}}>
+            <div className="text-light text-center text-md-start my-2">
+              <Link to='/'>
+                <img src={logo} height='50px' alt='notFound' />
+              </Link>
             </div>
-            {auth? <LogoutBtn />:<LoginSignupBtn />}
+            <div className='d-flex flex-wrap justify-content-around mx-5 gap-1'>
+              {auth? <LogoutBtns />:<LoginSignupBtns />}
+            </div>
         </nav>
     </header>
   );
 }
+

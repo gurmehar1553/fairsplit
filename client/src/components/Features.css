@@ -1,0 +1,8 @@
+.upperBorder{
+    position: relative;
+    max-height: 20%;
+}
+.WaveSvg{
+    position: absolute;
+    bottom: -3px;
+}

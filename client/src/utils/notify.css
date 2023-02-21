@@ -3,7 +3,7 @@
     bottom: 10px;
     right: 20px;
     min-width: 0%;
-    background-color: white;
+    background-color: #ffecb3;
     border: 1px solid;
     border-radius: 10px;
     height: 100px;
@@ -11,7 +11,8 @@
     z-index: 999;
     display: none;
     padding: 1%;
-
+    font-size: 25px;
+    color: black !important;
 }
 .popup{
     display: inline-block;

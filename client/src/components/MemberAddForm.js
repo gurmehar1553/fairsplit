@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {useField} from '../hooks/hooks'
-import {groupsData} from '../serverApi/server'
+import {addNewgroup} from '../serverApi/server'
 import AuthContext from '../utils/AuthProvider'
 
 
@@ -34,30 +34,31 @@ export default function MemberAddForm() {
 
     const nameField = useField('text')
     const descriptionField = useField('text')
-    const {currentUser} = useContext(AuthContext)
-
+    const {currentUser,setUser} = useContext(AuthContext)
     const navigate = useNavigate()
-
+    
     async function handleSubmit(event){
+        // console.log(currentUser)
         event.preventDefault()
         const inputMembers = [...event.target.selected_Members]
-
-        // inputMembers.forEach(e => console.log(e.checked))
-
-        const selectedMembers = inputMembers.filter(e => e.checked)
-        const idsOfSelectedMembers = selectedMembers.map(e => e.id)
-        const currentfriendsIdOnly = currentUser.friends.currentFriends.map(e => e._id)
-        const mappedSelectedMembers = currentfriendsIdOnly.filter((e) => idsOfSelectedMembers.includes(e.toString()))
+        const selectedMembers = inputMembers.filter(e => e.checked) //filter Checked Members from all members
+        const idsOfSelectedMembers = selectedMembers.map(e => e.id) //maps the ids of checkedMembers
         
         const groupData = {
             name: nameField.value,
             leader: currentUser._id,
             description: descriptionField.value,
-            members: [...mappedSelectedMembers,currentUser._id],
+            members: [...idsOfSelectedMembers,currentUser._id],
+            expenses:[],
         }
         // console.log('mapped selected Mebers', groupData)
-        const res = await groupsData(groupData)
-        res.status && navigate('/app')
+        const res = await addNewgroup(groupData)
+        if(res.status){
+            // console.log(res.createdGroup)
+            const newGroups = currentUser.groups.concat(res.createdGroup)
+            setUser({...currentUser,groups: newGroups})
+            navigate('/app', { replace:true })
+        }
 
     }
 
@@ -68,7 +69,7 @@ export default function MemberAddForm() {
                 <input placeholder='Group Name' className='form-control' required {...nameField} />
             </div>
             <div className="my-5">
-                <textarea placeholder='Description' className='form-control' required {...descriptionField} />
+                <textarea placeholder='Description' className='form-control' {...descriptionField} />
             </div>
             <MembersFormInput user={currentUser} />
             <button className='btn loginBtn my-2' type='submit'>Create Group</button>

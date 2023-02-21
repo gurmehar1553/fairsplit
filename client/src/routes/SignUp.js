@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/logo.webp'
 import { Link, useNavigate } from 'react-router-dom'
 import { useField } from '../hooks/hooks'
 import {postSignUp, sendOTP} from '../serverApi/server'
@@ -55,7 +55,7 @@ export default function SignUp() {
 
     async function handleSendOTP(){
         if(!inputEmail.value){
-            console.log('Dont send empty mails')
+            // console.log('Dont send empty mails')
             return
         }
         const SendingMail = {
@@ -82,7 +82,7 @@ export default function SignUp() {
         const res = await postSignUp(signUpData)
         notify(res.message)
         if(res.status){
-            navigate('/login')
+            navigate('/login', { replace:true })
         }
     }
 
@@ -92,7 +92,7 @@ export default function SignUp() {
                 <div className="mx-auto col-md-5">
                     <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
                 </div>
-                <h3 className="mt-4 text-center">Create New Account</h3>
+                <h3 className="mt-4 text-center text-light">Create New Account</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4 mt-3">
                         <input className="form-control" required placeholder="Username" {...inputUsername} />
@@ -101,7 +101,7 @@ export default function SignUp() {
                         <input onChange={handleEmailOnChange} className="form-control" required placeholder="Email" {...inputEmail} />
                     </div>
                     <div className='mb-4 mt-3'>
-                        <button disabled={otpStatus} className='btn btn-outline-success' type='button' onClick={handleSendOTP}>
+                        <button disabled={otpStatus} className='btn btn-outline-warning' type='button' onClick={handleSendOTP}>
                             {otpStatus ?'sent':'Send OTP'}
                         </button>
                     </div>
@@ -116,11 +116,11 @@ export default function SignUp() {
                         <input className="form-control" required placeholder="Confirm Password" {...inputConfirmPassword} />
                         <i className="form-check-label m-1 p-2 visibility-button fas fa-eye-slash" onClick={handleShowPassConfirmed}/>
                     </div>
-                    <button type="submit" className={`btn btn-success ${!nullCondition && 'disabled'} w-100 mb-4`}>
+                    <button type="submit" className={`btn btn-warning ${!nullCondition && 'disabled'} w-100 mb-4`}>
                         Sign Up
                     </button>
                 </form>
-                <p className="">Already have an account? <Link id="signInLink" to='/login'>Login</Link></p>
+                <p className="text-light">Already have an account? <Link id="signInLink" to='/login'>Login</Link></p>
             </div>
         </div>
     )
