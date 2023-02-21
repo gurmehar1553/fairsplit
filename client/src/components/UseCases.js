@@ -17,11 +17,6 @@ const UseCases = () => {
                         <h2 className="card-title text-warning">Love To Travel among friends?</h2>
                         <p className="card-text p-3">
                         Splitting money among friends can be a challenging and time-consuming task, but FairSplit makes it easy and fair. This innovative website allows you to quickly and easily split expenses and debts with your friends, ensuring that everyone pays their fair share.
-
-                            {/* Today's youth loves to travel among friends, but doesn't find easy to have a track of 
-                            all the travel expenses. Need a solution?
-                            FairSplit brings the solution to this problem.
-                            Easy to handle all the expenditure details including who contributed how much amount for whom. :)  */}
                         </p>
                     </div>
                 </div>
@@ -57,8 +52,6 @@ const UseCases = () => {
                         <h2 className="card-title text-warning">Share expenses with Anyone</h2>
                         <p className="card-text p-3">
                         Overall, if you're looking for a hassle-free way to split money with friends, FairSplit is the perfect solution. Give it a try today and see for yourself how easy and fair it is!
-                            {/* In a nut-shell, be it anyone whom you want to share your expenses with. FairSplit maintains all the records
-                            that you have entered which helps you to enjoy the moment rather than worrying for the expense contribution.:) */}
                         </p>
                     </div>
                 </div>

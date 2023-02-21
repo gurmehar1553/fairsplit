@@ -366,10 +366,11 @@ span{
     background: #655645 !important;
     border: none !important;
     transition: all 0.3s;
-  }
+}
 
-  .use-cards:hover{
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+.use-cards:hover{
+    box-shadow: 0rem 0rem 20px 16px rgb(250 249 195 / 15%);
+    transform: scale(0.9);
   }
 
   .footer{
