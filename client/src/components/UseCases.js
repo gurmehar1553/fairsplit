@@ -3,15 +3,18 @@ import travel from '../assets/images/travel.webp'
 import dinner from '../assets/images/dinner.webp'
 import roommates from '../assets/images/roommates.webp'
 import expenseOthers from '../assets/images/expenseOthers.webp'
+import './UseCases.css'
 
 function CardtoUses({src, heading, description}){
     return (
         <div className='col-md-3 p-4'>
             <div className="card use-cards h-100" >
-                <img className="card-img-top" src={src} alt="Not Found" />
+                <div className='card-img-top overflow-hidden'>
+                    <img className="Card-Image" width='377px' height='251px' src={src} alt="Not Found" />
+                </div>
                 <div className="card-body">
                     <h2 className="card-title text-warning">{heading}</h2>
-                    <p className="card-text">
+                    <p className="card-text text-justify">
                         {description}
                     </p>
                 </div>

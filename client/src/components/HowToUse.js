@@ -1,20 +1,10 @@
 import React from 'react'
-// import NewGroup from '../assets/images/NewGroup.png'
-// import NewExpense from '../assets/images/NewExpense.png'
-// import YourExpense from '../assets/images/YourExpense.png'
-// import debtFree from '../assets/images/debtFree.png'
-
-// function HowToUseCard({src, heading , left, description}){
 function HowToUseCard({heading , description}){
 
-    // const component = <div className='col-md-6'><img src={src} width='100%' alt='NotFound' /></div>
-
     return(
-        <div style={{backgroundColor:'#655645'}} className='col-10 col-md-5 py-2 shadow rounded' height="400px">
-            <h1 className='text-center text-md-start'>{heading}</h1>
-            {/* {left && component} */}
+        <div style={{backgroundColor:'#655645'}} className='col-10 col-md-5 py-2 shadow rounded'>
+            <h2 className='text-center text-md-start text-warning'>{heading}</h2>
             <p className='my-5'>{description}</p>
-            {/* {!left && component} */}
         </div>
     )
 }

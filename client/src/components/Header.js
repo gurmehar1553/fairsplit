@@ -42,7 +42,7 @@ export default function Header() {
         <nav className="navbar navbar-light d-flex justify-content-center" style={{backgroundColor:"#2a251f"}}>
             <div className="text-light text-center text-md-start my-2">
               <Link to='/'>
-                <img src={logo} height='50px' alt='notFound' />
+                <img src={logo} width='125px' height='50px' alt='notFound' />
               </Link>
             </div>
             <div className='d-flex flex-wrap justify-content-around mx-5 gap-1'>

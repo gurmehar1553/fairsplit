@@ -56,7 +56,7 @@ export default function Login() {
         <div className='login-outer row text-light'>
             <div className="p-5 my-5 shadow col-xl-4 col-lg-5 col-sm-10 col-md-6 main-div bg-opacity-10" id="sign-in">
                 <div className="mx-auto col-md-5">
-                    <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
+                    <img className="light-mode-item navbar-brand-item" src={logo} width='125px' height='50px' alt="logo"/>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="my-5">

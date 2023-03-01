@@ -90,7 +90,7 @@ export default function SignUp() {
         <div className='login-outer row'>
             <div className="p-5 my-5 shadow col-xl-4 col-lg-5  col-sm-10 col-md-6 main-div bg-opacity-10 sign-up">
                 <div className="mx-auto col-md-5">
-                    <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" style={{ height: '50px' }} />
+                    <img className="light-mode-item navbar-brand-item" src={logo} alt="logo" width='125px' height='50px'/>
                 </div>
                 <h3 className="mt-4 text-center text-light">Create New Account</h3>
                 <form onSubmit={handleSubmit}>
