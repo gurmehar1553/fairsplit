@@ -1,5 +1,5 @@
 import React from 'react'
-import features from "../assets/images/features.png"
+import features from "../assets/images/features.webp"
 import './Features.css'
 
 const Features = () => {

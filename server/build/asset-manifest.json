@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/static/css/main.12e8fc10.css",
-    "main.js": "/static/js/main.ef8573e0.js",
-    "static/media/travel.jpg": "/static/media/travel.1a2d6d58cb4351309399.jpg",
-    "static/media/dinner.jpg": "/static/media/dinner.772fd1d487e434418af7.jpg",
-    "static/media/roommates.jpg": "/static/media/roommates.802910299eb99d9a9798.jpg",
-    "static/media/features.png": "/static/media/features.310260b2b5e88617c873.png",
+    "main.js": "/static/js/main.2733c1ad.js",
+    "static/media/travel.webp": "/static/media/travel.0a4d8d7c470a6a893b6a.webp",
+    "static/media/dinner.webp": "/static/media/dinner.9a80e7c403366ef7381a.webp",
+    "static/media/roommates.webp": "/static/media/roommates.2c15b1586000028b976a.webp",
+    "static/media/features.webp": "/static/media/features.823542bc707dbca3e888.webp",
     "service-worker.js": "/service-worker.js",
     "static/media/Landing.webp": "/static/media/Landing.41f02b474492af3b4df2.webp",
-    "static/media/expenseOthers.png": "/static/media/expenseOthers.7779615c119c840966e0.png",
+    "static/media/expenseOthers.webp": "/static/media/expenseOthers.1c2906da857d5d485915.webp",
     "static/media/logo.webp": "/static/media/logo.d3fdf944300128adbd49.webp",
     "index.html": "/index.html",
     "main.12e8fc10.css.map": "/static/css/main.12e8fc10.css.map",
-    "main.ef8573e0.js.map": "/static/js/main.ef8573e0.js.map"
+    "main.2733c1ad.js.map": "/static/js/main.2733c1ad.js.map"
   },
   "entrypoints": [
     "static/css/main.12e8fc10.css",
-    "static/js/main.ef8573e0.js"
+    "static/js/main.2733c1ad.js"
   ]
 }

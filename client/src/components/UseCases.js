@@ -1,8 +1,8 @@
 import React from 'react'
-import travel from '../assets/images/travel.jpg'
-import dinner from '../assets/images/dinner.jpg'
-import roommates from '../assets/images/roommates.jpg'
-import expenseOthers from '../assets/images/expenseOthers.png'
+import travel from '../assets/images/travel.webp'
+import dinner from '../assets/images/dinner.webp'
+import roommates from '../assets/images/roommates.webp'
+import expenseOthers from '../assets/images/expenseOthers.webp'
 
 function CardtoUses({src, heading, description}){
     return (
